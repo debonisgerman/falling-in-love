@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import { Container } from "react-bootstrap";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import HomeScreen from "./screens/HomeScreen";
+import ShopScreen from "./screens/ShopScreen";
 import ProductScreen from "./screens/ProductScreen";
 import CartScreen from "./screens/CartScreen";
 import LoginScreen from "./screens/LoginScreen";
@@ -18,6 +18,7 @@ import UserEditScreen from "./screens/UserEditScreen";
 import ProductListScreen from "./screens/ProductListScreen";
 import ProductEditScreen from "./screens/ProductEditScreen";
 import OrderListScreen from "./screens/OrderListScreen";
+import HomeScreen from "./screens/HomeScreen";
 
 const App = () => {
   return (
@@ -48,13 +49,14 @@ const App = () => {
           <Route path="/login" component={LoginScreen} />
           <Route path="/product/:id" component={ProductScreen} />
           <Route path="/cart/:id?" component={CartScreen} />
-          <Route path="/search/:keyword" component={HomeScreen} exact />
-          <Route path="/page/:pageNumber" component={HomeScreen} exact />
+          <Route path="/shop/search/:keyword" component={ShopScreen} exact />
+          <Route path="/shop/page/:pageNumber" component={ShopScreen} exact />
           <Route
-            path="/search/:keyword/page/:pageNumber"
-            component={HomeScreen}
+            path="/shop/search/:keyword/page/:pageNumber"
+            component={ShopScreen}
             exact
           />
+          <Route path="/shop" component={ShopScreen} exact />
           <Route path="/" component={HomeScreen} exact />
         </Container>
       </main>

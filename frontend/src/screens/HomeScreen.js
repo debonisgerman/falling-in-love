@@ -1,59 +1,57 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { Col, Row } from "react-bootstrap";
-import Product from "../components/Product";
-import Message from "../components/Message";
-import Loader from "../components/Loader";
-import Paginate from "../components/Paginate";
-import Meta from "../components/Meta";
+import React from "react";
+import { Row, Col, Image } from "react-bootstrap";
+import BannerCarousel from "../components/BannerCarousel";
 import ProductCarousel from "../components/ProductCarousel";
-import { listProducts } from "../actions/productActions";
 
-const HomeScreen = ({ match }) => {
-  const keyword = match.params.keyword;
-  const pageNumber = match.params.pageNumber || 1;
-
-  const dispatch = useDispatch();
-
-  const productList = useSelector((state) => state.productList);
-  const { loading, error, products, page, pages } = productList;
-
-  useEffect(() => {
-    dispatch(listProducts(keyword, pageNumber));
-  }, [dispatch, keyword, pageNumber]);
-
+const HomeScreen = () => {
   return (
     <>
-      <Meta />
-      {!keyword ? (
-        <ProductCarousel />
-      ) : (
-        <Link to="/" className="btn btn-light">
-          Go Back
-        </Link>
-      )}
-      <h1>Latest Products</h1>
-      {loading ? (
-        <Loader />
-      ) : error ? (
-        <Message variant="danger">{error}</Message>
-      ) : (
-        <>
-          <Row>
-            {products.map((product) => (
-              <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                <Product product={product} />
-              </Col>
-            ))}
-          </Row>
-          <Paginate
-            pages={pages}
-            page={page}
-            keyword={keyword ? keyword : ""}
-          />
-        </>
-      )}
+      <Row className="justify-content-center">
+        <h1>GIK DIGITAL</h1>
+      </Row>
+      <BannerCarousel />
+      <h2 className="mt-5 mb-3">What do we do?</h2>
+      <Row>
+        <Col md={4}>
+          <h4 className="text-center">Lorem Ipsum</h4>
+          <Image src="/images/airpods.jpg" alt="nombre" fluid />
+          <p>
+            Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem
+            Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum
+          </p>
+        </Col>
+        <Col md={4}>
+          <h4 className="text-center">Lorem Ipsum</h4>
+          <Image src="/images/alexa.jpg" alt="nombre" fluid />
+          <p>
+            Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem
+            Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum
+          </p>
+        </Col>
+        <Col md={4}>
+          <h4 className="text-center">Lorem Ipsum</h4>
+          <Image src="/images/phone.jpg" alt="nombre" fluid />
+          <p>
+            Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem
+            Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum
+          </p>
+        </Col>
+      </Row>
+      <h2 className="mt-5 mb-3">Top Products</h2>
+      <ProductCarousel />
+      <h2 className="mt-5 mb-3">Trust us</h2>
+      <div className="marquee">
+        <p>
+          <Image src="/images/logo.png" alt="nombre" fluid className="mx-3" />
+          <Image src="/images/logo.png" alt="nombre" fluid className="mx-3" />
+          <Image src="/images/logo.png" alt="nombre" fluid className="mx-3" />
+          <Image src="/images/logo.png" alt="nombre" fluid className="mx-3" />
+          <Image src="/images/logo.png" alt="nombre" fluid className="mx-3" />
+          <Image src="/images/logo.png" alt="nombre" fluid className="mx-3" />
+          <Image src="/images/logo.png" alt="nombre" fluid className="mx-3" />
+          <Image src="/images/logo.png" alt="nombre" fluid className="mx-3" />
+        </p>
+      </div>
     </>
   );
 };

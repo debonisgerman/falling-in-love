@@ -20,6 +20,17 @@ h2 {
   margin: 0.1rem;
 }
 
+/* logo */
+.logoHeader {
+  width: 40px;
+  opacity: 0.8;
+}
+
+.logoHeader:hover {
+  width: 40px;
+  opacity: 1;
+}
+
 /* carousel */
 .carousel-item-next,
 .carousel-item-prev,
@@ -44,6 +55,47 @@ h2 {
 
 .carousel a {
   margin: 0 auto;
+}
+
+.banner-cr img {
+  margin: 0 auto;
+  height: auto;
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+  width: 100%;
+}
+
+/* Marquee  */
+.marquee {
+  width: 100%;
+  line-height: 50px;
+  white-space: nowrap;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.marquee p {
+  display: inline-block;
+  padding-left: 100%;
+  animation: marquee 15s linear infinite;
+}
+.marquee img {
+  width: 90px;
+  min-width: 90px;
+  filter: grayscale(100%);
+  cursor: pointer;
+}
+.marquee img:hover {
+  filter: grayscale(0%);
+}
+
+@keyframes marquee {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(-100%, 0);
+  }
 }
 
 @media only screen and (max-width: 768px) {
