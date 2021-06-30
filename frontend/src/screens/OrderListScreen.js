@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { LinkContainer } from "react-router-bootstrap";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
@@ -24,8 +24,8 @@ const OrderListScreen = ({ history }) => {
   }, [dispatch, history, userInfo]);
 
   return (
-    <>
-      <h1>Orders</h1>
+    <Container>
+      <h1>Pedidos</h1>
       {loading ? (
         <Loader />
       ) : error ? (
@@ -35,11 +35,11 @@ const OrderListScreen = ({ history }) => {
           <thead>
             <tr>
               <th>ID</th>
-              <th>USER</th>
-              <th>DATE</th>
-              <th>TOTAL PRICE</th>
-              <th>PAID</th>
-              <th>DELIVERED</th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Fecha</th>
+              <th>Cotizado</th>
+              <th>Enviado</th>
               <th></th>
             </tr>
           </thead>
@@ -47,12 +47,20 @@ const OrderListScreen = ({ history }) => {
             {orders.map((order) => (
               <tr key={order._id}>
                 <td>{order._id}</td>
-                <td>{order.user && order.user.name}</td>
-                <td>{order.createdAt.substring(0, 10)}</td>
-                <td>$ {order.totalPrice}</td>
+                <td>{order.shippingAddress.name}</td>
                 <td>
-                  {order.isPaid ? (
-                    order.paidAt.substring(0, 10)
+                  <a
+                    href={`mailto:${order.shippingAddress.email}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {order.shippingAddress.email}
+                  </a>
+                </td>
+                <td>{order.createdAt.substring(0, 10)}</td>
+                <td>
+                  {order.isPriced ? (
+                    order.pricedAt.substring(0, 10)
                   ) : (
                     <i className="fas fa-times" style={{ color: "red" }} />
                   )}
@@ -67,7 +75,7 @@ const OrderListScreen = ({ history }) => {
                 <td>
                   <LinkContainer to={`/order/${order._id}`}>
                     <Button variant="light" className="btn-sm">
-                      Details
+                      Detalles
                     </Button>
                   </LinkContainer>
                 </td>
@@ -76,7 +84,7 @@ const OrderListScreen = ({ history }) => {
           </tbody>
         </Table>
       )}
-    </>
+    </Container>
   );
 };
 

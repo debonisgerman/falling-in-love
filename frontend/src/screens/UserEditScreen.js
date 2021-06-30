@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
@@ -48,12 +48,12 @@ const UserEditScreen = ({ match, history }) => {
   };
 
   return (
-    <>
+    <Container>
       <Link to="/admin/userlist" className="btn btn-light my-3">
-        Go Back
+        Volver
       </Link>
       <FormContainer>
-        <h1>Edit User</h1>
+        <h1>Editar Usuario</h1>
         {loadingUpdate && <Loader />}
         {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
         {loading ? (
@@ -63,19 +63,19 @@ const UserEditScreen = ({ match, history }) => {
         ) : (
           <Form onSubmit={submitHandler}>
             <Form.Group controlId="name">
-              <Form.Label>Name</Form.Label>
+              <Form.Label>Nombre</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Name"
+                placeholder="Nombre"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
               ></Form.Control>
             </Form.Group>
             <Form.Group controlId="email">
-              <Form.Label>Email Address</Form.Label>
+              <Form.Label>Email</Form.Label>
               <Form.Control
                 type="email"
-                placeholder="Enter email"
+                placeholder="Ingrese Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               ></Form.Control>
@@ -83,19 +83,19 @@ const UserEditScreen = ({ match, history }) => {
             <Form.Group controlId="isadmin">
               <Form.Check
                 type="checkbox"
-                label="Is Admin"
+                label="Es Admin"
                 checked={isAdmin}
                 onChange={(e) => setIsAdmin(e.target.checked)}
               ></Form.Check>
             </Form.Group>
 
             <Button type="submit" variant="primary">
-              Update
+              Actualizar
             </Button>
           </Form>
         )}
       </FormContainer>
-    </>
+    </Container>
   );
 };
 

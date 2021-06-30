@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { LinkContainer } from "react-router-bootstrap";
-import { Table, Button, Row, Col, Image } from "react-bootstrap";
+import { Table, Button, Row, Col, Image, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
@@ -59,7 +59,7 @@ const ProductListScreen = ({ history, match }) => {
   ]);
 
   const deleteHandler = (id) => {
-    if (window.confirm("Are you sure?")) {
+    if (window.confirm("¿Estás Seguro?")) {
       dispatch(deleteProduct(id));
     }
   };
@@ -69,14 +69,14 @@ const ProductListScreen = ({ history, match }) => {
   };
 
   return (
-    <>
-      <Row className="align-items-center">
+    <Container>
+      <Row className="alignItems-center">
         <Col>
-          <h1>Products</h1>
+          <h1>Productos</h1>
         </Col>
         <Col className="text-right">
           <Button className="my-3" onClick={createProductHandler}>
-            <i className="fas fa-plus" /> Create Product
+            <i className="fas fa-plus" /> Crear Producto
           </Button>
         </Col>
       </Row>
@@ -93,12 +93,13 @@ const ProductListScreen = ({ history, match }) => {
           <Table striped bordered hover responsive className="table-sm">
             <thead>
               <tr>
-                <th style={{ width: "10%" }}>IMAGE</th>
+                <th style={{ width: "10%" }}>Imagen</th>
                 <th>ID</th>
-                <th>NAME</th>
-                <th>PRICE</th>
-                <th>CATEGORY</th>
-                <th>BRAND</th>
+                <th>Nombre</th>
+                <th>Sección</th>
+                <th>Categoría</th>
+                <th>Stock</th>
+                <th>Código</th>
                 <th></th>
               </tr>
             </thead>
@@ -106,13 +107,14 @@ const ProductListScreen = ({ history, match }) => {
               {products.map((product) => (
                 <tr key={product._id}>
                   <td style={{ width: "10%" }}>
-                    <Image src={product.image} alt={product.name} fluid />
+                    <Image src={product.image} alt={product.name} fluid="true" />
                   </td>
                   <td>{product._id}</td>
                   <td>{product.name}</td>
-                  <td>$ {product.price}</td>
+                  <td>{product.section}</td>
                   <td>{product.category}</td>
-                  <td>{product.brand}</td>
+                  <td>{product.stock}</td>
+                  <td>{product.code}</td>
                   <td>
                     <LinkContainer to={`/admin/product/${product._id}/edit`}>
                       <Button variant="light" className="btn-sm">
@@ -134,7 +136,7 @@ const ProductListScreen = ({ history, match }) => {
           <Paginate pages={pages} page={page} isAdmin={true} />
         </>
       )}
-    </>
+    </Container>
   );
 };
 

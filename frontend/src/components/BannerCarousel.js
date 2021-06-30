@@ -1,61 +1,81 @@
-// import React, { useEffect } from "react";
-// import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
 import { Carousel, Image } from "react-bootstrap";
-// import { useDispatch, useSelector } from "react-redux";
-// import Loader from "./Loader";
-// import Message from "./Message";
-// import { listTopProducts } from "../actions/productActions";
-import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { isMobile, isTablet, isBrowser } from "react-device-detect";
+import Loader from "./Loader";
+import Message from "./Message";
+import { listBanners } from "../actions/bannerActions";
 
-const ProductCarousel = () => {
-  //   const dispatch = useDispatch();
-  //   const productTopRated = useSelector((state) => state.productTopRated);
-  //   const { loading, error, products } = productTopRated;
-  //   useEffect(() => {
-  //     dispatch(listTopProducts());
-  //   }, [dispatch]);
-  //   return loading ? (
-  //     <Loader />
-  //   ) : error ? (
-  //     <Message variant="danger">{error}</Message>
-  //   ) : (
-  //     <Carousel pause="hover" className="bg-dark">
-  //       {products.map((product) => (
-  //         <Carousel.Item key={product._id}>
-  //           <Link to={`/product/${product._id}`}>
-  //             <Image src={product.image} alt={product.name} fluid />
-  //             <Carousel.Caption className="carosuel-caption">
-  //               <h2>
-  //                 {product.name} ($ {product.price})
-  //               </h2>
-  //             </Carousel.Caption>
-  //           </Link>
-  //         </Carousel.Item>
-  //       ))}
-  //     </Carousel>
-  //   );
-  return (
+const BannerCarousel = () => {
+  const dispatch = useDispatch();
+  const bannerList = useSelector((state) => state.bannerList);
+  const { loading, error, banners } = bannerList;
+  useEffect(() => {
+    dispatch(listBanners());
+  }, [dispatch]);
+  return loading ? (
+    <Loader />
+  ) : error ? (
+    <Message variant="danger">{error}</Message>
+  ) : (
     <Carousel pause="hover" className="banner-cr">
-      <Carousel.Item>
-        <Image src="/images/1.png" alt="nombre" fluid />
-        <Carousel.Caption>
-          <h2>Banner de prueba</h2>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-        <Image src="/images/2.png" alt="nombre" fluid />
-        <Carousel.Caption>
-          <h2>Segundo Banner</h2>
-        </Carousel.Caption>
-      </Carousel.Item>
-      <Carousel.Item>
-        <Image src="/images/3.png" alt="nombre" fluid />
-        <Carousel.Caption>
-          <h2>Último Banner</h2>
-        </Carousel.Caption>
-      </Carousel.Item>
+      {banners
+        .filter((banner) => banner.show)
+        .map((banner) => (
+          <Carousel.Item key={banner._id}>
+            {isBrowser &&
+              (banner.imageDesktop.indexOf("mp4") > -1 ? (
+                <video
+                  width="100%"
+                  height="auto"
+                  style={{ maxHeight: "630px" }}
+                  autoPlay
+                  loop
+                  muted
+                >
+                  <source src={banner.imageDesktop} type="video/mp4" />
+                </video>
+              ) : (
+                <Image
+                  src={banner.imageDesktop}
+                  alt={banner._id}
+                  fluid="true"
+                />
+              ))}
+            {isTablet &&
+              (banner.imageTablet.indexOf("mp4") > -1 ? (
+                <video
+                  width="100%"
+                  height="auto"
+                  style={{ maxHeight: "630px" }}
+                  autoPlay
+                  loop
+                  muted
+                >
+                  <source src={banner.imageTablet} type="video/mp4" />
+                </video>
+              ) : (
+                <Image src={banner.imageTablet} alt={banner._id} fluid="true" />
+              ))}
+            {isMobile &&
+              (banner.imageMobile.indexOf("mp4") > -1 ? (
+                <video
+                  width="100%"
+                  height="auto"
+                  style={{ maxHeight: "630px" }}
+                  autoPlay
+                  loop
+                  muted
+                >
+                  <source src={banner.imageMobile} type="video/mp4" />
+                </video>
+              ) : (
+                <Image src={banner.imageMobile} alt={banner._id} fluid="true" />
+              ))}
+          </Carousel.Item>
+        ))}
     </Carousel>
   );
 };
 
-export default ProductCarousel;
+export default BannerCarousel;

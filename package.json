@@ -1,7 +1,7 @@
 {
-  "name": "ecommerce",
+  "name": "fallinginlove",
   "version": "1.0.0",
-  "description": "eCommerce App",
+  "description": "Falling In Love App",
   "main": "server.js",
   "type": "module",
   "scripts": {
@@ -12,6 +12,7 @@
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "data:import": "node backend/seeder",
     "data:destroy": "node backend/seeder -d",
+    "excel:import": "node backend/excel",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "author": "Germán De Bonis",
@@ -25,7 +26,9 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.10.15",
     "morgan": "^1.10.0",
-    "multer": "^1.4.2"
+    "multer": "^1.4.2",
+    "node-xlsx": "^0.16.1",
+    "nodemailer": "^6.4.17"
   },
   "devDependencies": {
     "concurrently": "^5.3.0",

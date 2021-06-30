@@ -5,23 +5,130 @@ import Product from "../models/productModel.js";
 // @route GET /api/products
 // @access Public
 const getProducts = asyncHandler(async (req, res) => {
-  const pageSize = 2;
+  const pageSize = 12;
   const page = Number(req.query.pageNumber) || 1;
+  let regex = new RegExp(req.query.keyword, "i");
+  const category = req.query.category;
+  const material = req.query.material;
+  const section = req.query.section;
 
-  const keyword = req.query.keyword
-    ? {
-        name: {
-          $regex: req.query.keyword,
-          $options: "i",
-        },
+  let keyword;
+  if (category || material || section) {
+    if (req.query.keyword) {
+      keyword = {
+        $and: [
+          {
+            $or: [
+              {
+                name: regex,
+              },
+              {
+                category: regex,
+              },
+              {
+                section: regex,
+              },
+            ],
+          },
+        ],
+      };
+      category && keyword.$and.push({ category: category });
+      material && keyword.$and.push({ material: material });
+      section && keyword.$and.push({ section: section });
+    } else {
+      keyword = { $and: [] };
+      category && keyword.$and.push({ category: category });
+      material && keyword.$and.push({ material: material });
+      section && keyword.$and.push({ section: section });
+    }
+  } else {
+    keyword = req.query.keyword
+      ? {
+        $or: [
+          { name: regex },
+          { category: regex },
+          { code: regex },
+          { section: regex },
+        ],
       }
-    : {};
+      : {};
+  }
 
   const count = await Product.countDocuments({ ...keyword });
   const products = await Product.find({ ...keyword })
     .limit(pageSize)
     .skip(pageSize * (page - 1));
   res.json({ products, page, pages: Math.ceil(count / pageSize) });
+});
+
+const getFilters = asyncHandler(async (req, res) => {
+  let regex = new RegExp(req.query.keyword, "i");
+  const category = req.query.category;
+  const material = req.query.material;
+  const section = req.query.section;
+
+  let keyword;
+  if (category || material || section) {
+    if (req.query.keyword) {
+      keyword = {
+        $and: [
+          {
+            $or: [
+              {
+                name: regex,
+              },
+              {
+                category: regex,
+              },
+              {
+                section: regex,
+              },
+            ],
+          },
+        ],
+      };
+      category && keyword.$and.push({ category: category });
+      material && keyword.$and.push({ material: material });
+      section && keyword.$and.push({ section: section });
+    } else {
+      keyword = { $and: [] };
+      category && keyword.$and.push({ category: category });
+      material && keyword.$and.push({ material: material });
+      section && keyword.$and.push({ section: section });
+    }
+  } else {
+    keyword = req.query.keyword
+      ? {
+        $or: [
+          { name: regex },
+          { category: regex },
+          { code: regex },
+          { section: regex },
+        ],
+      }
+      : {};
+  }
+
+  const products = await Product.find({ ...keyword });
+
+  const filters = {
+    filters: {
+      categories: [],
+      materials: [],
+      sections: [],
+    },
+  };
+  filters.filters.categories = products
+    .map((item) => item.category)
+    .filter((value, index, self) => value && self.indexOf(value) === index);
+  filters.filters.materials = products
+    .map((item) => item.material)
+    .filter((value, index, self) => value && self.indexOf(value) === index);
+  filters.filters.sections = products
+    .map((item) => item.section)
+    .filter((value, index, self) => value && self.indexOf(value) === index);
+
+  res.json(filters);
 });
 
 // @desc Fetch single product
@@ -58,15 +165,17 @@ const deleteProduct = asyncHandler(async (req, res) => {
 // @access Private/Admin
 const createProduct = asyncHandler(async (req, res) => {
   const product = new Product({
-    name: "sample name",
-    price: 0,
     user: req.user._id,
-    image: "/images/sample.jpg",
-    brand: "Sample Brand",
-    category: "sample category",
-    countInStock: 0,
-    numReviews: 0,
-    description: "Sample description",
+    name: "Nombre",
+    image: "/images/logo.jpg",
+    category: "Categoría",
+    description: "Descripción",
+    material: "",
+    section: "Sección",
+    code: "0",
+    size: [],
+    leading: false,
+    stock: 0,
   });
 
   const createdProduct = await product.save();
@@ -79,64 +188,35 @@ const createProduct = asyncHandler(async (req, res) => {
 const updateProduct = asyncHandler(async (req, res) => {
   const {
     name,
-    price,
-    description,
     image,
-    brand,
     category,
-    countInStock,
+    description,
+    material,
+    section,
+    code,
+    leading,
+    size,
+    stock,
   } = req.body;
+
+  console.log(size, req.body);
 
   const product = await Product.findById(req.params.id);
 
   if (product) {
     product.name = name;
-    product.price = price;
-    product.description = description;
     product.image = image;
-    product.brand = brand;
     product.category = category;
-    product.countInStock = countInStock;
+    product.description = description;
+    product.material = material;
+    product.section = section;
+    product.code = code;
+    product.leading = leading;
+    product.size = size;
+    product.stock = stock;
+
     const updatedProduct = await product.save();
     res.json(updatedProduct);
-  } else {
-    res.status(404);
-    throw new Error("Product not found");
-  }
-});
-
-// @desc Create new review
-// @route POST /api/products/:id/reviews
-// @access Private
-const createProductReview = asyncHandler(async (req, res) => {
-  const { rating, comment } = req.body;
-
-  const product = await Product.findById(req.params.id);
-
-  if (product) {
-    const alreadyReviewed = product.reviews.find(
-      (r) => r.user.toString() === req.user._id.toString()
-    );
-    if (alreadyReviewed) {
-      res.status(400);
-      throw new Error("Product already reviewed");
-    }
-
-    const review = {
-      name: req.user.name,
-      rating: Number(rating),
-      comment,
-      user: req.user._id,
-    };
-    product.reviews.push(review);
-
-    product.numReviews = product.reviews.length;
-    product.rating =
-      product.reviews.reduce((acc, item) => item.rating + acc, 0) /
-      product.reviews.length;
-
-    await product.save();
-    res.status(201).json({ message: "Review added" });
   } else {
     res.status(404);
     throw new Error("Product not found");
@@ -147,7 +227,7 @@ const createProductReview = asyncHandler(async (req, res) => {
 // @route get /api/products/top
 // @access Public
 const getTopProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({}).sort({ rating: -1 }).limit(3);
+  const products = await Product.find({ leading: true }).sort({ leading: -1 }).limit(9);
   res.json(products);
 });
 
@@ -157,6 +237,6 @@ export {
   deleteProduct,
   createProduct,
   updateProduct,
-  createProductReview,
   getTopProducts,
+  getFilters,
 };

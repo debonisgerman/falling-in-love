@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { LinkContainer } from "react-router-bootstrap";
-import { Table, Button } from "react-bootstrap";
+import { Table, Button, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
@@ -27,14 +27,14 @@ const UserListScreen = ({ history }) => {
   }, [dispatch, history, userInfo, successDelete]);
 
   const deleteHandler = (id) => {
-    if (window.confirm("Are you sure?")) {
+    if (window.confirm("¿Estás Seguro?")) {
       dispatch(deleteUser(id));
     }
   };
 
   return (
-    <>
-      <h1>Users</h1>
+    <Container>
+      <h1>Usuarios</h1>
       {loading ? (
         <Loader />
       ) : error ? (
@@ -44,9 +44,9 @@ const UserListScreen = ({ history }) => {
           <thead>
             <tr>
               <th>ID</th>
-              <th>NAME</th>
-              <th>EMAIL</th>
-              <th>ADMIN</th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Admin</th>
               <th></th>
             </tr>
           </thead>
@@ -84,7 +84,7 @@ const UserListScreen = ({ history }) => {
           </tbody>
         </Table>
       )}
-    </>
+    </Container>
   );
 };
 

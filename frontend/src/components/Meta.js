@@ -12,9 +12,9 @@ const Meta = ({ title, description, keywords }) => {
 };
 
 Meta.defaultProps = {
-  title: "Welcome to eCommerce",
-  keywords: "electronics, buy electronics, cheap electronics",
-  description: "We sell the best products for cheap",
+  title: "Falling In Love",
+  keywords: "",
+  description: "",
 };
 
 export default Meta;

@@ -17,53 +17,95 @@ const Header = () => {
 
   return (
     <header>
-      <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect>
+      <Navbar bg="light" variant="light" expand="lg" collapseOnSelect>
         <Container>
           <LinkContainer to="/">
-            {/* <Navbar.Brand>eCommerce</Navbar.Brand> */}
             <Navbar.Brand>
-              <Image src="/images/logo.png" alt="logo" fluid className='logoHeader' />
+              <Image
+                src="/images/logo.png"
+                alt="logo"
+                fluid="true"
+                className="logoHeader"
+              />
             </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Route render={({ history }) => <SearchBox history={history} />} />
             <Nav className="ml-auto">
+              <LinkContainer to="/about-us">
+                <Nav.Link>
+                  <i className="fas fa-users"></i> Nosotros
+                </Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/find-us">
+                <Nav.Link>
+                  <i className="fas fa-map-marker-alt"></i> Encuéntranos
+                </Nav.Link>
+              </LinkContainer>
               <LinkContainer to="/shop">
-                <Nav.Link>Shop</Nav.Link>
+                <Nav.Link>
+                  <i className="fas fa-store-alt"></i> Tienda
+                </Nav.Link>
               </LinkContainer>
               <LinkContainer to="/cart">
                 <Nav.Link>
-                  <i className="fas fa-shopping-cart" /> Cart
+                  <i className="fas fa-shopping-cart" /> Carrito
                 </Nav.Link>
               </LinkContainer>
               {userInfo && userInfo.isAdmin && (
-                <NavDropdown title="Admin" id="adminmenu">
+                <NavDropdown
+                  title={
+                    <span>
+                      <i className="fas fa-cog"></i> Admin
+                    </span>
+                  }
+                  id="adminmenu"
+                >
                   <LinkContainer to="/admin/userlist">
-                    <NavDropdown.Item>Users</NavDropdown.Item>
+                    <NavDropdown.Item>
+                      <i className="fas fa-users"></i> Usuarios
+                    </NavDropdown.Item>
                   </LinkContainer>
                   <LinkContainer to="/admin/productList">
-                    <NavDropdown.Item>Products</NavDropdown.Item>
+                    <NavDropdown.Item>
+                      <i className="fas fa-tools"></i> Productos
+                    </NavDropdown.Item>
                   </LinkContainer>
                   <LinkContainer to="/admin/orderList">
-                    <NavDropdown.Item>Orders</NavDropdown.Item>
+                    <NavDropdown.Item>
+                      <i className="fas fa-shipping-fast"></i> Pedidos
+                    </NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/admin/bannerlist">
+                    <NavDropdown.Item>
+                      <i className="far fa-images"></i> Banners
+                    </NavDropdown.Item>
                   </LinkContainer>
                 </NavDropdown>
               )}
               {userInfo ? (
-                <NavDropdown title={userInfo.name} id="username">
+                <NavDropdown
+                  title={
+                    <span>
+                      <i className="fas fa-user"></i> {userInfo.name}
+                    </span>
+                  }
+                  id="username"
+                >
                   <LinkContainer to="/profile">
-                    <NavDropdown.Item>Profile</NavDropdown.Item>
+                    <NavDropdown.Item>
+                      <i className="fas fa-user-edit"></i> Perfil
+                    </NavDropdown.Item>
                   </LinkContainer>
                   <NavDropdown.Item onClick={logoutHandler}>
-                    Logout
+                    <i className="fas fa-sign-out-alt"></i> Salir
                   </NavDropdown.Item>
                 </NavDropdown>
               ) : (
                 <LinkContainer to="/login">
                   <Nav.Link>
-                    <i className="fas fa-user" />
-                    Log In
+                    <i className="fas fa-user" /> Iniciar Sesión
                   </Nav.Link>
                 </LinkContainer>
               )}

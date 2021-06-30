@@ -7,8 +7,8 @@ import {
   productDeleteReducer,
   productCreateReducer,
   productUpdateReducer,
-  productReviewCreateReducer,
   productTopRatedReducer,
+  productFilterReducer,
 } from "./reducers/productReducers";
 import { cartReducer } from "./reducers/cartReducers";
 import {
@@ -24,10 +24,17 @@ import {
   orderCreateReducer,
   orderDetailsReducer,
   orderListMyReducer,
-  orderPayReducer,
   orderListReducer,
   orderDeliverReducer,
+  orderPricedReducer,
 } from "./reducers/orderReducers";
+import {
+  bannerCreateReducer,
+  bannerDeleteReducer,
+  bannerDetailsReducer,
+  bannerListReducer,
+  bannerUpdateReducer,
+} from "./reducers/bannerReducers";
 
 const reducer = combineReducers({
   productList: productListReducer,
@@ -35,8 +42,8 @@ const reducer = combineReducers({
   productDelete: productDeleteReducer,
   productCreate: productCreateReducer,
   productUpdate: productUpdateReducer,
-  productReviewCreate: productReviewCreateReducer,
   productTopRated: productTopRatedReducer,
+  productFilter: productFilterReducer,
   cart: cartReducer,
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
@@ -47,10 +54,15 @@ const reducer = combineReducers({
   userUpdate: userUpdateReducer,
   orderCreate: orderCreateReducer,
   orderDetails: orderDetailsReducer,
-  orderPay: orderPayReducer,
   orderDeliver: orderDeliverReducer,
+  orderPriced: orderPricedReducer,
   orderListMy: orderListMyReducer,
   orderList: orderListReducer,
+  bannerCreate: bannerCreateReducer,
+  bannerDelete: bannerDeleteReducer,
+  bannerDetails: bannerDetailsReducer,
+  bannerList: bannerListReducer,
+  bannerUpdate: bannerUpdateReducer,
 });
 
 const cartItemsFromStorage = localStorage.getItem("cartItems")
