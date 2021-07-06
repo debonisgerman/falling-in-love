@@ -18,44 +18,34 @@ const Footer = () => {
               <div className="mb-3">
                 <Link to="/find-us/lampa">
                   <i className="fas fa-map-marker-alt pr-2"></i>
-                  Lorem Ipsum
+                  Encuéntranos
                 </Link>
               </div>
               <div className="mb-2">
-                <a href="tel:11111111" target="_blank" rel="noreferrer">
+                <a href="tel:913059930" target="_blank" rel="noreferrer">
                   <i className="fas fa-phone pr-2"></i>
-                  11111111
+                  913059930
                 </a>
               </div>
               <div className="mb-2">
                 <a
-                  href="#"
+                  href="https://wa.me/message/BC3M5NM7LNWAE1"
                   target="_blank"
                   rel="noreferrer"
                 >
                   <i className="fab fa-whatsapp pr-2"></i>
-                  11111111
-                </a>
-              </div>
-              <div className="mb-2">
-                <a
-                  href="#"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <i className="fab fa-whatsapp pr-2"></i>
-                  11111111
+                  913059930
                 </a>
               </div>
               <hr className="bg-light" />
               <div className="mb-2">
                 <a
-                  href="mailto:debonis.german@gmail.com"
+                  href="mailto:fallinginloveperu@outlook.com"
                   target="_blank"
                   rel="noreferrer"
                 >
                   <i className="fas fa-envelope pr-2"></i>
-                  debonis.german@gmail.com
+                  fallinginloveperu@outlook.com
                 </a>
               </div>
             </div>
@@ -68,51 +58,6 @@ const Footer = () => {
               className="logoFooter"
               style={{ visibility: "hidden" }}
             />
-            <div className="my-3">
-              <div className="mb-3">
-                <Link to="/find-us/paruro">
-                  <i className="fas fa-map-marker-alt pr-2"></i>
-                  Lorem Ipsum
-                </Link>
-              </div>
-              <div className="mb-2">
-                <a href="tel:11111111" target="_blank" rel="noreferrer">
-                  <i className="fas fa-phone pr-2"></i>
-                  11111111
-                </a>
-              </div>
-              <div className="mb-2">
-                <a
-                  href="#"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <i className="fab fa-whatsapp pr-2"></i>
-                  11111111
-                </a>
-              </div>
-              <div className="mb-2" style={{ visibility: "hidden" }}>
-                <a
-                  href="#"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <i className="fab fa-whatsapp pr-2"></i>
-                  11111111
-                </a>
-              </div>
-              <hr className="bg-light" />
-              <div className="mb-2">
-                <a
-                  href="mailto:debonis.german@gmail.com"
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  <i className="fas fa-envelope pr-2"></i>
-                  debonis.german@gmail.com
-                </a>
-              </div>
-            </div>
           </Col>
           <Col md={4}>
             <Image
@@ -127,7 +72,7 @@ const Footer = () => {
               <div className="my-2 social-network">
                 <Row>
                   <a
-                    href="#"
+                    href="https://www.facebook.com/Falling-in-Love-775386406168379"
                     target="_blank"
                     rel="noreferrer"
                     className="mx-1 ml-3"
@@ -143,7 +88,7 @@ const Footer = () => {
                     ></i>
                   </a>
                   <a
-                    href="#"
+                    href="https://www.instagram.com/fallinginlove.pe/"
                     target="_blank"
                     rel="noreferrer"
                     className="mx-1 ml-3"
@@ -159,23 +104,7 @@ const Footer = () => {
                     ></i>
                   </a>
                   <a
-                    href="#"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mx-1 ml-3"
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      color: "cornflowerblue",
-                    }}
-                  >
-                    <i
-                      className="fab fa-twitter py-2 mr-2"
-                      style={{ fontSize: "25px" }}
-                    ></i>
-                  </a>
-                  <a
-                    href="#"
+                    href="https://wa.me/message/BC3M5NM7LNWAE1"
                     target="_blank"
                     rel="noreferrer"
                     className="mx-1 ml-3"
@@ -187,22 +116,6 @@ const Footer = () => {
                   >
                     <i
                       className="fab fa-whatsapp py-2 mr-2"
-                      style={{ fontSize: "25px" }}
-                    ></i>
-                  </a>
-                  <a
-                    href="#"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="mx-1 ml-3"
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      color: "red",
-                    }}
-                  >
-                    <i
-                      className="fab fa-youtube py-2 mr-2"
                       style={{ fontSize: "25px" }}
                     ></i>
                   </a>

@@ -31,7 +31,7 @@ const Product = ({ product }) => {
           <Row>
             <Col sm={6} md={6} lg={6} xl={6} xs={6} className="text-center">
               <a
-                href="https://wa.me/+51977776527"
+                href="https://wa.me/message/BC3M5NM7LNWAE1"
                 target="_blank"
                 rel="noreferrer"
               >
@@ -40,7 +40,7 @@ const Product = ({ product }) => {
             </Col>
             <Col sm={6} md={6} lg={6} xl={6} xs={6} className="text-center">
               <a
-                href="mailto:salomonpacificosac@gmail.com"
+                href="mailto:fallinginloveperu@outlook.com"
                 target="_blank"
                 rel="noreferrer"
               >

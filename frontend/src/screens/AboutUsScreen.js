@@ -35,14 +35,14 @@ const AboutUsScreen = () => {
         Conózcanos
       </h1>
       <Row>
-        <Col md={3}></Col>
-        <Col md={3}>
+        <Col md={4}></Col>
+        <Col md={4}>
           <Card className="my-3 p-3 rounded w100p">
             <Card.Title>
-              <h4 className="text-center">Lorem Ipsum</h4>
+              <h4 className="text-center">Andrea Cueva</h4>
             </Card.Title>
             <Card.Img
-              src="/images/ventas.png"
+              src="/images/mujer.png"
               variant="top"
               fluid="true"
               style={{ width: "50%", margin: "0 auto" }}
@@ -55,26 +55,26 @@ const AboutUsScreen = () => {
                 <Row className="mt-2">
                   <Col className="text-center">
                     <a
-                      href="#"
+                      href="https://wa.me/message/BC3M5NM7LNWAE1"
                       target="_blank"
                       rel="noreferrer"
                       style={{ color: "green" }}
                     >
                       <i
                         className="fab fa-whatsapp pt-2"
-                        style={{ fontSize: "25px" }}
+                        style={{ fontSize: "35px" }}
                       ></i>
                     </a>
                   </Col>
                   <Col className="text-center">
                     <a
-                      href="#"
+                      href="mailto:fallinginloveperu@outlook.com"
                       target="_blank"
                       rel="noreferrer"
                     >
                       <i
                         className="fas fa-envelope pt-2"
-                        style={{ fontSize: "25px" }}
+                        style={{ fontSize: "35px" }}
                       ></i>
                     </a>
                   </Col>
@@ -83,55 +83,7 @@ const AboutUsScreen = () => {
             </Card.Body>
           </Card>
         </Col>
-        <Col md={3}>
-          <Card className="my-3 p-3 rounded w100p">
-            <Card.Title>
-              <h4 className="text-center">Lorem Ipsum</h4>
-            </Card.Title>
-            <Card.Img
-              src="/images/cliente.png"
-              variant="top"
-              fluid="true"
-              style={{ width: "50%", margin: "0 auto" }}
-            />
-
-            <Card.Body>
-              <Card.Text as="p" className="text-center">
-                Contáctenos
-              </Card.Text>
-              <Card.Text>
-                <Row className="mt-2">
-                  <Col className="text-center">
-                    <a
-                      href="#"
-                      target="_blank"
-                      rel="noreferrer"
-                      style={{ color: "green" }}
-                    >
-                      <i
-                        className="fab fa-whatsapp pt-2"
-                        style={{ fontSize: "25px" }}
-                      ></i>
-                    </a>
-                  </Col>
-                  <Col className="text-center">
-                    <a
-                      href="#"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <i
-                        className="fas fa-envelope pt-2"
-                        style={{ fontSize: "25px" }}
-                      ></i>
-                    </a>
-                  </Col>
-                </Row>
-              </Card.Text>
-            </Card.Body>
-          </Card>
-        </Col>
-        <Col md={3}></Col>
+        <Col md={4}></Col>
       </Row>
     </Container>
   );

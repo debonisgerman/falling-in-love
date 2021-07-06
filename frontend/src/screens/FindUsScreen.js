@@ -45,27 +45,27 @@ const FindUsScreen = ({ match }) => {
               style={{ cursor: "pointer" }}
             >
               <i className="fas fa-map-marker-alt pr-2"></i>
-              Lorem Ipsum
+              Aquí estamos
             </ListGroup.Item>
             <ListGroup.Item className="pt-0">
               <Row className="mt-2">
                 <Col>
                   <div>
-                    <a href="tel:11111111" target="_blank" rel="noreferrer">
+                    <a href="tel:913059930" target="_blank" rel="noreferrer">
                       <i className="fas fa-phone pr-2"></i>
-                      11111111
+                      913059930
                     </a>
                   </div>
                 </Col>
                 <Col>
                   <div>
                     <a
-                      href="#"
+                      href="https://wa.me/message/BC3M5NM7LNWAE1"
                       target="_blank"
                       rel="noreferrer"
                     >
                       <i className="fab fa-whatsapp pr-2"></i>
-                      11111111
+                      913059930
                     </a>
                   </div>
                 </Col>
@@ -74,12 +74,13 @@ const FindUsScreen = ({ match }) => {
             <ListGroup.Item
               onClick={() => filterMap("lampa")}
               className="no-border pb-0"
-              style={{ cursor: "pointer" }}
+              style={{ cursor: "pointer", display: "none" }}
             >
               <i className="fas fa-map-marker-alt pr-2"></i>
               Lorem Ipsum
             </ListGroup.Item>
-            <ListGroup.Item className="pt-0">
+            <ListGroup.Item className="pt-0"
+              style={{ cursor: "pointer", display: "none" }}>
               <Row className="mt-2">
                 <Col>
                   <div>
@@ -187,48 +188,6 @@ const FindUsScreen = ({ match }) => {
               data-id="paruro"
               position={[-12.054208809262152, -77.0255821313492]}
             >
-              <Popup>
-                <div style={{ width: "13rem" }}>
-                  <Row>
-                    <h6 style={{ width: "100%" }} className="text-center">
-                      Lorem Ipsum
-                    </h6>
-                  </Row>
-                  <Row className="my-2">
-                    <Col className="text-center">
-                      <a
-                        href="#"
-                        target="_blank"
-                        rel="noreferrer"
-                        style={{ color: "green" }}
-                      >
-                        <i
-                          className="fas fa-map-marker-alt py-2"
-                          style={{ fontSize: "25px" }}
-                        ></i>
-                        <br />
-                        Google Maps
-                      </a>
-                    </Col>
-                    <Col className="text-center">
-                      <a
-                        href="#"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <i
-                          className="fab fa-waze py-2"
-                          style={{ fontSize: "25px" }}
-                        ></i>
-                        <br />
-                        Waze
-                      </a>
-                    </Col>
-                  </Row>
-                </div>
-              </Popup>
-            </Marker>
-            <Marker data-id="lampa" position={[-12.053952, -77.03429]}>
               <Popup>
                 <div style={{ width: "13rem" }}>
                   <Row>
