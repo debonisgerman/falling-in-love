@@ -18,11 +18,11 @@ const HomeScreen = () => {
             >
               <Card className="my-3 p-3 rounded w100p mh-400">
                 <Card.Title>
-                  <h4 className="dark-blue bold text-center">Categoría 1</h4>
+                  <h4 className="dark-blue bold text-center">Trusas</h4>
                 </Card.Title>
                 <Card.Img
                   className="mh-210 of-ct"
-                  src="/images/agata.jpg"
+                  src="/images/cat-1.jpg"
                   variant="top"
                   fluid="true"
                 />
@@ -42,11 +42,11 @@ const HomeScreen = () => {
             >
               <Card className="my-3 p-3 rounded w100p mh-400">
                 <Card.Title>
-                  <h4 className="dark-blue bold text-center">Categoría 2</h4>
+                  <h4 className="dark-blue bold text-center">Bralettes</h4>
                 </Card.Title>
                 <Card.Img
                   className="mh-210 of-ct"
-                  src="/images/agata.jpg"
+                  src="/images/cat-2.jpg"
                   variant="top"
                   fluid="true"
                 />
@@ -66,11 +66,11 @@ const HomeScreen = () => {
             >
               <Card className="my-3 p-3 rounded w100p mh-400">
                 <Card.Title>
-                  <h4 className="dark-blue bold text-center">Categoría 3</h4>
+                  <h4 className="dark-blue bold text-center">Conjuntos</h4>
                 </Card.Title>
                 <Card.Img
                   className="mh-210 of-ct"
-                  src="/images/agata.jpg"
+                  src="/images/cat-3.jpg"
                   variant="top"
                   fluid="true"
                 />
@@ -90,11 +90,11 @@ const HomeScreen = () => {
             >
               <Card className="my-3 p-3 rounded w100p mh-400">
                 <Card.Title>
-                  <h4 className="dark-blue bold text-center">Categoría 4</h4>
+                  <h4 className="dark-blue bold text-center">Otros</h4>
                 </Card.Title>
                 <Card.Img
                   className="mh-210 of-ct"
-                  src="/images/agata.jpg"
+                  src="/images/cat-4.jpg"
                   variant="top"
                   fluid="true"
                 />
