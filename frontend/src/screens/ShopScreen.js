@@ -48,7 +48,7 @@ const ShopScreen = ({ match, location }) => {
         <Message variant="danger">{error}</Message>
       ) : (
         <>
-          <Row className="px-3">
+          <Row className="px-3 w-100">
             <Col lg={3} md={3} xl={3} className="pt-2-4">
               <Filter
                 loadingFilters={loadingFilters}

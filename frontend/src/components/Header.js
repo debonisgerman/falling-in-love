@@ -82,6 +82,11 @@ const Header = () => {
                       <i className="far fa-images"></i> Banners
                     </NavDropdown.Item>
                   </LinkContainer>
+                  <LinkContainer to="/admin/categorylist">
+                    <NavDropdown.Item>
+                      <i className="far fa-file-plus"></i> Categorías
+                    </NavDropdown.Item>
+                  </LinkContainer>
                 </NavDropdown>
               )}
               {userInfo ? (

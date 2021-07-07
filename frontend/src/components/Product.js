@@ -17,7 +17,7 @@ const Product = ({ product }) => {
         </Link>
         <Card.Text as="p">
           <strong>Categoría: </strong>
-          {product.category}
+          {product.category ? product.category.name : "No definido"}
         </Card.Text>
         <Card.Text as="p">
           <strong>Material: </strong>

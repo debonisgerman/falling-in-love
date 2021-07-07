@@ -15,7 +15,7 @@ const BannerListScreen = ({ history, match }) => {
   const dispatch = useDispatch();
 
   const bannerList = useSelector((state) => state.bannerList);
-  const { loading, error, banners, page, pages } = bannerList;
+  const { loading, error, banners } = bannerList;
 
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;

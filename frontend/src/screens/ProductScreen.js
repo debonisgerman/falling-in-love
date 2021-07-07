@@ -63,7 +63,7 @@ const ProductScreen = ({ history, match }) => {
                   <strong>Descripción:</strong> {product.description}
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <strong>Categoría:</strong> {product.category}
+                  <strong>Categoría:</strong> {product.category ? product.category.name : 'Sin Definir'}
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <strong>Material:</strong>{" "}

@@ -22,12 +22,16 @@ import AboutUsScreen from "./screens/AboutUsScreen";
 import FindUsScreen from "./screens/FindUsScreen";
 import BannerEditScreen from "./screens/BannerEditScreen";
 import BannerListScreen from "./screens/BannerListScreen";
+import CategoryEditScreen from "./screens/CategoryEditScreen";
+import CategoryListScreen from "./screens/CategoryListScreen";
 
 const App = () => {
   return (
     <Router>
       <Header />
-      <main className="py-3">
+      <main className="pb-3 w-100">
+        <Route path="/admin/category/:id/edit" component={CategoryEditScreen} />
+        <Route path="/admin/categorylist" component={CategoryListScreen} />
         <Route path="/admin/banner/:id/edit" component={BannerEditScreen} />
         <Route path="/admin/bannerlist" component={BannerListScreen} />
         <Route path="/admin/orderlist" component={OrderListScreen} />

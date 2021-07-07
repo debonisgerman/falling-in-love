@@ -2698,15 +2698,15 @@
  
  .btn-primary:hover {
      color: #fff;
-     background-color: #006f94;
-     border-color: #006687
+     background-color: #470018;
+     border-color: #310011
  }
  
  .btn-primary.focus,
  .btn-primary:focus {
      color: #fff;
-     background-color: #006f94;
-     border-color: #006687;
+     background-color: #470018;
+     border-color: #310011;
      box-shadow: 0 0 0 .2rem rgba(38, 157, 196, .5)
  }
  
@@ -2721,7 +2721,7 @@
  .btn-primary:not(:disabled):not(.disabled):active,
  .show>.btn-primary.dropdown-toggle {
      color: #fff;
-     background-color: #006687;
+     background-color: #310011;
      border-color: #005c7a
  }
  
@@ -5333,7 +5333,7 @@
      z-index: 3;
      color: #fff;
      background-color: #780028;
-     border-color: #0079a1
+     border-color: #6c0024
  }
  
  .page-item.disabled .page-link {
@@ -5423,7 +5423,7 @@
  a.badge-primary:focus,
  a.badge-primary:hover {
      color: #fff;
-     background-color: #006687
+     background-color: #310011
  }
  
  a.badge-primary.focus,
@@ -7062,7 +7062,7 @@
  a.bg-primary:hover,
  button.bg-primary:focus,
  button.bg-primary:hover {
-     background-color: #006687!important
+     background-color: #310011!important
  }
  
  .bg-secondary {
@@ -10639,7 +10639,7 @@
  .bg-primary .dropdown-menu .dropdown-item.active,
  .bg-primary .dropdown-menu .dropdown-item:focus,
  .bg-primary .dropdown-menu .dropdown-item:hover {
-     background-color: #0079a1;
+     background-color: #6c0024;
      color: #fff
  }
  
@@ -10681,7 +10681,7 @@
  }
  
  .btn-primary {
-     border-color: #0079a1
+     border-color: #6c0024
  }
  
  .btn-secondary {
@@ -10720,7 +10720,7 @@
  
  .btn-group .dropdown-toggle.btn-primary~.dropdown-menu {
      background-color: #780028;
-     border-color: #0079a1
+     border-color: #6c0024
  }
  
  .btn-group .dropdown-toggle.btn-primary~.dropdown-menu .dropdown-item {
@@ -10879,7 +10879,7 @@
  .table-hover .table-primary:hover,
  .table-hover .table-primary:hover>td,
  .table-hover .table-primary:hover>th {
-     background-color: #0079a1
+     background-color: #6c0024
  }
  
  .table-hover .table-secondary:hover,
@@ -10960,7 +10960,7 @@
  }
  
  .nav-pills .active {
-     border: 1px solid #0079a1
+     border: 1px solid #6c0024
  }
  
  .breadcrumb {

@@ -35,6 +35,13 @@ import {
   bannerListReducer,
   bannerUpdateReducer,
 } from "./reducers/bannerReducers";
+import {
+  categoryCreateReducer,
+  categoryDeleteReducer,
+  categoryDetailsReducer,
+  categoryListReducer,
+  categoryUpdateReducer,
+} from "./reducers/categoryReducers";
 
 const reducer = combineReducers({
   productList: productListReducer,
@@ -63,6 +70,11 @@ const reducer = combineReducers({
   bannerDetails: bannerDetailsReducer,
   bannerList: bannerListReducer,
   bannerUpdate: bannerUpdateReducer,
+  categoryCreate: categoryCreateReducer,
+  categoryDelete: categoryDeleteReducer,
+  categoryDetails: categoryDetailsReducer,
+  categoryList: categoryListReducer,
+  categoryUpdate: categoryUpdateReducer,
 });
 
 const cartItemsFromStorage = localStorage.getItem("cartItems")

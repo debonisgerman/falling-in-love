@@ -35,7 +35,7 @@ const FindUsScreen = ({ match }) => {
 
   return (
     <Container>
-      <h1 className="mt-5 mb-3 text-center">¿Dónde encontrarnos?</h1>
+      <h1 className="mt-5 mb-3 secondary-blue bold text-center">¿Dónde encontrarnos?</h1>
       <Row>
         <Col md={3}>
           <ListGroup variant="flush">

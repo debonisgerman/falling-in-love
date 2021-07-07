@@ -115,7 +115,7 @@ const Filter = ({ loadingFilters, errorFilters, parsed, keyword, filters }) => {
           <ListGroup>
             <ListGroup.Item>
               <Accordion>
-                <Accordion.Toggle as={Card.Header} eventKey="0">
+                <Accordion.Toggle as={Card.Header} className="pointer" eventKey="0">
                   <b>Sección</b>
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey="0">
@@ -141,7 +141,7 @@ const Filter = ({ loadingFilters, errorFilters, parsed, keyword, filters }) => {
             </ListGroup.Item>
             <ListGroup.Item>
               <Accordion>
-                <Accordion.Toggle as={Card.Header} eventKey="0">
+                <Accordion.Toggle as={Card.Header} className="pointer" eventKey="0">
                   <b>Categoría</b>
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey="0">
@@ -167,7 +167,7 @@ const Filter = ({ loadingFilters, errorFilters, parsed, keyword, filters }) => {
             </ListGroup.Item>
             <ListGroup.Item>
               <Accordion>
-                <Accordion.Toggle as={Card.Header} eventKey="0">
+                <Accordion.Toggle as={Card.Header} className="pointer" eventKey="0">
                   <b>Material</b>
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey="0">

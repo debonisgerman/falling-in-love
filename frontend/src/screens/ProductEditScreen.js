@@ -7,6 +7,8 @@ import Message from "../components/Message";
 import Loader from "../components/Loader";
 import FormContainer from "../components/FormContainer";
 import { listProductsDetails, updateProduct } from "../actions/productActions";
+import { listCategories } from "../actions/categoryActions";
+
 import {
   PRODUCT_UPDATE_RESET,
   PRODUCT_DETAILS_RESET,
@@ -29,6 +31,9 @@ const ProductEditScreen = ({ match, history }) => {
 
   const dispatch = useDispatch();
 
+  const categoryList = useSelector((state) => state.categoryList);
+  const { loadingCategories, errorCategories, categories } = categoryList;
+
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
 
@@ -40,6 +45,7 @@ const ProductEditScreen = ({ match, history }) => {
   } = productUpdate;
 
   useEffect(() => {
+    dispatch(listCategories());
     if (successUpdate) {
       dispatch({ type: PRODUCT_UPDATE_RESET });
       dispatch({ type: PRODUCT_DETAILS_RESET });
@@ -156,7 +162,7 @@ const ProductEditScreen = ({ match, history }) => {
               {uploading && <Loader />}
             </Form.Group>
 
-            <Form.Group controlId="category">
+            {/* <Form.Group controlId="category">
               <Form.Label>Categoría</Form.Label>
               <Form.Control
                 type="text"
@@ -164,6 +170,26 @@ const ProductEditScreen = ({ match, history }) => {
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
               ></Form.Control>
+            </Form.Group> */}
+            <Form.Group controlId="category">
+              <Form.Label>Categoría</Form.Label>
+              <Form.Control
+                as="select"
+                value={category}
+                onChange={e => {
+                  setCategory(e.target.value);
+                }}
+              >
+                {loadingCategories ? (
+                  <Loader />
+                ) : errorCategories ? (
+                  <Message variant="danger">{error}</Message>
+                ) : (
+                  categories && categories.filter(c => c.showInHome).slice(0, 4).map((category) => (
+                    <option key={category._id} value={category._id}>{category.name}</option>
+                  ))
+                )}
+              </Form.Control>
             </Form.Group>
 
             <Form.Group controlId="description">
@@ -293,7 +319,7 @@ const ProductEditScreen = ({ match, history }) => {
           </Form>
         )}
       </FormContainer>
-    </Container>
+    </Container >
   );
 };
 

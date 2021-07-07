@@ -112,7 +112,7 @@ const ProductListScreen = ({ history, match }) => {
                   <td>{product._id}</td>
                   <td>{product.name}</td>
                   <td>{product.section}</td>
-                  <td>{product.category}</td>
+                  <td>{product.category ? product.category.name : ''}</td>
                   <td>{product.stock}</td>
                   <td>{product.code}</td>
                   <td>

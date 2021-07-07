@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import Product from "../models/productModel.js";
+import Category from "../models/categoryModel.js";
 
 // @desc Fetch all products
 // @route GET /api/products
@@ -8,9 +9,20 @@ const getProducts = asyncHandler(async (req, res) => {
   const pageSize = 12;
   const page = Number(req.query.pageNumber) || 1;
   let regex = new RegExp(req.query.keyword, "i");
-  const category = req.query.category;
+  let category = req.query.category;
   const material = req.query.material;
   const section = req.query.section;
+
+  console.log("ACA", category);
+
+  if (category) {
+    category = await Category.findOne({ name: category });
+    console.log("ACA2", category);
+    if (category) {
+      category = category._id;
+    }
+    console.log("ACA3", category);
+  }
 
   let keyword;
   if (category || material || section) {
@@ -56,6 +68,7 @@ const getProducts = asyncHandler(async (req, res) => {
 
   const count = await Product.countDocuments({ ...keyword });
   const products = await Product.find({ ...keyword })
+    .populate('category')
     .limit(pageSize)
     .skip(pageSize * (page - 1));
   res.json({ products, page, pages: Math.ceil(count / pageSize) });
@@ -63,9 +76,20 @@ const getProducts = asyncHandler(async (req, res) => {
 
 const getFilters = asyncHandler(async (req, res) => {
   let regex = new RegExp(req.query.keyword, "i");
-  const category = req.query.category;
+  let category = req.query.category;
   const material = req.query.material;
   const section = req.query.section;
+
+  console.log("ACA", category);
+
+  if (category) {
+    category = await Category.findOne({ name: category });
+    console.log("ACA2", category);
+    if (category) {
+      category = category._id;
+    }
+    console.log("ACA3", category);
+  }
 
   let keyword;
   if (category || material || section) {
@@ -109,7 +133,7 @@ const getFilters = asyncHandler(async (req, res) => {
       : {};
   }
 
-  const products = await Product.find({ ...keyword });
+  const products = await Product.find({ ...keyword }).populate('category');
 
   const filters = {
     filters: {
@@ -119,7 +143,7 @@ const getFilters = asyncHandler(async (req, res) => {
     },
   };
   filters.filters.categories = products
-    .map((item) => item.category)
+    .map((item) => item.category.name)
     .filter((value, index, self) => value && self.indexOf(value) === index);
   filters.filters.materials = products
     .map((item) => item.material)
@@ -135,7 +159,7 @@ const getFilters = asyncHandler(async (req, res) => {
 // @route GET /api/products/:id
 // @access Public
 const getProductById = asyncHandler(async (req, res) => {
-  const product = await Product.findById(req.params.id);
+  const product = await Product.findById(req.params.id).populate('category');
 
   if (product) {
     res.json(product);
