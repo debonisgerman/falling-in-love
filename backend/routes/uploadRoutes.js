@@ -46,5 +46,17 @@ router.post("/bannerMobile", upload.single("imageMobile"), (req, res) => {
 router.post("/", upload.single("image"), (req, res) => {
   res.send(`/${req.file.path}`);
 });
+router.post("/", upload.single("image2"), (req, res) => {
+  res.send(`/${req.file.path}`);
+});
+router.post("/", upload.single("image3"), (req, res) => {
+  res.send(`/${req.file.path}`);
+});
+router.post("/", upload.single("image4"), (req, res) => {
+  res.send(`/${req.file.path}`);
+});
+router.post("/", upload.single("image5"), (req, res) => {
+  res.send(`/${req.file.path}`);
+});
 
 export default router;

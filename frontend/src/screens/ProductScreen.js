@@ -33,6 +33,13 @@ const ProductScreen = ({ history, match }) => {
     history.push(`/cart/${match.params.id}?qty=${qty}`);
   };
 
+  const setQuantity = (e) => {
+    setQty(e.target.value);
+    if (e.target.value > product.stock) {
+      setQty(product.stock);
+    }
+  }
+
   return (
     <Container>
       <Link className="btn btn-light my-3" to="/shop">
@@ -76,6 +83,9 @@ const ProductScreen = ({ history, match }) => {
                   <strong>Código:</strong> {product.code}
                 </ListGroup.Item>
                 <ListGroup.Item>
+                  <strong>Stock:</strong> {product.stock}
+                </ListGroup.Item>
+                <ListGroup.Item>
                   <Row>
                     <Col sm={6} className="text-center">
                       <a
@@ -110,8 +120,9 @@ const ProductScreen = ({ history, match }) => {
                           type="number"
                           placeholder="Cantidad"
                           value={qty}
-                          onChange={(e) => setQty(e.target.value)}
+                          onChange={(e) => setQuantity(e)}
                           min="0"
+                          max={product.stock}
                         ></Form.Control>
                       </Col>
                     </Row>
@@ -130,9 +141,6 @@ const ProductScreen = ({ history, match }) => {
                 </ListGroup>
               </Card>
             </Col>
-          </Row>
-          <Row>
-            <h2>Productos Relacionados</h2>
           </Row>
           <Row className="my-3 py-3">
             <Col md={12}>

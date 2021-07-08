@@ -45,7 +45,7 @@ const createCategory = asyncHandler(async (req, res) => {
     const category = new Category({
         name: 'categoría',
         description: 'descripción',
-        image: "/images/logo.jpg",
+        image: "/images/logo.png",
         showInHome: false,
     });
 

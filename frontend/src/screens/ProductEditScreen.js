@@ -19,6 +19,10 @@ const ProductEditScreen = ({ match, history }) => {
 
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
+  const [image2, setImage2] = useState("");
+  const [image3, setImage3] = useState("");
+  const [image4, setImage4] = useState("");
+  const [image5, setImage5] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [material, setMaterial] = useState("");
@@ -56,6 +60,10 @@ const ProductEditScreen = ({ match, history }) => {
       } else {
         setName(product.name);
         setImage(product.image);
+        setImage2(product.image2);
+        setImage3(product.image3);
+        setImage4(product.image4);
+        setImage5(product.image5);
         setDescription(product.description);
         setCategory(product.category);
         setMaterial(product.material);
@@ -83,6 +91,28 @@ const ProductEditScreen = ({ match, history }) => {
       const { data } = await axios.post("/api/upload", formData, config);
 
       setImage(data);
+      setUploading(false);
+    } catch (error) {
+      console.error(error);
+      setUploading(false);
+    }
+  };
+
+  const uploadFileHandler2 = async (e, x) => {
+    console.log(e, x);
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image2", file);
+    setUploading(true);
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      };
+      const { data } = await axios.post("/api/upload", formData, config);
+
+      setImage2(data);
       setUploading(false);
     } catch (error) {
       console.error(error);
@@ -180,6 +210,7 @@ const ProductEditScreen = ({ match, history }) => {
                   setCategory(e.target.value);
                 }}
               >
+                <option value={null}>- Elegir</option>
                 {loadingCategories ? (
                   <Loader />
                 ) : errorCategories ? (

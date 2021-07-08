@@ -84,11 +84,9 @@ const getFilters = asyncHandler(async (req, res) => {
 
   if (category) {
     category = await Category.findOne({ name: category });
-    console.log("ACA2", category);
     if (category) {
       category = category._id;
     }
-    console.log("ACA3", category);
   }
 
   let keyword;
@@ -134,6 +132,7 @@ const getFilters = asyncHandler(async (req, res) => {
   }
 
   const products = await Product.find({ ...keyword }).populate('category');
+  console.log("Los productos", products);
 
   const filters = {
     filters: {
@@ -143,7 +142,7 @@ const getFilters = asyncHandler(async (req, res) => {
     },
   };
   filters.filters.categories = products
-    .map((item) => item.category.name)
+    .map((item) => item.category && item.category.name)
     .filter((value, index, self) => value && self.indexOf(value) === index);
   filters.filters.materials = products
     .map((item) => item.material)
@@ -191,8 +190,7 @@ const createProduct = asyncHandler(async (req, res) => {
   const product = new Product({
     user: req.user._id,
     name: "Nombre",
-    image: "/images/logo.jpg",
-    category: "Categoría",
+    image: "/images/logo.png",
     description: "Descripción",
     material: "",
     section: "Sección",
@@ -213,6 +211,10 @@ const updateProduct = asyncHandler(async (req, res) => {
   const {
     name,
     image,
+    image2,
+    image3,
+    image4,
+    image5,
     category,
     description,
     material,
@@ -230,6 +232,10 @@ const updateProduct = asyncHandler(async (req, res) => {
   if (product) {
     product.name = name;
     product.image = image;
+    product.image2 = image2;
+    product.image3 = image3;
+    product.image4 = image4;
+    product.image5 = image5;
     product.category = category;
     product.description = description;
     product.material = material;

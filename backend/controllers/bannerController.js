@@ -30,9 +30,9 @@ const deleteBanner = asyncHandler(async (req, res) => {
 const createBanner = asyncHandler(async (req, res) => {
   const banner = new Banner({
     user: req.user._id,
-    imageDesktop: "/images/logo.jpg",
-    imageTablet: "/images/logo.jpg",
-    imageMobile: "/images/logo.jpg",
+    imageDesktop: "/images/logo.png",
+    imageTablet: "/images/logo.png",
+    imageMobile: "/images/logo.png",
     show: false,
   });
 
