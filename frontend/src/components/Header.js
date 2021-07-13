@@ -1,9 +1,7 @@
 import React from "react";
-import { Route } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Navbar, Nav, Container, NavDropdown, Image } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import SearchBox from "./SearchBox";
 import { logout } from "../actions/userActions";
 
 const Header = () => {
@@ -31,7 +29,6 @@ const Header = () => {
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
-            <Route render={({ history }) => <SearchBox history={history} />} />
             <Nav className="ml-auto">
               <LinkContainer to="/about-us">
                 <Nav.Link>
@@ -85,6 +82,26 @@ const Header = () => {
                   <LinkContainer to="/admin/categorylist">
                     <NavDropdown.Item>
                       <i className="far fa-file-plus"></i> Categorías
+                    </NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/admin/materiallist">
+                    <NavDropdown.Item>
+                      <i className="far fa-file-plus"></i> Materiales
+                    </NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/admin/sectionlist">
+                    <NavDropdown.Item>
+                      <i className="far fa-file-plus"></i> Secciones
+                    </NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/admin/colorlist">
+                    <NavDropdown.Item>
+                      <i className="far fa-file-plus"></i> Colores
+                    </NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/admin/sizelist">
+                    <NavDropdown.Item>
+                      <i className="far fa-file-plus"></i> Talles
                     </NavDropdown.Item>
                   </LinkContainer>
                 </NavDropdown>

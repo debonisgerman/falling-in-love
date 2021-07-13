@@ -34,11 +34,12 @@ const OrderListScreen = ({ history }) => {
         <Table striped bordered hover responsive className="table-sm">
           <thead>
             <tr>
-              <th>ID</th>
+              <th>Nro. Factura</th>
               <th>Nombre</th>
-              <th>Email</th>
+              <th>Factura</th>
+              <th>Contacto</th>
               <th>Fecha</th>
-              <th>Cotizado</th>
+              <th>Pagado</th>
               <th>Enviado</th>
               <th></th>
             </tr>
@@ -46,28 +47,36 @@ const OrderListScreen = ({ history }) => {
           <tbody>
             {orders.map((order) => (
               <tr key={order._id}>
-                <td>{order._id}</td>
+                <td>{order.billNumber}</td>
                 <td>{order.shippingAddress.name}</td>
-                <td>
+                <td>{order.shippingAddress.bill ? 'Si' : 'No'}</td>
+                <td className="flex align-items-center justify-content-around">
                   <a
                     href={`mailto:${order.shippingAddress.email}`}
                     target="_blank"
                     rel="noreferrer"
                   >
-                    {order.shippingAddress.email}
+                    <i className="fas fa-envelope"></i>
+                  </a>
+                  <a
+                    href={`tel:${order.shippingAddress.phone}`}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <i className="fas fa-phone"></i>
                   </a>
                 </td>
-                <td>{order.createdAt.substring(0, 10)}</td>
+                <td>{new Date(order.createdAt).toLocaleString()}</td>
                 <td>
                   {order.isPriced ? (
-                    order.pricedAt.substring(0, 10)
+                    new Date(order.pricedAt).toLocaleString()
                   ) : (
                     <i className="fas fa-times" style={{ color: "red" }} />
                   )}
                 </td>
                 <td>
                   {order.isDelivered ? (
-                    order.deliveredAt.substring(0, 10)
+                    new Date(order.deliveredAt).toLocaleString()
                   ) : (
                     <i className="fas fa-times" style={{ color: "red" }} />
                   )}

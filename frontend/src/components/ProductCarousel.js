@@ -28,7 +28,13 @@ const ProductCarousel = () => {
             <Col key={products[i - 1]._id}>
               <Link to={`/product/${products[i - 1]._id}`}>
                 <Image
-                  src={products[i - 1].image}
+                  src={
+                    products[i - 1].variants &&
+                      products[i - 1].variants[0] &&
+                      products[i - 1].variants[0].images.length > 0 ?
+                      products[i - 1].variants[0].images[0] :
+                      '/images/logo.png'
+                  }
                   alt={products[i - 1].name}
                   fluid="true"
                 />

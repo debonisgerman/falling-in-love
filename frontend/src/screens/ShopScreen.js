@@ -7,7 +7,7 @@ import Message from "../components/Message";
 import Loader from "../components/Loader";
 import Paginate from "../components/Paginate";
 import Meta from "../components/Meta";
-import { listProducts, listFilters } from "../actions/productActions";
+import { listShopProducts, listFilters } from "../actions/productActions";
 import Filter from "../components/Filter";
 
 const ShopScreen = ({ match, location }) => {
@@ -32,7 +32,7 @@ const ShopScreen = ({ match, location }) => {
   } = productFilter;
 
   useEffect(() => {
-    dispatch(listProducts(keyword, pageNumber));
+    dispatch(listShopProducts(keyword, pageNumber));
     dispatch(listFilters(keyword));
   }, [dispatch, keyword, pageNumber]);
 

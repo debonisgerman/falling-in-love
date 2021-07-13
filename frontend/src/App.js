@@ -24,12 +24,28 @@ import BannerEditScreen from "./screens/BannerEditScreen";
 import BannerListScreen from "./screens/BannerListScreen";
 import CategoryEditScreen from "./screens/CategoryEditScreen";
 import CategoryListScreen from "./screens/CategoryListScreen";
+import MaterialEditScreen from "./screens/MaterialEditScreen";
+import MaterialListScreen from "./screens/MaterialListScreen";
+import SectionEditScreen from "./screens/SectionEditScreen";
+import SectionListScreen from "./screens/SectionListScreen";
+import ColorEditScreen from "./screens/ColorEditScreen";
+import ColorListScreen from "./screens/ColorListScreen";
+import SizeEditScreen from "./screens/SizeEditScreen";
+import SizeListScreen from "./screens/SizeListScreen";
 
 const App = () => {
   return (
     <Router>
       <Header />
       <main className="pb-3 w-100">
+        <Route path="/admin/material/:id/edit" component={MaterialEditScreen} />
+        <Route path="/admin/materiallist" component={MaterialListScreen} />
+        <Route path="/admin/size/:id/edit" component={SizeEditScreen} />
+        <Route path="/admin/sizelist" component={SizeListScreen} />
+        <Route path="/admin/color/:id/edit" component={ColorEditScreen} />
+        <Route path="/admin/colorlist" component={ColorListScreen} />
+        <Route path="/admin/section/:id/edit" component={SectionEditScreen} />
+        <Route path="/admin/sectionlist" component={SectionListScreen} />
         <Route path="/admin/category/:id/edit" component={CategoryEditScreen} />
         <Route path="/admin/categorylist" component={CategoryListScreen} />
         <Route path="/admin/banner/:id/edit" component={BannerEditScreen} />

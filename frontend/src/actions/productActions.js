@@ -21,6 +21,9 @@ import {
   PRODUCT_FILTER_REQUEST,
   PRODUCT_FILTER_SUCCESS,
   PRODUCT_FILTER_FAIL,
+  PRODUCT_RELATED_FAIL,
+  PRODUCT_RELATED_REQUEST,
+  PRODUCT_RELATED_SUCCESS,
 } from "../constants/productConstants";
 
 export const listProducts = (
@@ -33,12 +36,44 @@ export const listProducts = (
       category: "",
       material: "",
       section: "",
+      price: "",
       ...queryString.parse(window.location.search),
     };
     dispatch({ type: PRODUCT_LIST_REQUEST });
 
     const { data } = await axios.get(
-      `/api/products?keyword=${keyword}&pageNumber=${pageNumber}&category=${parsed.category}&material=${parsed.material}&section=${parsed.section}`
+      `/api/products?keyword=${keyword}&pageNumber=${pageNumber}&category=${parsed.category}&material=${parsed.material}&section=${parsed.section}&price=${parsed.price}`
+    );
+
+    dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_LIST_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const listShopProducts = (
+  keyword = "",
+  pageNumber = "",
+  search = ""
+) => async (dispatch) => {
+  try {
+    const parsed = {
+      category: "",
+      material: "",
+      section: "",
+      price: "",
+      ...queryString.parse(window.location.search),
+    };
+    dispatch({ type: PRODUCT_LIST_REQUEST });
+
+    const { data } = await axios.get(
+      `/api/products/shop?keyword=${keyword}&pageNumber=${pageNumber}&category=${parsed.category}&material=${parsed.material}&section=${parsed.section}&price=${parsed.price}`
     );
 
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
@@ -59,12 +94,13 @@ export const listFilters = (keyword = "", search = "") => async (dispatch) => {
       category: "",
       material: "",
       section: "",
+      price: "",
       ...queryString.parse(window.location.search),
     };
     dispatch({ type: PRODUCT_FILTER_REQUEST });
 
     const { data } = await axios.get(
-      `/api/products/filters?keyword=${keyword}&category=${parsed.category}&material=${parsed.material}&section=${parsed.section}`
+      `/api/products/filters?keyword=${keyword}&category=${parsed.category}&material=${parsed.material}&section=${parsed.section}&price=${parsed.price}`
     );
 
     dispatch({ type: PRODUCT_FILTER_SUCCESS, payload: data });
@@ -192,6 +228,24 @@ export const updateProduct = (product) => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: PRODUCT_UPDATE_FAIL,
+      payload:
+        error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message,
+    });
+  }
+};
+
+export const listRelatedProducts = ({ categoryId }) => async (dispatch) => {
+  try {
+    dispatch({ type: PRODUCT_RELATED_REQUEST });
+
+    const { data } = await axios.get(`/api/products/related/${categoryId}`);
+
+    dispatch({ type: PRODUCT_RELATED_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_RELATED_FAIL,
       payload:
         error.response && error.response.data.message
           ? error.response.data.message

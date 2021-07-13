@@ -6,46 +6,43 @@ const sendMail = async (data, order, orderItems) => {
     host: "smtp.gmail.com",
     auth: {
       user: "debonis.german@gmail.com",
-      pass: "Arturo18!",
+      pass: "Alessia20!",
     },
   });
 
   await transporter.sendMail({
     from: '"Germán De Bonis" <debonis.german@gmail.com>',
     to: '"Germán De Bonis" <debonis.german@gmail.com>',
-    subject: `${data.name} pidió una cotización desde el sitio web`,
+    subject: `${data.name} hizo una compra desde el Sitio Web`,
     html: `
       <div>
         <h3>Pedido por el sitio web</h3>
         <div>Datos del cliente:</div>
         <div>
           <ul>
-            <li>Nombre: <b>${data.name}</b></li>
-            <li>Correo: <b>${data.email}</b></li>
-            <li>Dirección: <b>${data.address}</b></li>
-            <li>Provincia: <b>${data.province}</b></li>
-            <li>Teléfono: <b>${data.phone}</b></li>
-            ${
-              data.socialReason
-                ? `<li>Razón Social: <b>${data.socialReason}</b></li>`
-                : ""
-            }
-            ${data.ruc ? `<li>RUC Empresa: <b>${data.ruc}</b></li>` : ""}
+              <li><strong>Nombre: </strong> ${data.name}</li>
+              <li><strong>Email: </strong> ${data.email}</li>
+              <li><strong>Dirección:</strong> ${data.address}</li>
+              <li><strong>Provincia:</strong> ${data.province}</li>
+              <li><strong>Teléfono:</strong> ${data.phone}</li>
+              <li><strong>Factura:</strong> ${data.bill ? 'Si' : 'No'}</li>
+              <li><strong>Razón Social:</strong> ${data.socialReason ? data.socialReason : '-'}</li>
+              <li><strong>RUC:</strong> ${data.ruc ? data.ruc : '-'}</li>
           </ul>
         <div>
         <div>
           <div>Datos del pedido:</div>
           <ul>
-                <li>Nro. Orden: ${order}</li>
+                <li>Nro. Orden: ${order.billNumber}</li>
             ${orderItems.map((item) => {
-              return `
+      return `
                 <li>Producto: ${item.name}</li>
-                <li>Descripción: ${item.product.description}</li>
-                <li>Código: ${item.product.code}</li>
+                <li>Color: ${item.colorName}</li>
+                <li>Talle: ${item.sizeName}</li>
                 <li>Cantidad: ${item.qty}</li>
                 <hr />
               `;
-            })}
+    })}
           </ul>
         </div>
       </div>
@@ -55,43 +52,40 @@ const sendMail = async (data, order, orderItems) => {
   await transporter.sendMail({
     from: '"Germán De Bonis" <debonis.german@gmail.com>',
     to: "'" + data.name + "' " + data.email,
-    subject: `${data.name} gracias por pedir una cotización`,
+    subject: `${data.name} gracias por pedir en Falling In love`,
     html: `
       <div>
         <h3>Pedido por el sitio web</h3>
-        <div>Tus datos:</div>
+        <div>Datos del cliente:</div>
         <div>
           <ul>
-            <li>Nombre: <b>${data.name}</b></li>
-            <li>Correo: <b>${data.email}</b></li>
-            <li>Dirección: <b>${data.address}</b></li>
-            <li>Provincia: <b>${data.province}</b></li>
-            <li>Teléfono: <b>${data.phone}</b></li>
-            ${
-              data.socialReason
-                ? `<li>Razón Social: <b>${data.socialReason}</b></li>`
-                : ""
-            }
-            ${data.ruc ? `<li>RUC Empresa: <b>${data.ruc}</b></li>` : ""}
+              <li><strong>Nombre: </strong> ${data.name}</li>
+              <li><strong>Email: </strong> ${data.email}</li>
+              <li><strong>Dirección:</strong> ${data.address}</li>
+              <li><strong>Provincia:</strong> ${data.province}</li>
+              <li><strong>Teléfono:</strong> ${data.phone}</li>
+              <li><strong>Factura:</strong> ${data.bill ? 'Si' : 'No'}</li>
+              <li><strong>Razón Social:</strong> ${data.socialReason ? data.socialReason : '-'}</li>
+              <li><strong>RUC:</strong> ${data.ruc ? data.ruc : '-'}</li>
           </ul>
-        </div>
+        <div>
         <div>
           <div>Datos del pedido:</div>
           <ul>
-                <li>Nro. Orden: ${order}</li>
+                <li>Nro. Orden: ${order.billNumber}</li>
             ${orderItems.map((item) => {
-              return `
+      return `
                 <li>Producto: ${item.name}</li>
-                <li>Descripción: ${item.product.description}</li>
-                <li>Código: ${item.product.code}</li>
+                <li>Color: ${item.colorName}</li>
+                <li>Talle: ${item.sizeName}</li>
                 <li>Cantidad: ${item.qty}</li>
                 <hr />
               `;
-            })}
+    })}
           </ul>
         </div>
         <div>
-            Cualquier duda contactarse por whatsapp al <a href='https://wa.me/+51977776527' target='_blank'>977776527</a>
+          <a href="https://falling-in-love.herokuapp.com/order/${order._id}" target="_blank">Aquí</a> puedes seguir tu pedido.
         </div>
       </div>
     `,

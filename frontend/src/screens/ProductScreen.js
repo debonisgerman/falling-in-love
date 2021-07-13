@@ -4,14 +4,16 @@ import { Link } from "react-router-dom";
 import {
   Row,
   Col,
-  Image,
   ListGroup,
   Card,
   Button,
   Form,
-  Container
+  Container,
+  Image,
+  InputGroup,
+  FormControl,
 } from "react-bootstrap";
-import ProductCarousel from "../components/ProductCarousel";
+import ProductRelatedCarousel from "../components/ProductRelatedCarousel";
 import { listProductsDetails } from "../actions/productActions";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
@@ -19,6 +21,12 @@ import Meta from "../components/Meta";
 
 const ProductScreen = ({ history, match }) => {
   const [qty, setQty] = useState(1);
+  const [backgroundImage, setBackgroundImage] = useState("white");
+  const [backgroundPosition, setBackgroundPosition] = useState('0% 0%');
+  const [variant, setVariant] = useState({});
+  const [productRendered, setProductRendered] = useState(false);
+  const [variantSize, setVariantSize] = useState(null);
+  const [variantSizeStock, setVariantSizeStock] = useState(0);
 
   const dispatch = useDispatch();
 
@@ -26,17 +34,58 @@ const ProductScreen = ({ history, match }) => {
   const { loading, error, product } = productDetails;
 
   useEffect(() => {
-    dispatch(listProductsDetails(match.params.id));
-  }, [dispatch, match]);
+    if (!productRendered) {
+      dispatch(listProductsDetails(match.params.id));
+    }
+    if (product && product.name && !productRendered) {
+      if (product.variants && product.variants.length > 0) {
+        setVariant(product.variants[0]);
+        setBackgroundImage(product.variants[0].images[0].split("\\").join("//"));
+      } else {
+        setBackgroundImage('/images/logo.png');
+      }
+      setProductRendered(true);
+    }
+  }, [dispatch, match, product, productRendered]);
 
   const addToCartHandler = () => {
-    history.push(`/cart/${match.params.id}?qty=${qty}`);
+    history.push(`/cart/${match.params.id}?qty=${qty}&size=${variantSize}&color=${variant.color._id}`);
   };
 
   const setQuantity = (e) => {
     setQty(e.target.value);
     if (e.target.value > product.stock) {
       setQty(product.stock);
+    }
+  }
+
+  const handleMouseMove = e => {
+    const { left, top, width, height } = e.target.getBoundingClientRect()
+    const x = (e.pageX - left) / width * 100
+    const y = (e.pageY - top) / height * 100
+    setBackgroundPosition(`${x}% ${y}%`);
+  }
+
+  const handleImageClick = e => {
+    setBackgroundImage(e.target.src);
+  }
+
+  const handleVariantChange = e => {
+    setVariant(product.variants.find(p => p.color._id == e.target.value));
+    setBackgroundImage(product.variants.find(p => p.color._id == e.target.value).images[0].split("\\").join("//"));
+    setVariantSize(0);
+    console.log(variantSize);
+  }
+
+  const handleCartDisabled = e => {
+    return !variantSize || !variant.hasOwnProperty('sizes') || (variant.hasOwnProperty('sizes') && variant.sizes.length === 0);
+  }
+
+  const handleSizeChange = e => {
+    setVariantSize(e.target.value);
+    setVariantSizeStock(variant.sizes.find(x => x.size._id == e.target.value).stock);
+    if (+qty > +variant.sizes.find(x => x.size._id == e.target.value).stock) {
+      setQty(variant.sizes.find(x => x.size._id == e.target.value).stock);
     }
   }
 
@@ -53,37 +102,86 @@ const ProductScreen = ({ history, match }) => {
         <>
           <Meta title={product.name} />
           <Row>
-            <Col md={6}>
-              <Image
-                src={product.image}
-                alt={product.name}
-                fluid="true"
-                className="w100p"
-              />
+            <Col md={4}>
+              <Row>
+                <figure
+                  className="product-figure"
+                  onMouseMove={handleMouseMove}
+                  style={{ backgroundPosition, backgroundImage: `url(${backgroundImage})`, backgroundRepeat: 'no-repeat' }}
+                >
+                  <img src={backgroundImage} alt={product.name} />
+                </figure>
+              </Row>
+              <Row>
+                {variant && variant.images && variant.images.map((image, i) => (
+                  <Col>
+                    <Image
+                      src={image}
+                      alt={i}
+                      key={i}
+                      fluid="true"
+                      className="w100p"
+                      onClick={handleImageClick}
+                    />
+                  </Col>
+                ))}
+              </Row>
             </Col>
-            <Col md={3}>
+            <Col md={5}>
               <ListGroup variant="flush">
                 <ListGroup.Item>
-                  <h3>{product.name}</h3>
+                  <h3>{product.name}{product.price ? ` - S./ ${product.price}` : ''}</h3>
+                </ListGroup.Item>
+                <ListGroup.Item>
+                  <strong>Color:</strong>
+                  {variant && variant.color ? (
+                    <InputGroup>
+                      <FormControl
+                        as="select"
+                        value={variant.color._id}
+                        onChange={handleVariantChange}
+                      >
+                        {
+                          product.variants && product.variants.map((c) => (
+                            <option key={c.color._id} value={c.color._id}>{c.color.name}</option>
+                          ))
+                        }
+                      </FormControl>
+                    </InputGroup>
+                  ) : <></>}
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <strong>Descripción:</strong> {product.description}
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <strong>Categoría:</strong> {product.category ? product.category.name : 'Sin Definir'}
+                  <strong>Categoría:</strong> {product.category ? product.category.name : 'No definido'}
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <strong>Material:</strong>{" "}
-                  {product.material ? product.material : "Sin Definir"}
+                  {product.material ? product.material.reduce((accumulator, currentValue) => accumulator = accumulator + ", " + currentValue.name, "").slice(2) : "No definido"}
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <strong>Sección:</strong> {product.section}
+                  <strong>Sección:</strong>{" "}
+                  {product.section ? product.section.reduce((accumulator, currentValue) => accumulator = accumulator + ", " + currentValue.name, "").slice(2) : "No definido"}
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <strong>Código:</strong> {product.code}
-                </ListGroup.Item>
-                <ListGroup.Item>
-                  <strong>Stock:</strong> {product.stock}
+                  <strong>Talles (Stock):</strong>
+                  {variant && variant.sizes ? (
+                    <InputGroup>
+                      <FormControl
+                        as="select"
+                        value={variantSize}
+                        onChange={handleSizeChange}
+                      >
+                        <option value={null}>- Elegir</option>
+                        {
+                          variant && variant.sizes.map((c) => (
+                            <option key={c.size._id} value={c.size._id}>{c.size.name} ({c.stock})</option>
+                          ))
+                        }
+                      </FormControl>
+                    </InputGroup>
+                  ) : <></>}
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Row>
@@ -113,7 +211,7 @@ const ProductScreen = ({ history, match }) => {
               <Card>
                 <ListGroup variant="flush">
                   <ListGroup.Item>
-                    <Row>
+                    <Row className="align-items-center">
                       <Col>Cantidad</Col>
                       <Col>
                         <Form.Control
@@ -122,7 +220,7 @@ const ProductScreen = ({ history, match }) => {
                           value={qty}
                           onChange={(e) => setQuantity(e)}
                           min="0"
-                          max={product.stock}
+                          max={variantSizeStock}
                         ></Form.Control>
                       </Col>
                     </Row>
@@ -133,7 +231,7 @@ const ProductScreen = ({ history, match }) => {
                       onClick={addToCartHandler}
                       className="btn-block"
                       type="button"
-                      disabled={!product.countInStock === 0}
+                      disabled={handleCartDisabled()}
                     >
                       Agregar al Carrito
                     </Button>
@@ -144,7 +242,14 @@ const ProductScreen = ({ history, match }) => {
           </Row>
           <Row className="my-3 py-3">
             <Col md={12}>
-              <ProductCarousel />
+              {
+                product.related ? (
+                  <ProductRelatedCarousel categoryId={product.related._id} />
+                ) : (
+                  <></>
+                )
+              }
+
             </Col>
           </Row>
         </>

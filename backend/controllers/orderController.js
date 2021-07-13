@@ -2,6 +2,7 @@ import asyncHandler from "express-async-handler";
 import mongoose from "mongoose";
 import sendMail from "../utils/mailer.js";
 import Order from "../models/orderModel.js";
+import Product from "../models/productModel.js";
 
 // @desc Create new Order
 // @route POST /api/orders
@@ -23,7 +24,20 @@ const addOrderItems = asyncHandler(async (req, res) => {
     );
     createdOrder = await createdOrder.populate("orderItems.product");
 
-    sendMail(shippingAddress, newOrder._id, newOrder.orderItems);
+    for (let i in orderItems) {
+      console.log(orderItems[i]);
+      const product = await Product.findById(orderItems[i].product);
+      const productVariant = product.variants.find(v => v.color == orderItems[i].color);
+      if (productVariant) {
+        const variantSize = productVariant.sizes.find(x => x.size == orderItems[i].size);
+        if (variantSize) {
+          variantSize.stock = variantSize.stock - orderItems[i].qty;
+        }
+      }
+      await product.save();
+    }
+
+    sendMail(shippingAddress, newOrder, newOrder.orderItems);
 
     res.status(201).json(createdOrder);
   }

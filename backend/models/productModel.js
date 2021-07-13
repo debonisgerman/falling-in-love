@@ -15,19 +15,11 @@ const productSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    image2: {
-      type: String,
-    },
-    image3: {
-      type: String,
-    },
-    image4: {
-      type: String,
-    },
-    image5: {
-      type: String,
-    },
     category: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Category",
+    },
+    related: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
     },
@@ -35,13 +27,14 @@ const productSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    material: {
-      type: String,
-    },
-    section: {
-      type: String,
-      required: true,
-    },
+    material: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Material",
+    }],
+    section: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Section",
+    }],
     code: {
       type: String,
       required: true,
@@ -52,13 +45,35 @@ const productSchema = mongoose.Schema(
     },
     size: {
       type: Array,
-      required: false,
     },
     stock: {
       type: Number,
-      required: false,
       default: 0
     },
+    price: {
+      type: Number,
+    },
+    published: {
+      type: Boolean,
+      default: false,
+    },
+    variants: [{
+      color: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Color",
+      },
+      images: [String],
+      sizes: [{
+        size: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Size"
+        },
+        stock: {
+          type: Number,
+          default: 0,
+        }
+      }]
+    }]
   },
   {
     timestamps: true,

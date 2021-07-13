@@ -96,10 +96,12 @@ const ProductListScreen = ({ history, match }) => {
                 <th style={{ width: "10%" }}>Imagen</th>
                 <th>ID</th>
                 <th>Nombre</th>
-                <th>Sección</th>
+                <th>Precio</th>
+                <th>Material</th>
                 <th>Categoría</th>
+                <th>Sección</th>
                 <th>Stock</th>
-                <th>Código</th>
+                <th>Publicado</th>
                 <th></th>
               </tr>
             </thead>
@@ -107,14 +109,23 @@ const ProductListScreen = ({ history, match }) => {
               {products.map((product) => (
                 <tr key={product._id}>
                   <td style={{ width: "10%" }}>
-                    <Image src={product.image} alt={product.name} fluid="true" />
+                    <Image src={
+                      product.variants &&
+                        product.variants.length > 0 &&
+                        product.variants[0].images &&
+                        product.variants[0].images.length > 0 ?
+                        product.variants[0].images[0] :
+                        '/images/logo.png'
+                    } alt={product.name} fluid="true" />
                   </td>
                   <td>{product._id}</td>
                   <td>{product.name}</td>
-                  <td>{product.section}</td>
+                  <td>{product.price ? `S./ ${product.price}` : ''}</td>
+                  <td>{product.material ? product.material.reduce((accumulator, currentValue) => accumulator = accumulator + ", " + currentValue.name, "").slice(2) : ''}</td>
                   <td>{product.category ? product.category.name : ''}</td>
+                  <td>{product.section ? product.section.reduce((accumulator, currentValue) => accumulator = accumulator + ", " + currentValue.name, "").slice(2) : ''}</td>
                   <td>{product.stock}</td>
-                  <td>{product.code}</td>
+                  <td>{product.published ? 'Si' : 'No'}</td>
                   <td>
                     <LinkContainer to={`/admin/product/${product._id}/edit`}>
                       <Button variant="light" className="btn-sm">

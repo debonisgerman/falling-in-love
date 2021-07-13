@@ -1,13 +1,18 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Form, Button, Container } from "react-bootstrap";
+import { Form, Button, Container, Col, Row } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import FormContainer from "../components/FormContainer";
+import VariantForm from "../components/VariantForm";
 import { listProductsDetails, updateProduct } from "../actions/productActions";
 import { listCategories } from "../actions/categoryActions";
+import { listMaterials } from "../actions/materialActions";
+import { listSections } from "../actions/sectionActions";
+import { listColors } from "../actions/colorActions";
+import { listSizes } from "../actions/sizeActions";
 
 import {
   PRODUCT_UPDATE_RESET,
@@ -18,25 +23,34 @@ const ProductEditScreen = ({ match, history }) => {
   const productId = match.params.id;
 
   const [name, setName] = useState("");
-  const [image, setImage] = useState("");
-  const [image2, setImage2] = useState("");
-  const [image3, setImage3] = useState("");
-  const [image4, setImage4] = useState("");
-  const [image5, setImage5] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
-  const [material, setMaterial] = useState("");
-  const [section, setSection] = useState("");
+  const [related, setRelated] = useState("");
+  const [material, setMaterial] = useState([]);
+  const [section, setSection] = useState([]);
   const [code, setCode] = useState("");
-  const [uploading, setUploading] = useState(false);
   const [leading, setLeading] = useState(false);
-  const [size, setSize] = useState([]);
-  const [stock, setStock] = useState(0);
+  const [published, setPublished] = useState(false);
+  const [price, setPrice] = useState(0);
+  const [variants, setVariants] = useState([]);
+  const [colorSelect, setColorSelect] = useState("");
 
   const dispatch = useDispatch();
 
   const categoryList = useSelector((state) => state.categoryList);
   const { loadingCategories, errorCategories, categories } = categoryList;
+
+  const materialList = useSelector((state) => state.materialList);
+  const { loadingMaterials, errorMaterials, materials } = materialList;
+
+  const sectionList = useSelector((state) => state.sectionList);
+  const { loadingSections, errorSections, sections } = sectionList;
+
+  const colorList = useSelector((state) => state.colorList);
+  const { loadingColors, errorColors, colors } = colorList;
+
+  const sizeList = useSelector((state) => state.sizeList);
+  const { loadingSizes, errorSizes, sizes } = sizeList;
 
   const productDetails = useSelector((state) => state.productDetails);
   const { loading, error, product } = productDetails;
@@ -50,7 +64,12 @@ const ProductEditScreen = ({ match, history }) => {
 
   useEffect(() => {
     dispatch(listCategories());
+    dispatch(listMaterials());
+    dispatch(listSections());
+    dispatch(listColors());
+    dispatch(listSizes());
     if (successUpdate) {
+      dispatch(listCategories());
       dispatch({ type: PRODUCT_UPDATE_RESET });
       dispatch({ type: PRODUCT_DETAILS_RESET });
       history.push("/admin/productlist");
@@ -59,66 +78,47 @@ const ProductEditScreen = ({ match, history }) => {
         dispatch(listProductsDetails(productId));
       } else {
         setName(product.name);
-        setImage(product.image);
-        setImage2(product.image2);
-        setImage3(product.image3);
-        setImage4(product.image4);
-        setImage5(product.image5);
         setDescription(product.description);
-        setCategory(product.category);
-        setMaterial(product.material);
-        setSection(product.section);
+        setCategory(product.category ? product.category._id : "");
+        setRelated(product.related ? product.related._id : "");
+        setMaterial(product.material ? product.material.reduce((accumulator, currentValue) => {
+          accumulator = accumulator || [];
+          accumulator.push(currentValue._id);
+          return accumulator
+        }, []) : []);
+        setSection(product.section ? product.section.reduce((accumulator, currentValue) => {
+          accumulator = accumulator || [];
+          accumulator.push(currentValue._id);
+          return accumulator
+        }, []) : []);
         setCode(product.code);
         setLeading(product.leading);
-        setSize(product.size ? product.size : []);
-        setStock(product.stock ? product.stock : 0);
+        setPrice(product.price ? product.price : 0);
+        setPublished(product.published ? product.published : false);
+        // ver como setear los valores, color tiene que ser el id y mismo los sizes
+        if (product.variants) {
+          let aux = [];
+          for (let i in product.variants) {
+            const imagesAux = product.variants[i].images;
+            const colorAux = product.variants[i].color._id;
+            let sizesAux = [];
+            for (let j in product.variants[i].sizes) {
+              sizesAux.push({
+                size: product.variants[i].sizes[j].size._id,
+                stock: product.variants[i].sizes[j].stock,
+              })
+            }
+            aux.push({
+              images: imagesAux,
+              color: colorAux,
+              sizes: sizesAux,
+            })
+          }
+          setVariants(aux);
+        }
       }
     }
   }, [product, dispatch, productId, history, successUpdate]);
-
-  const uploadFileHandler = async (e, x) => {
-    console.log(e, x);
-    const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append("image", file);
-    setUploading(true);
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
-      const { data } = await axios.post("/api/upload", formData, config);
-
-      setImage(data);
-      setUploading(false);
-    } catch (error) {
-      console.error(error);
-      setUploading(false);
-    }
-  };
-
-  const uploadFileHandler2 = async (e, x) => {
-    console.log(e, x);
-    const file = e.target.files[0];
-    const formData = new FormData();
-    formData.append("image2", file);
-    setUploading(true);
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      };
-      const { data } = await axios.post("/api/upload", formData, config);
-
-      setImage2(data);
-      setUploading(false);
-    } catch (error) {
-      console.error(error);
-      setUploading(false);
-    }
-  };
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -126,29 +126,78 @@ const ProductEditScreen = ({ match, history }) => {
       updateProduct({
         _id: productId,
         name,
-        image,
         description,
         category,
         material,
         section,
         code,
         leading,
-        size,
-        stock
+        published,
+        price,
+        variants,
+        related,
       })
     );
   };
 
-  const onCheckChange = (e) => {
-    let newSizes = [...size];
+  const onSectionChange = (e) => {
+    let newSections = [...section];
     if (e.target.checked) {
-      newSizes.push(e.target.id.split("talle-")[1]);
+      newSections.push(e.target.id);
     } else {
-      const value = e.target.id.split("talle-")[1];
-      newSizes = newSizes.filter(x => x !== value);
+      const value = e.target.id;
+      newSections = newSections.filter(x => x !== value);
     }
-    setSize(newSizes);
+    setSection(newSections);
   }
+
+  const onMaterialChange = (e) => {
+    let newMaterials = [...material];
+    if (e.target.checked) {
+      newMaterials.push(e.target.id);
+    } else {
+      const value = e.target.id;
+      newMaterials = newMaterials.filter(x => x !== value);
+    }
+    setMaterial(newMaterials);
+  }
+
+  const handleVariants = (e) => {
+    let newVariants = [...variants];
+    newVariants.push({ color: colorSelect, images: [], sizes: [] });
+    setVariants(newVariants);
+    setColorSelect("");
+  }
+
+  const handleVariantsUpdate = (sizesV, images, color) => {
+    console.log(sizesV, images, color);
+    if (color) {
+      let newVariants = [...variants];
+      const otherVariants = newVariants.filter(v => v.color !== color._id);
+      newVariants = newVariants.filter(v => v.color === color._id);
+      if (newVariants.length > 0) {
+        newVariants = newVariants[0];
+
+        let imgs = [];
+        Object.keys(images).forEach(i => imgs.push(images[i]));
+        newVariants.images = imgs;
+
+        let newSizes = [];
+        for (let s in sizesV) {
+          let foundSize = sizes.find(x => x.name === s);
+          newSizes.push({
+            size: foundSize._id,
+            stock: sizesV[s],
+          });
+        }
+        newVariants.sizes = newSizes;
+        setVariants([...otherVariants, ...[newVariants]]);
+      } else {
+        console.log("Something went wrong ", newVariants);
+      }
+    }
+  }
+
 
   return (
     <Container>
@@ -175,32 +224,18 @@ const ProductEditScreen = ({ match, history }) => {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId="image">
-              <Form.Label>Imagen</Form.Label>
+            <Form.Group controlId="price">
+              <Form.Label>Precio</Form.Label>
               <Form.Control
-                type="text"
-                placeholder="Ingrese Url de la imagen"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
+                type="number"
+                placeholder="Precio"
+                value={price}
+                min={0.00}
+                step={0.01}
+                onChange={(e) => setPrice(e.target.value)}
               ></Form.Control>
-              <Form.File
-                id="image-file"
-                label="Elegir Imagen"
-                custom
-                onChange={(e) => uploadFileHandler(e, "test")}
-              ></Form.File>
-              {uploading && <Loader />}
             </Form.Group>
 
-            {/* <Form.Group controlId="category">
-              <Form.Label>Categoría</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Categoría"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-              ></Form.Control>
-            </Form.Group> */}
             <Form.Group controlId="category">
               <Form.Label>Categoría</Form.Label>
               <Form.Control
@@ -216,8 +251,30 @@ const ProductEditScreen = ({ match, history }) => {
                 ) : errorCategories ? (
                   <Message variant="danger">{error}</Message>
                 ) : (
-                  categories && categories.filter(c => c.showInHome).slice(0, 4).map((category) => (
-                    <option key={category._id} value={category._id}>{category.name}</option>
+                  categories && categories.map((c) => (
+                    <option key={c._id} value={c._id}>{c.name}</option>
+                  ))
+                )}
+              </Form.Control>
+            </Form.Group>
+
+            <Form.Group controlId="related">
+              <Form.Label>Relacionado</Form.Label>
+              <Form.Control
+                as="select"
+                value={related}
+                onChange={e => {
+                  setRelated(e.target.value);
+                }}
+              >
+                <option value={null}>- Elegir</option>
+                {loadingCategories ? (
+                  <Loader />
+                ) : errorCategories ? (
+                  <Message variant="danger">{error}</Message>
+                ) : (
+                  categories && categories.map((c) => (
+                    <option key={c._id} value={c._id}>{c.name}</option>
                   ))
                 )}
               </Form.Control>
@@ -235,94 +292,54 @@ const ProductEditScreen = ({ match, history }) => {
 
             <Form.Group controlId="material">
               <Form.Label>Material</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Material"
-                value={material}
-                onChange={(e) => setMaterial(e.target.value)}
-              ></Form.Control>
+              <div key={`material`} className="mb-3">
+                {loadingMaterials ? (
+                  <Loader />
+                ) : errorMaterials ? (
+                  <Message variant="danger">{error}</Message>
+                ) : (
+                  materials && materials.map((m) => (
+                    <Form.Check
+                      key={m._id}
+                      checked={material.indexOf(m._id) !== -1}
+                      onChange={onMaterialChange}
+                      custom
+                      inline
+                      value={m._id}
+                      name={m.name}
+                      label={m.name}
+                      type='checkbox'
+                      id={m._id}
+                    />
+                  ))
+                )}
+              </div>
             </Form.Group>
 
             <Form.Group controlId="section">
               <Form.Label>Sección</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Sección"
-                value={section}
-                onChange={(e) => setSection(e.target.value)}
-              ></Form.Control>
-            </Form.Group>
-
-            <Form.Group controlId="size">
-              <Form.Label>Talle</Form.Label>
-              <div key={`talle`} className="mb-3">
-                <Form.Check
-                  checked={size && size.indexOf('XS') !== -1}
-                  onChange={onCheckChange}
-                  custom
-                  inline
-                  value="XS"
-                  name="XS"
-                  label="XS"
-                  type='checkbox'
-                  id="talle-XS"
-                />
-                <Form.Check
-                  checked={size && size.indexOf('S') !== -1}
-                  onChange={onCheckChange}
-                  custom
-                  inline
-                  value="S"
-                  name="S"
-                  label="S"
-                  type='checkbox'
-                  id="talle-S"
-                />
-                <Form.Check
-                  checked={size && size.indexOf('M') !== -1}
-                  onChange={onCheckChange}
-                  custom
-                  inline
-                  value="M"
-                  name="M"
-                  label="M"
-                  type='checkbox'
-                  id="talle-M"
-                />
-                <Form.Check
-                  checked={size && size.indexOf('L') !== -1}
-                  onChange={onCheckChange}
-                  custom
-                  inline
-                  value="L"
-                  name="L"
-                  label="L"
-                  type='checkbox'
-                  id="talle-L"
-                />
-                <Form.Check
-                  checked={size && size.indexOf('XL') !== -1}
-                  onChange={onCheckChange}
-                  custom
-                  inline
-                  value="XL"
-                  name="XL"
-                  label="XL"
-                  type='checkbox'
-                  id="talle-XL"
-                />
+              <div key={`section`} className="mb-3">
+                {loadingSections ? (
+                  <Loader />
+                ) : errorSections ? (
+                  <Message variant="danger">{error}</Message>
+                ) : (
+                  sections && sections.map((s) => (
+                    <Form.Check
+                      key={s._id}
+                      checked={section.indexOf(s._id) !== -1}
+                      onChange={onSectionChange}
+                      custom
+                      inline
+                      value={s._id}
+                      name={s.name}
+                      label={s.name}
+                      type='checkbox'
+                      id={s._id}
+                    />
+                  ))
+                )}
               </div>
-            </Form.Group>
-
-            <Form.Group controlId="stock">
-              <Form.Label>Stock</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Stock"
-                value={stock}
-                min={0}
-                onChange={(e) => setStock(e.target.value)}
-              ></Form.Control>
             </Form.Group>
 
             <Form.Group controlId="code">
@@ -335,12 +352,81 @@ const ProductEditScreen = ({ match, history }) => {
               ></Form.Control>
             </Form.Group>
 
+            <Form.Group controlId="colorSelect">
+              <Form.Label>Color</Form.Label>
+              <Row>
+                <Col md={10}>
+                  <Form.Control
+                    as="select"
+                    value={colorSelect}
+                    onChange={e => {
+                      setColorSelect(e.target.value);
+                    }}
+                  >
+                    <option value={null}>- Elegir</option>
+                    {loadingColors ? (
+                      <Loader />
+                    ) : errorColors ? (
+                      <Message variant="danger">{error}</Message>
+                    ) : (
+                      colors && colors.filter(
+                        function (e) {
+                          console.log(this); return this && this.map(function (x) { return x.color; }).indexOf(e._id) < 0;
+                        },
+                        variants
+                      ).map((c) => (
+                        <option
+                          key={c._id}
+                          value={c._id}
+                          id={c._id}
+                        >
+                          {c.name}
+                        </option>
+                      ))
+                    )}
+                  </Form.Control>
+                </Col>
+                <Col md={2}>
+                  <Button
+                    disabled={variants && variants.length >= colors.length || !colorSelect}
+                    onClick={handleVariants}
+                    variant="primary"
+                  >
+                    Agregar
+                  </Button>
+                </Col>
+              </Row>
+            </Form.Group>
+            {
+              colors.length > 0 && sizes.length > 0 && variants.length > 0 && variants.map((v, i) => (
+                <>
+                  <VariantForm
+                    color={v.color}
+                    colors={colors}
+                    sizesArray={sizes}
+                    key={i}
+                    variant={v}
+                    updateVariants={handleVariantsUpdate}
+                  />
+                </>
+              ))
+            }
+
             <Form.Group controlId="leading">
               <Form.Check
                 type="checkbox"
                 label="Producto Destacado"
                 checked={leading}
                 onChange={(e) => setLeading(e.target.checked)}
+              ></Form.Check>
+            </Form.Group>
+
+            <Form.Group controlId="published">
+              <Form.Check
+                type="checkbox"
+                label="Publicar"
+                checked={published}
+                onChange={(e) => setPublished(e.target.checked)}
               ></Form.Check>
             </Form.Group>
 

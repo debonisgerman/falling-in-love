@@ -19,8 +19,16 @@ import { ORDER_CREATE_RESET } from "../constants/orderConstants";
 const CartScreen = ({ match, location, history }) => {
   const productId = match.params.id;
 
-  const qty = location.search ? Number(location.search.split("=")[1]) : 1;
+  let qty = 0;
+  let size = "";
+  let color = "";
 
+  const search = location.search ? location.search.split("&") : null;
+  if (search) {
+    qty = search.find(x => x.indexOf("qty") !== -1).split("=")[1];
+    size = search.find(x => x.indexOf("size") !== -1).split("=")[1];
+    color = search.find(x => x.indexOf("color") !== -1).split("=")[1];
+  }
   const dispatch = useDispatch();
 
   const cart = useSelector((state) => state.cart);
@@ -28,9 +36,9 @@ const CartScreen = ({ match, location, history }) => {
 
   useEffect(() => {
     if (productId) {
-      dispatch(addToCart(productId, qty));
+      dispatch(addToCart(productId, qty, size, color));
     }
-  }, [dispatch, productId, qty]);
+  }, [dispatch, productId, qty, size, color]);
 
   const removeFromCartHandler = (id) => {
     dispatch(removeFromCart(id));
@@ -66,6 +74,7 @@ const CartScreen = ({ match, location, history }) => {
                     </Col>
                     <Col md={5}>
                       <Link to={`/product/${item.product}`}>{item.name}</Link>
+                      <div>S./ {item.price}</div>
                     </Col>
                     <Col md={2}>
                       <Form.Control
@@ -74,7 +83,7 @@ const CartScreen = ({ match, location, history }) => {
                         value={item.qty}
                         onChange={(e) =>
                           dispatch(
-                            addToCart(item.product, Number(e.target.value))
+                            addToCart(item.product, Number(e.target.value), size, color)
                           )
                         }
                         min="0"
@@ -95,7 +104,6 @@ const CartScreen = ({ match, location, history }) => {
             </ListGroup>
           )}
           <br />
-          <h4>También podrías necesitar</h4>
           <ProductCarousel />
         </Col>
         <Col md={4}>
@@ -103,11 +111,7 @@ const CartScreen = ({ match, location, history }) => {
             <ListGroup variant="flush">
               <ListGroup.Item>
                 <h2>
-                  Subtotal ({cartItems.reduce((acc, item) => acc + item.qty, 0)}
-                  )
-                  {cartItems.reduce((acc, item) => acc + item.qty, 0) > 1
-                    ? " items"
-                    : " item"}
+                  Subtotal (S./ {cartItems.reduce((acc, item) => acc + (item.qty * item.price), 0)})
                 </h2>
               </ListGroup.Item>
               <ListGroup.Item>
@@ -117,7 +121,7 @@ const CartScreen = ({ match, location, history }) => {
                   disabled={cartItems.length === 0}
                   onClick={checkoutHandler}
                 >
-                  Cotizar
+                  Pedir
                 </Button>
               </ListGroup.Item>
             </ListGroup>

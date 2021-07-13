@@ -280,3 +280,36 @@ footer a:hover {
 .pointer {
   cursor: pointer;
 }
+
+
+.product-figure:hover img {
+  opacity: 0;
+}
+
+.product-figure img {
+  display: block;
+  width: 100%;
+  pointer-events: none;
+  margin: 0 auto;
+}
+
+.no-stock-bow {
+  position: absolute;
+    transform: rotate(320deg);
+    text-transform: uppercase;
+    background: #b9535c;
+    color: #fff;
+    width: 30%;
+    margin: 0 auto;
+    left: -4.5rem;
+    right: 0;
+    top: 2rem;
+    border-radius: 3px;
+    font-weight: bold;
+    text-align: center;
+    opacity: 0.8;
+}
+
+.flex {
+  display: flex;
+}

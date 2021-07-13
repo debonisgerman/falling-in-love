@@ -1,10 +1,26 @@
-import React from "react";
-import { Accordion, ListGroup, Card } from "react-bootstrap";
+import React, { useState, useEffect } from "react";
+import { Accordion, ListGroup, Card, Row, Col, InputGroup, Button, FormControl } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 
 const Filter = ({ loadingFilters, errorFilters, parsed, keyword, filters }) => {
+  const [fromPrice, setFromPrice] = useState(null);
+  const [toPrice, setToPrice] = useState(null);
+
+  useEffect(() => {
+    if (!loadingFilters) {
+      if (filters && filters.price) {
+        if (filters.price.indexOf("to") !== -1) {
+          setToPrice(filters.price.split("to")[1]);
+          setFromPrice(filters.price.split("to")[0]);
+        } else {
+          setFromPrice(filters.price);
+        }
+      }
+    }
+  }, [loadingFilters]);
+
   const filterClicked = (filter, filterValue) => {
     const hasFilter = window.location.href.indexOf("?") > -1;
     if (!hasFilter) {
@@ -28,12 +44,12 @@ const Filter = ({ loadingFilters, errorFilters, parsed, keyword, filters }) => {
         if (filtersSplit === filterValue) {
           const prevChar =
             window.location.href[
-              window.location.href.indexOf(`${filter}=`) - 1
+            window.location.href.indexOf(`${filter}=`) - 1
             ];
           const nextChar =
             window.location.href[
-              window.location.href.indexOf(`${filter}=` + filtersSplit) +
-                (`${filter}=` + filtersSplit).length
+            window.location.href.indexOf(`${filter}=` + filtersSplit) +
+            (`${filter}=` + filtersSplit).length
             ];
           if (prevChar === "?" && nextChar === "&") {
             window.location.href = window.location.href
@@ -53,6 +69,16 @@ const Filter = ({ loadingFilters, errorFilters, parsed, keyword, filters }) => {
     }
   };
 
+  const handlePrice = (e) => {
+    if (toPrice < fromPrice) {
+      alert("El precio hasta no puede ser menor al precio desde");
+      return false;
+    }
+    let filterPrice = (fromPrice ? fromPrice : 0) + "to";
+    filterPrice = (toPrice ? filterPrice + toPrice : filterPrice.split("to").join(""));
+    filterClicked('price', filterPrice);
+  }
+
   return (
     <>
       <h5>
@@ -68,50 +94,50 @@ const Filter = ({ loadingFilters, errorFilters, parsed, keyword, filters }) => {
             parsed.category ||
             parsed.material ||
             keyword) && (
-            <>
-              <p>
-                Filtrando por:
-                {parsed.section ? (
-                  <>
-                    <br /> Sección: {parsed.section}
-                  </>
-                ) : (
-                  ""
-                )}
-                {parsed.category ? (
-                  <>
-                    <br /> Categoría: {parsed.category}
-                  </>
-                ) : (
-                  ""
-                )}
-                {parsed.material ? (
-                  <>
-                    <br /> Material: {parsed.material}
-                  </>
-                ) : (
-                  ""
-                )}
-                {keyword ? (
-                  <>
-                    <br /> Búsqueda: {keyword}
-                  </>
-                ) : (
-                  ""
-                )}
-              </p>
-              <Link
-                className="btn btn-block btn-primary"
-                onClick={() =>
+              <>
+                <p>
+                  Filtrando por:
+                  {parsed.section ? (
+                    <>
+                      <br /> Sección: {parsed.section}
+                    </>
+                  ) : (
+                    ""
+                  )}
+                  {parsed.category ? (
+                    <>
+                      <br /> Categoría: {parsed.category}
+                    </>
+                  ) : (
+                    ""
+                  )}
+                  {parsed.material ? (
+                    <>
+                      <br /> Material: {parsed.material}
+                    </>
+                  ) : (
+                    ""
+                  )}
+                  {keyword ? (
+                    <>
+                      <br /> Búsqueda: {keyword}
+                    </>
+                  ) : (
+                    ""
+                  )}
+                </p>
+                <Link
+                  className="btn btn-block btn-primary"
+                  onClick={() =>
                   (window.location.href =
                     window.location.origin + window.location.pathname)
-                }
-                to="/shop"
-              >
-                Limpiar Filtros
-              </Link>
-            </>
-          )}
+                  }
+                  to="/shop"
+                >
+                  Limpiar Filtros
+                </Link>
+              </>
+            )}
           <ListGroup>
             <ListGroup.Item>
               <Accordion>
@@ -187,6 +213,57 @@ const Filter = ({ loadingFilters, errorFilters, parsed, keyword, filters }) => {
                           )}
                         </ListGroup.Item>
                       ))}
+                  </ListGroup>
+                </Accordion.Collapse>
+              </Accordion>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Accordion>
+                <Accordion.Toggle as={Card.Header} className="pointer" eventKey="0">
+                  <b>Precio (S./)</b>
+                </Accordion.Toggle>
+                <Accordion.Collapse eventKey="0">
+                  <ListGroup variant="flush">
+                    <ListGroup.Item>
+                      <Row>
+                        <Col>
+                          <div>Desde</div>
+                          <InputGroup>
+                            <FormControl
+                              type="number"
+                              placeholder="Desde"
+                              value={fromPrice}
+                              min={0.00}
+                              step={0.01}
+                              onChange={(e) => setFromPrice(e.target.value)}
+                            ></FormControl>
+                          </InputGroup>
+                        </Col>
+                        <Col>
+                          <div>Hasta</div>
+                          <InputGroup>
+                            <FormControl
+                              type="number"
+                              placeholder="Hasta"
+                              value={toPrice}
+                              min={0.00}
+                              step={0.01}
+                              onChange={(e) => setToPrice(e.target.value)}
+                            ></FormControl>
+                          </InputGroup>
+                        </Col>
+                      </Row>
+                      <Row className="mt-2">
+                        <Col>
+                          <Button
+                            className="btn-block btn-primary rounded"
+                            onClick={handlePrice}
+                          >
+                            Aplicar
+                          </Button>
+                        </Col>
+                      </Row>
+                    </ListGroup.Item>
                   </ListGroup>
                 </Accordion.Collapse>
               </Accordion>

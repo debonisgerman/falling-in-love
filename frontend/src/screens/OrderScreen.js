@@ -68,59 +68,33 @@ const OrderScreen = ({ match, history }) => {
     <Message variant="danger">{error}</Message>
   ) : (
     <Container>
-      <h1>Pedido {order._id}</h1>
+      <h1>Pedido Nro. {order.billNumber}</h1>
       <Row>
         <Col md={8}>
           <ListGroup variant="flush">
             <ListGroup.Item>
               <h2>Envío</h2>
-              <p>
-                <strong>Nombre: </strong> {order.shippingAddress.name}
-              </p>
-              <p>
-                <strong>Email: </strong>{" "}
-                <a
-                  href={`mailto:${order.shippingAddress.email}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  {order.shippingAddress.email}
-                </a>
-              </p>
-              <p>
-                <strong>Dirección: </strong>
-                {order.shippingAddress.address}, {order.shippingAddress.city}{" "}
-                {order.shippingAddress.postalCode},{" "}
-                {order.shippingAddress.country}
-              </p>
-              {order.shippingAddress.socialReason ? (
-                <p>
-                  <strong>Razón Social: </strong>
-                  {order.shippingAddress.socialReason}
-                </p>
-              ) : (
-                ""
-              )}
-              {order.shippingAddress.ruc ? (
-                <p>
-                  <strong>RUC: </strong> {order.shippingAddress.ruc}
-                </p>
-              ) : (
-                ""
-              )}
+              <p><strong>Nombre: </strong> {order.shippingAddress.name}</p>
+              <p><strong>Email: </strong> {order.shippingAddress.email}</p>
+              <p><strong>Dirección:</strong> {order.shippingAddress.address}</p>
+              <p><strong>Provincia:</strong> {order.shippingAddress.province}</p>
+              <p><strong>Teléfono:</strong> {order.shippingAddress.phone}</p>
+              <p><strong>Factura:</strong> {order.shippingAddress.bill ? 'Si' : 'No'}</p>
+              <p><strong>Razón Social:</strong> {order.shippingAddress.socialReason ? order.shippingAddress.socialReason : '-'}</p>
+              <p><strong>RUC:</strong> {order.shippingAddress.ruc ? order.shippingAddress.ruc : '-'}</p>
               {order.isPriced ? (
                 <Message variant="success">
-                  Cotizado el {order.pricedAt}
+                  Pagado el {(new Date(order.pricedAt)).toLocaleString()}
                 </Message>
               ) : (
-                <Message variant="danger">No cotizado</Message>
+                <Message variant="secondary">No pagado</Message>
               )}
               {order.isDelivered ? (
                 <Message variant="success">
-                  Enviado el {order.deliveredAt}
+                  Entregado el {(new Date(order.deliveredAt)).toLocaleString()}
                 </Message>
               ) : (
-                <Message variant="danger">No enviado</Message>
+                <Message variant="secondary">En Camino</Message>
               )}
             </ListGroup.Item>
 
@@ -146,6 +120,12 @@ const OrderScreen = ({ match, history }) => {
                           <Link to={`/product/${item.product}`}>
                             {item.name}
                           </Link>
+                          <p className="mt-2 mb-1">
+                            <strong>Talle: {item.sizeName}</strong>
+                          </p>
+                          <p>
+                            <strong>color: {item.colorName}</strong>
+                          </p>
                         </Col>
                         <Col md={4}>Cantidad: {item.qty}</Col>
                       </Row>
@@ -186,7 +166,7 @@ const OrderScreen = ({ match, history }) => {
                     className="btn btn-block"
                     onClick={pricedHandler}
                   >
-                    Marcar como cotizado{" "}
+                    Marcar como pagado{" "}
                   </Button>
                 </ListGroup.Item>
               )}

@@ -20,6 +20,19 @@ const PlaceOrderScreen = ({ history }) => {
 
   const cart = useSelector((state) => state.cart);
 
+  const addDecimals = (num) => {
+    return (Math.round(num * 100) / 100).toFixed(2);
+  };
+
+  cart.itemsPrice = addDecimals(
+    cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
+  );
+  cart.shippingPrice = addDecimals(15);
+  cart.totalPrice = (
+    Number(cart.itemsPrice) +
+    Number(cart.shippingPrice)
+  ).toFixed(2);
+
   const orderCreate = useSelector((state) => state.orderCreate);
   const { order, success, error } = orderCreate;
 
@@ -38,7 +51,6 @@ const PlaceOrderScreen = ({ history }) => {
         paymentMethod: cart.paymentMethod,
         itemsPrice: cart.itemsPrice,
         shippingPrice: cart.shippingPrice,
-        taxPrice: cart.taxPrice,
         totalPrice: cart.totalPrice,
       })
     );
@@ -47,18 +59,20 @@ const PlaceOrderScreen = ({ history }) => {
 
   return (
     <Container>
-      <CheckoutSteps step1 step2 step4 />
+      <CheckoutSteps step1 step2 step3 step4 />
       <Row>
         <Col md={8}>
           <ListGroup variant="flush">
             <ListGroup.Item>
               <h2>Envío</h2>
-              <p>
-                <strong>Envío: </strong>
-                {cart.shippingAddress.name}, {cart.shippingAddress.address},{" "}
-                {cart.shippingAddress.city} {cart.shippingAddress.postalCode},{" "}
-                {cart.shippingAddress.country}
-              </p>
+              <p><strong>Nombre: </strong> {cart.shippingAddress.name}</p>
+              <p><strong>Email: </strong> {cart.shippingAddress.email}</p>
+              <p><strong>Dirección:</strong> {cart.shippingAddress.address}</p>
+              <p><strong>Provincia:</strong> {cart.shippingAddress.province}</p>
+              <p><strong>Teléfono:</strong> {cart.shippingAddress.phone}</p>
+              <p><strong>Factura:</strong> {cart.shippingAddress.bill ? 'Si' : 'No'}</p>
+              <p><strong>Razón Social:</strong> {cart.shippingAddress.socialReason ? cart.shippingAddress.socialReason : '-'}</p>
+              <p><strong>RUC:</strong> {cart.shippingAddress.ruc ? cart.shippingAddress.ruc : '-'}</p>
             </ListGroup.Item>
 
             <ListGroup.Item>
@@ -82,8 +96,17 @@ const PlaceOrderScreen = ({ history }) => {
                           <Link to={`/product/${item.product}`}>
                             {item.name}
                           </Link>
+                          <p className="mt-2 mb-1">
+                            <strong>Talle: {item.sizeName}</strong>
+                          </p>
+                          <p>
+                            <strong>color: {item.colorName}</strong>
+                          </p>
                         </Col>
-                        <Col md={4}>Cantidad: {item.qty}</Col>
+                        <Col md={4}>
+                          {item.qty} x ${item.price} = S./
+                          {(item.qty * item.price).toFixed(2)}
+                        </Col>
                       </Row>
                     </ListGroup.Item>
                   ))}
@@ -102,14 +125,26 @@ const PlaceOrderScreen = ({ history }) => {
                 <Row>
                   <Col>Items</Col>
                   <Col>
-                    {cart.cartItems.reduce((acc, item) => +acc + +item.qty, 0)}
+                    <strong>S./ {cart.itemsPrice}</strong>
                   </Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
-                  <Col>Productos</Col>
-                  <Col>{cart.cartItems.length}</Col>
+                  <Col>Costo de Envío</Col>
+                  <Col><strong>S./ {cart.shippingPrice}</strong></Col>
+                </Row>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <Row>
+                  <Col>Total</Col>
+                  <Col><strong>S./ {cart.totalPrice}</strong></Col>
+                </Row>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <Row>
+                  <Col>Método de Pago</Col>
+                  <Col><strong>{cart.paymentMethod}</strong></Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>

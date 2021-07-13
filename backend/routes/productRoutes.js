@@ -5,14 +5,18 @@ import {
   deleteProduct,
   getProductById,
   getProducts,
+  getShopProducts,
   updateProduct,
   getTopProducts,
   getFilters,
+  getRelatedProducts,
 } from "../controllers/productController.js";
 import { protect, admin } from "../middleware/authMiddleware.js";
 
 router.route("/").get(getProducts).post(protect, admin, createProduct);
 router.get("/top", getTopProducts);
+router.get("/related/:id", getRelatedProducts);
+router.get("/shop", getShopProducts);
 router.get("/filters", getFilters);
 router
   .route("/:id")

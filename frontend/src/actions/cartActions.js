@@ -6,18 +6,23 @@ import {
   CART_SAVE_PAYMENT_METHOD,
 } from "../constants/cartConstants";
 
-export const addToCart = (id, qty) => async (dispatch, getState) => {
+export const addToCart = (id, qty, size, color) => async (dispatch, getState) => {
   const { data } = await axios.get(`/api/products/${id}`);
+  const variant = data.variants.find(v => v.color._id == color);
+
 
   dispatch({
     type: CART_ADD_ITEM,
     payload: {
       product: data._id,
       name: data.name,
-      image: data.image,
+      image: variant && variant.images && variant.images.length > 0 ? variant.images[0] : '',
       price: data.price,
-      countInStock: data.countInStock,
       qty,
+      color: color,
+      colorName: variant.color.name,
+      size: size,
+      sizeName: variant.sizes.find(s => s.size._id == size).size.name,
     },
   });
 

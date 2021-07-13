@@ -8,6 +8,7 @@ import {
   productCreateReducer,
   productUpdateReducer,
   productTopRatedReducer,
+  productRelatedReducer,
   productFilterReducer,
 } from "./reducers/productReducers";
 import { cartReducer } from "./reducers/cartReducers";
@@ -42,6 +43,34 @@ import {
   categoryListReducer,
   categoryUpdateReducer,
 } from "./reducers/categoryReducers";
+import {
+  materialCreateReducer,
+  materialDeleteReducer,
+  materialDetailsReducer,
+  materialListReducer,
+  materialUpdateReducer,
+} from "./reducers/materialReducers";
+import {
+  sectionCreateReducer,
+  sectionDeleteReducer,
+  sectionDetailsReducer,
+  sectionListReducer,
+  sectionUpdateReducer,
+} from "./reducers/sectionReducers";
+import {
+  colorCreateReducer,
+  colorDeleteReducer,
+  colorDetailsReducer,
+  colorListReducer,
+  colorUpdateReducer,
+} from "./reducers/colorReducers";
+import {
+  sizeCreateReducer,
+  sizeDeleteReducer,
+  sizeDetailsReducer,
+  sizeListReducer,
+  sizeUpdateReducer,
+} from "./reducers/sizeReducers";
 
 const reducer = combineReducers({
   productList: productListReducer,
@@ -50,6 +79,7 @@ const reducer = combineReducers({
   productCreate: productCreateReducer,
   productUpdate: productUpdateReducer,
   productTopRated: productTopRatedReducer,
+  productRelated: productRelatedReducer,
   productFilter: productFilterReducer,
   cart: cartReducer,
   userLogin: userLoginReducer,
@@ -75,6 +105,26 @@ const reducer = combineReducers({
   categoryDetails: categoryDetailsReducer,
   categoryList: categoryListReducer,
   categoryUpdate: categoryUpdateReducer,
+  materialCreate: materialCreateReducer,
+  materialDelete: materialDeleteReducer,
+  materialDetails: materialDetailsReducer,
+  materialList: materialListReducer,
+  materialUpdate: materialUpdateReducer,
+  sectionCreate: sectionCreateReducer,
+  sectionDelete: sectionDeleteReducer,
+  sectionDetails: sectionDetailsReducer,
+  sectionList: sectionListReducer,
+  sectionUpdate: sectionUpdateReducer,
+  colorCreate: colorCreateReducer,
+  colorDelete: colorDeleteReducer,
+  colorDetails: colorDetailsReducer,
+  colorList: colorListReducer,
+  colorUpdate: colorUpdateReducer,
+  sizeCreate: sizeCreateReducer,
+  sizeDelete: sizeDeleteReducer,
+  sizeDetails: sizeDetailsReducer,
+  sizeList: sizeListReducer,
+  sizeUpdate: sizeUpdateReducer,
 });
 
 const cartItemsFromStorage = localStorage.getItem("cartItems")

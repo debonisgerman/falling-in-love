@@ -16,13 +16,14 @@ const ShippingScreen = ({ history }) => {
   const [phone, setPhone] = useState(shippingAddress.phone);
   const [socialReason, setSocialReason] = useState(shippingAddress.socialReason);
   const [ruc, setRuc] = useState(shippingAddress.ruc);
-  
+  const [bill, setBill] = useState(shippingAddress.bill);
+
   const dispatch = useDispatch();
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(saveShippingAddress({ name, email, address, province, phone, socialReason, ruc }));
-    history.push("/placeorder");
+    dispatch(saveShippingAddress({ name, email, address, province, phone, socialReason, ruc, bill }));
+    history.push("/payment");
   };
 
   return (
@@ -85,26 +86,43 @@ const ShippingScreen = ({ history }) => {
           ></Form.Control>
         </Form.Group>
 
-        <Form.Group controlId="socialReason">
-          <Form.Label>Razón Social</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="Razón Social"
-            value={socialReason}
-            onChange={(e) => setSocialReason(e.target.value)}
-          ></Form.Control>
+        <Form.Group controlId="bill">
+          <Form.Check
+            type="checkbox"
+            label="Factura"
+            checked={bill}
+            onChange={(e) => setBill(e.target.checked)}
+          ></Form.Check>
         </Form.Group>
+        {
+          bill && (
+            <>
+              <Form.Group controlId="socialReason">
+                <Form.Label>Razón Social</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Razón Social"
+                  value={socialReason}
+                  required={bill}
+                  onChange={(e) => setSocialReason(e.target.value)}
+                  visible={bill}
+                ></Form.Control>
+              </Form.Group>
 
-        <Form.Group controlId="ruc">
-          <Form.Label>RUC</Form.Label>
-          <Form.Control
-            type="text"
-            placeholder="RUC"
-            value={ruc}
-            onChange={(e) => setRuc(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
-
+              <Form.Group controlId="ruc">
+                <Form.Label>RUC</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="RUC"
+                  value={ruc}
+                  required={bill}
+                  onChange={(e) => setRuc(e.target.value)}
+                  visible={bill}
+                ></Form.Control>
+              </Form.Group>
+            </>
+          )
+        }
         <Button type="submit" variant="primary">
           Continuar
         </Button>

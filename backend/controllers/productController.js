@@ -1,6 +1,8 @@
 import asyncHandler from "express-async-handler";
 import Product from "../models/productModel.js";
 import Category from "../models/categoryModel.js";
+import Material from "../models/materialModel.js";
+import Section from "../models/sectionModel.js";
 
 // @desc Fetch all products
 // @route GET /api/products
@@ -10,22 +12,46 @@ const getProducts = asyncHandler(async (req, res) => {
   const page = Number(req.query.pageNumber) || 1;
   let regex = new RegExp(req.query.keyword, "i");
   let category = req.query.category;
-  const material = req.query.material;
-  const section = req.query.section;
+  let material = req.query.material;
+  let section = req.query.section;
+  let price = req.query.price;
+  let priceTo;
+  let priceFrom;
 
-  console.log("ACA", category);
+  if (price) {
+    if (price.indexOf("to") !== -1) {
+      priceTo = price.split("to")[1];
+      priceFrom = price.split("to")[0];
+    } else {
+      priceFrom = price;
+    }
+  }
 
   if (category) {
     category = await Category.findOne({ name: category });
-    console.log("ACA2", category);
     if (category) {
       category = category._id;
     }
-    console.log("ACA3", category);
   }
 
+  if (material) {
+    material = await Material.findOne({ name: material });
+    if (material) {
+      material = material._id;
+    }
+  }
+
+  if (section) {
+    section = await Section.findOne({ name: section });
+    if (section) {
+      section = section._id;
+    }
+  }
+
+  console.log(price, priceFrom, priceTo);
+
   let keyword;
-  if (category || material || section) {
+  if (category || material || section || priceFrom || priceTo) {
     if (req.query.keyword) {
       keyword = {
         $and: [
@@ -47,11 +73,15 @@ const getProducts = asyncHandler(async (req, res) => {
       category && keyword.$and.push({ category: category });
       material && keyword.$and.push({ material: material });
       section && keyword.$and.push({ section: section });
+      priceFrom && keyword.$and.push({ price: { $gte: priceFrom } });
+      priceTo && keyword.$and.push({ price: { $lte: priceTo } });
     } else {
       keyword = { $and: [] };
       category && keyword.$and.push({ category: category });
       material && keyword.$and.push({ material: material });
       section && keyword.$and.push({ section: section });
+      priceFrom && keyword.$and.push({ price: { $gte: priceFrom } });
+      priceTo && keyword.$and.push({ price: { $lte: priceTo } });
     }
   } else {
     keyword = req.query.keyword
@@ -66,21 +96,39 @@ const getProducts = asyncHandler(async (req, res) => {
       : {};
   }
 
+  console.log("key", keyword);
+
   const count = await Product.countDocuments({ ...keyword });
   const products = await Product.find({ ...keyword })
     .populate('category')
+    .populate('section')
+    .populate('material')
+    .populate('variants.color')
+    .populate('variants.sizes.size')
     .limit(pageSize)
     .skip(pageSize * (page - 1));
   res.json({ products, page, pages: Math.ceil(count / pageSize) });
 });
 
-const getFilters = asyncHandler(async (req, res) => {
+const getShopProducts = asyncHandler(async (req, res) => {
+  const pageSize = 12;
+  const page = Number(req.query.pageNumber) || 1;
   let regex = new RegExp(req.query.keyword, "i");
   let category = req.query.category;
-  const material = req.query.material;
-  const section = req.query.section;
+  let material = req.query.material;
+  let section = req.query.section;
+  let price = req.query.price;
+  let priceTo;
+  let priceFrom;
 
-  console.log("ACA", category);
+  if (price) {
+    if (price.indexOf("to") !== -1) {
+      priceTo = price.split("to")[1];
+      priceFrom = price.split("to")[0];
+    } else {
+      priceFrom = price;
+    }
+  }
 
   if (category) {
     category = await Category.findOne({ name: category });
@@ -89,8 +137,24 @@ const getFilters = asyncHandler(async (req, res) => {
     }
   }
 
+  if (material) {
+    material = await Material.findOne({ name: material });
+    if (material) {
+      material = material._id;
+    }
+  }
+
+  if (section) {
+    section = await Section.findOne({ name: section });
+    if (section) {
+      section = section._id;
+    }
+  }
+
+  console.log(price, priceFrom, priceTo);
+
   let keyword;
-  if (category || material || section) {
+  if (category || material || section || priceFrom || priceTo) {
     if (req.query.keyword) {
       keyword = {
         $and: [
@@ -112,11 +176,15 @@ const getFilters = asyncHandler(async (req, res) => {
       category && keyword.$and.push({ category: category });
       material && keyword.$and.push({ material: material });
       section && keyword.$and.push({ section: section });
+      priceFrom && keyword.$and.push({ price: { $gte: priceFrom } });
+      priceTo && keyword.$and.push({ price: { $lte: priceTo } });
     } else {
       keyword = { $and: [] };
       category && keyword.$and.push({ category: category });
       material && keyword.$and.push({ material: material });
       section && keyword.$and.push({ section: section });
+      priceFrom && keyword.$and.push({ price: { $gte: priceFrom } });
+      priceTo && keyword.$and.push({ price: { $lte: priceTo } });
     }
   } else {
     keyword = req.query.keyword
@@ -131,25 +199,147 @@ const getFilters = asyncHandler(async (req, res) => {
       : {};
   }
 
-  const products = await Product.find({ ...keyword }).populate('category');
-  console.log("Los productos", products);
+  console.log("key", keyword);
+
+  const count = await Product.countDocuments({ ...keyword, published: true });
+  const products = await Product.find({ ...keyword, published: true })
+    .populate('category')
+    .populate('section')
+    .populate('material')
+    .populate('variants.color')
+    .populate('variants.sizes.size')
+    .limit(pageSize)
+    .skip(pageSize * (page - 1));
+  res.json({ products, page, pages: Math.ceil(count / pageSize) });
+})
+
+const getFilters = asyncHandler(async (req, res) => {
+  let regex = new RegExp(req.query.keyword, "i");
+  let category = req.query.category;
+  let material = req.query.material;
+  let section = req.query.section;
+  let price = req.query.price;
+  let priceTo;
+  let priceFrom;
+
+  if (price) {
+    if (price.indexOf("to") !== -1) {
+      priceTo = price.split("to")[1];
+      priceFrom = price.split("to")[0];
+    } else {
+      priceFrom = price;
+    }
+  }
+
+  if (category) {
+    category = await Category.findOne({ name: category });
+    if (category) {
+      category = category._id;
+    }
+  }
+
+  if (material) {
+    material = await Material.findOne({ name: material });
+    if (material) {
+      material = material._id;
+    }
+  }
+
+  if (section) {
+    section = await Section.findOne({ name: section });
+    if (section) {
+      section = section._id;
+    }
+  }
+
+  let keyword;
+  if (category || material || section || priceFrom || priceTo) {
+    if (req.query.keyword) {
+      keyword = {
+        $and: [
+          {
+            $or: [
+              {
+                name: regex,
+              },
+              {
+                category: regex,
+              },
+              {
+                section: regex,
+              },
+            ],
+          },
+        ],
+      };
+      category && keyword.$and.push({ category: category });
+      material && keyword.$and.push({ material: material });
+      section && keyword.$and.push({ section: section });
+      priceFrom && keyword.$and.push({ price: { $gte: priceFrom } });
+      priceTo && keyword.$and.push({ price: { $lte: priceTo } });
+    } else {
+      keyword = { $and: [] };
+      category && keyword.$and.push({ category: category });
+      material && keyword.$and.push({ material: material });
+      section && keyword.$and.push({ section: section });
+      priceFrom && keyword.$and.push({ price: { $gte: priceFrom } });
+      priceTo && keyword.$and.push({ price: { $lte: priceTo } });
+    }
+  } else {
+    keyword = req.query.keyword
+      ? {
+        $or: [
+          { name: regex },
+          { category: regex },
+          { code: regex },
+          { section: regex },
+        ],
+      }
+      : {};
+  }
+
+  console.log(keyword);
+
+  const products = await Product.find({ ...keyword })
+    .populate('category')
+    .populate('section')
+    .populate('material');
 
   const filters = {
     filters: {
       categories: [],
       materials: [],
       sections: [],
+      price,
     },
   };
   filters.filters.categories = products
     .map((item) => item.category && item.category.name)
     .filter((value, index, self) => value && self.indexOf(value) === index);
-  filters.filters.materials = products
-    .map((item) => item.material)
-    .filter((value, index, self) => value && self.indexOf(value) === index);
-  filters.filters.sections = products
-    .map((item) => item.section)
-    .filter((value, index, self) => value && self.indexOf(value) === index);
+
+  filters.filters.materials = products.reduce((acc, product) => {
+    acc = acc || [];
+    if (product.material) {
+      acc.push(product.material.reduce((accumulator, currentValue) => {
+        accumulator = accumulator || [];
+        accumulator.push(currentValue.name);
+        return accumulator
+      }, []));
+    }
+    return acc;
+  }, []).flat().filter((value, index, self) => value && self.indexOf(value) === index);
+
+  filters.filters.sections = products.reduce((acc, product) => {
+    acc = acc || [];
+    if (product.section) {
+      acc.push(product.section.reduce((accumulator, currentValue) => {
+        accumulator = accumulator || [];
+        accumulator.push(currentValue.name);
+        return accumulator
+      }, []));
+    }
+    return acc;
+  }, []).flat().filter((value, index, self) => value && self.indexOf(value) === index);
 
   res.json(filters);
 });
@@ -158,7 +348,13 @@ const getFilters = asyncHandler(async (req, res) => {
 // @route GET /api/products/:id
 // @access Public
 const getProductById = asyncHandler(async (req, res) => {
-  const product = await Product.findById(req.params.id).populate('category');
+  const product = await Product.findById(req.params.id)
+    .populate('category')
+    .populate('section')
+    .populate('material')
+    .populate('variants.color')
+    .populate('variants.sizes.size')
+    .populate('related');
 
   if (product) {
     res.json(product);
@@ -210,40 +406,32 @@ const createProduct = asyncHandler(async (req, res) => {
 const updateProduct = asyncHandler(async (req, res) => {
   const {
     name,
-    image,
-    image2,
-    image3,
-    image4,
-    image5,
     category,
     description,
     material,
     section,
     code,
     leading,
-    size,
-    stock,
+    published,
+    price,
+    variants,
+    related,
   } = req.body;
-
-  console.log(size, req.body);
 
   const product = await Product.findById(req.params.id);
 
   if (product) {
     product.name = name;
-    product.image = image;
-    product.image2 = image2;
-    product.image3 = image3;
-    product.image4 = image4;
-    product.image5 = image5;
     product.category = category;
     product.description = description;
     product.material = material;
     product.section = section;
     product.code = code;
     product.leading = leading;
-    product.size = size;
-    product.stock = stock;
+    product.published = published;
+    product.price = price;
+    product.variants = variants;
+    product.related = related;
 
     const updatedProduct = await product.save();
     res.json(updatedProduct);
@@ -257,7 +445,13 @@ const updateProduct = asyncHandler(async (req, res) => {
 // @route get /api/products/top
 // @access Public
 const getTopProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({ leading: true }).sort({ leading: -1 }).limit(9);
+  const products = await Product.find({ leading: true, published: true }).sort({ leading: -1 }).limit(9);
+  res.json(products);
+});
+
+const getRelatedProducts = asyncHandler(async (req, res) => {
+  const categoryId = req.params.id;
+  const products = await Product.find({ leading: true, published: true, category: categoryId }).sort({ leading: -1 }).limit(9);
   res.json(products);
 });
 
@@ -269,4 +463,6 @@ export {
   updateProduct,
   getTopProducts,
   getFilters,
+  getShopProducts,
+  getRelatedProducts,
 };
