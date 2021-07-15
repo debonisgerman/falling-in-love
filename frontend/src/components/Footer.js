@@ -7,20 +7,16 @@ const Footer = () => {
     <footer className="text-white navbar-dark bg-dark">
       <Container className="text-light">
         <Row className="py-3">
-          <Col md={4}>
+          <Col md={4} className="text-center">
             <Image
               src="/images/logo.png"
               alt="logo"
               fluid="true"
               className="logoFooter"
             />
+          </Col>
+          <Col md={4} className="text-center">
             <div className="my-3">
-              <div className="mb-3">
-                <Link to="/find-us/lampa">
-                  <i className="fas fa-map-marker-alt pr-2"></i>
-                  Encuéntranos
-                </Link>
-              </div>
               <div className="mb-2">
                 <a href="tel:913059930" target="_blank" rel="noreferrer">
                   <i className="fas fa-phone pr-2"></i>
@@ -50,27 +46,11 @@ const Footer = () => {
               </div>
             </div>
           </Col>
-          <Col md={4}>
-            <Image
-              src="/images/logo.png"
-              alt="logo"
-              fluid="true"
-              className="logoFooter"
-              style={{ visibility: "hidden" }}
-            />
-          </Col>
-          <Col md={4}>
-            <Image
-              src="/images/logo.png"
-              alt="logo"
-              fluid="true"
-              className="logoFooter"
-              style={{ visibility: "hidden" }}
-            />
+          <Col md={4} className="text-center">
             <div className="mb-3">
               <h5 className="my-3">¡Síguenos!</h5>
               <div className="my-2 social-network">
-                <Row>
+                <Row className="text-center justify-content-center">
                   <a
                     href="https://www.facebook.com/Falling-in-Love-775386406168379"
                     target="_blank"
