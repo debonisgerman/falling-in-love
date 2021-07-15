@@ -4,6 +4,11 @@
 
 .bg {
   background: url("./bg.png");
+  min-height: 500px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 main {
@@ -112,9 +117,14 @@ h2 {
 
 @media only screen and (max-width: 768px) {
   .carousel img {
-    height: 250px;
-    margin: 90px 0px 20px 0px;
+    height: auto;
+    margin: 0px 0px 20px 0px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border-radius: 4px;
   }
+
   .carousel-control-next,
   .carousel-control-prev {
     display: none;
@@ -312,4 +322,14 @@ footer a:hover {
 
 .flex {
   display: flex;
+}
+
+
+
+
+@media only screen and (max-width: 768px) {
+  #productCarousel .carousel-caption {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
