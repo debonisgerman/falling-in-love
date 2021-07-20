@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import Color from "../models/colorModel.js";
+import Product from "../models/productModel.js";
 
 // @desc Fetch all colors
 // @route GET /api/colors
@@ -30,6 +31,13 @@ const deleteColor = asyncHandler(async (req, res) => {
     const color = await Color.findById(req.params.id);
 
     if (color) {
+
+        let products = await Product.find({ 'variants.color': req.params.id });
+        for (let p in products) {
+            products[p].variants = products[p].variants.filter(v => v.color.toString() !== req.params.id.toString());
+            await products[p].save();
+        }
+
         await color.remove();
         res.json({ message: "Color removed" });
     } else {

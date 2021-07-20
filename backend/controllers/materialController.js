@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import Material from "../models/materialModel.js";
+import Product from "../models/productModel.js";
 
 // @desc Fetch all materials
 // @route GET /api/materials
@@ -30,6 +31,11 @@ const deleteMaterial = asyncHandler(async (req, res) => {
     const material = await Material.findById(req.params.id);
 
     if (material) {
+        let products = await Product.find({ 'material': req.params.id });
+        for (let p in products) {
+            products[p].material = products[p].material.filter(s => s.toString() !== req.params.id);
+            await products[p].save();
+        }
         await material.remove();
         res.json({ message: "Material removed" });
     } else {

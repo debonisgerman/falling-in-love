@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import Section from "../models/sectionModel.js";
+import Product from "../models/productModel.js";
 
 // @desc Fetch all sections
 // @route GET /api/sections
@@ -30,6 +31,13 @@ const deleteSection = asyncHandler(async (req, res) => {
     const section = await Section.findById(req.params.id);
 
     if (section) {
+
+        let products = await Product.find({ 'section': req.params.id });
+        for (let p in products) {
+            products[p].section = products[p].section.filter(s => s.toString() !== req.params.id);
+            await products[p].save();
+        }
+        
         await section.remove();
         res.json({ message: "Section removed" });
     } else {

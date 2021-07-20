@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import Category from "../models/categoryModel.js";
+import Product from "../models/productModel.js";
 
 // @desc Fetch all categories
 // @route GET /api/categories
@@ -30,6 +31,13 @@ const deleteCategory = asyncHandler(async (req, res) => {
     const category = await Category.findById(req.params.id);
 
     if (category) {
+
+        let products = await Product.find({ 'category': req.params.id });
+        for (let p in products) {
+            products[p].category = null;
+            await products[p].save();
+        }
+
         await category.remove();
         res.json({ message: "Category removed" });
     } else {

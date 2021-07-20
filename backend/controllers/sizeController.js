@@ -1,5 +1,6 @@
 import asyncHandler from "express-async-handler";
 import Size from "../models/sizeModel.js";
+import Product from "../models/productModel.js";
 
 // @desc Fetch all sizes
 // @route GET /api/sizes
@@ -30,6 +31,16 @@ const deleteSize = asyncHandler(async (req, res) => {
     const size = await Size.findById(req.params.id);
 
     if (size) {
+
+        // search all the products with variants with this size
+        let products = await Product.find({ 'variants.sizes.size': req.params.id });
+        for (let p in products) {
+            for (let v in products[p].variants) {
+                products[p].variants[v].sizes = products[p].variants[p].sizes.filter(x => x.size.toString() !== req.params.id.toString());
+            }
+            await products[p].save();
+        }
+
         await size.remove();
         res.json({ message: "Size removed" });
     } else {
