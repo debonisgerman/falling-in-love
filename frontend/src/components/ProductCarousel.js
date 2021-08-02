@@ -8,7 +8,7 @@ import { listTopProducts } from "../actions/productActions";
 
 const ProductCarousel = () => {
   const dispatch = useDispatch();
-  const pages = [1, 2, 3];
+  let pages = [];
   const productTopRated = useSelector((state) => state.productTopRated);
   const { loading, error, products } = productTopRated;
 
@@ -16,8 +16,33 @@ const ProductCarousel = () => {
     dispatch(listTopProducts());
   }, [dispatch]);
 
+  const getPages = () => {
+    if (!products || products.length === 0) {
+      return null;
+    } else {
+      const pagesCount = Math.ceil(products.length / 3);
+      if (document.getElementById("destTitle") && products.length > 0) {
+        document.getElementById("destTitle").innerHTML = "Productos Destacados";
+      }
+      pages = [];
+      for (let i = 0; i < pagesCount; i++) {
+        pages.push(i + 1);
+      }
+      return pages.map((page, index) => (
+        <Carousel.Item key={page}>
+          <Row className="w-100 text-center justify-content-center">{getCarouselItem(page, products)}</Row>
+        </Carousel.Item>
+      ))
+    }
+  }
+
+  const handleLink = product => {
+    window.location.href = window.location.origin + `/product/${product._id}`;
+  }
+
   const getCarouselItem = (page, products) => {
     if (!products || products.length === 0) {
+      // document.getElementById("destTitle") ? document.getElementById("destTitle").remove() : null;
       return null;
     } else {
       const rounds = page + 3;
@@ -25,8 +50,8 @@ const ProductCarousel = () => {
       for (let i = page; i < rounds; i++) {
         if (products[i - 1]) {
           items.push(
-            <Col key={products[i - 1]._id}>
-              <Link to={`/product/${products[i - 1]._id}`}>
+            <Col md={4} key={products[i - 1]._id}>
+              <Link onClick={() => handleLink(products[i - 1])}>
                 <Image
                   src={
                     products[i - 1].variants &&
@@ -56,13 +81,9 @@ const ProductCarousel = () => {
     <Message variant="danger">{error}</Message>
   ) : (
     <>
-      <h2 className="mt-5 mb-3 secondary-blue bold text-center">Productos Destacados</h2>
+      <h2 id="destTitle" className="mt-5 mb-3 secondary-blue bold text-center"></h2>
       <Carousel id="productCarousel" pause="hover" className="bg-primary" controls={false}>
-        {pages.map((page, index) => (
-          <Carousel.Item key={page}>
-            <Row className="w-100 text-center">{getCarouselItem(page, products)}</Row>
-          </Carousel.Item>
-        ))}
+        {getPages()}
       </Carousel>
     </>
   );

@@ -4,6 +4,7 @@ import { Form, Button, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
+import Meta from "../components/Meta";
 import FormContainer from "../components/FormContainer";
 import { listColorsDetails, updateColor } from "../actions/colorActions";
 import {
@@ -57,6 +58,7 @@ const ColorEditScreen = ({ match, history }) => {
 
     return (
         <Container>
+            <Meta />
             <Link to="/admin/colorlist" className="btn btn-light my-3">
                 Volver
             </Link>

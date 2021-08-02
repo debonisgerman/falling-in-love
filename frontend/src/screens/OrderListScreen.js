@@ -4,6 +4,7 @@ import { Table, Button, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
+import Meta from "../components/Meta";
 import { listOrders } from "../actions/orderActions";
 
 const OrderListScreen = ({ history }) => {
@@ -25,6 +26,7 @@ const OrderListScreen = ({ history }) => {
 
   return (
     <Container>
+      <Meta />
       <h1>Pedidos</h1>
       {loading ? (
         <Loader />

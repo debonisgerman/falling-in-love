@@ -6,6 +6,7 @@ import BannerCarousel from "../components/BannerCarousel";
 import ProductCarousel from "../components/ProductCarousel";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
+import Meta from "../components/Meta";
 import { listCategories } from "../actions/categoryActions";
 
 const HomeScreen = () => {
@@ -20,7 +21,8 @@ const HomeScreen = () => {
 
 
   return (
-    <div className="bg">
+    <>
+      <Meta />
       <BannerCarousel />
       <Container>
         <h2 className="mt-5 mb-3 secondary-blue bold text-center">Lencería Fina</h2>
@@ -31,7 +33,7 @@ const HomeScreen = () => {
             <Message variant="danger">{error}</Message>
           ) : (
             categories && categories.filter(c => c.showInHome).slice(0, 4).map((category) => (
-              < Col md={3}>
+              < Col md={3} className="flex">
                 <LinkContainer
                   className="CardLinkContainer"
                   to="/shop"
@@ -60,7 +62,7 @@ const HomeScreen = () => {
         </Row>
         <ProductCarousel />
       </Container>
-    </div>
+    </>
   );
 };
 

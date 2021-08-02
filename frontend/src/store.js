@@ -71,6 +71,9 @@ import {
   sizeListReducer,
   sizeUpdateReducer,
 } from "./reducers/sizeReducers";
+import {
+  departmentListReducer,
+} from "./reducers/departmentReducers";
 
 const reducer = combineReducers({
   productList: productListReducer,
@@ -125,6 +128,7 @@ const reducer = combineReducers({
   sizeDetails: sizeDetailsReducer,
   sizeList: sizeListReducer,
   sizeUpdate: sizeUpdateReducer,
+  departmentList: departmentListReducer,
 });
 
 const cartItemsFromStorage = localStorage.getItem("cartItems")

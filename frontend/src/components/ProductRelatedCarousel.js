@@ -6,15 +6,40 @@ import Loader from "./Loader";
 import Message from "./Message";
 import { listRelatedProducts } from "../actions/productActions";
 
-const ProductRelatedCarousel = (categoryId) => {
+const ProductRelatedCarousel = ({ categoryId, productId }) => {
     const dispatch = useDispatch();
-    const pages = [1, 2, 3];
+    let pages = [];
     const productRelated = useSelector((state) => state.productRelated);
     const { loading, error, products } = productRelated;
 
     useEffect(() => {
-        dispatch(listRelatedProducts(categoryId));
+        dispatch(listRelatedProducts({ categoryId }));
     }, [dispatch]);
+
+    const getPages = () => {
+        if (!products || products.length === 0) {
+            return null;
+        } else {
+            let newProducts = products.filter(p => p._id.toString() !== productId.toString());
+            const pagesCount = Math.ceil(newProducts.length / 3);
+            if (document.getElementById("carouTitle") && newProducts.length > 0) {
+                document.getElementById("carouTitle").innerHTML = "Productos Relacionados";
+            }
+            pages = [];
+            for (let i = 0; i < pagesCount; i++) {
+                pages.push(i + 1);
+            }
+            return pages.map((page, index) => (
+                <Carousel.Item key={page}>
+                    <Row className="w-100 text-center justify-content-center">{getCarouselItem(page, newProducts)}</Row>
+                </Carousel.Item>
+            ))
+        }
+    }
+
+    const handleLink = product => {
+        window.location.href = window.location.origin + `/product/${product._id}`;
+    }
 
     const getCarouselItem = (page, products) => {
         if (!products || products.length === 0) {
@@ -25,8 +50,8 @@ const ProductRelatedCarousel = (categoryId) => {
             for (let i = page; i < rounds; i++) {
                 if (products[i - 1]) {
                     items.push(
-                        <Col key={products[i - 1]._id}>
-                            <Link to={`/product/${products[i - 1]._id}`}>
+                        <Col md={4} key={products[i - 1]._id}>
+                            <Link onClick={() => handleLink(products[i - 1])}>
                                 <Image
                                     src={
                                         products[i - 1].variants &&
@@ -56,13 +81,9 @@ const ProductRelatedCarousel = (categoryId) => {
         <Message variant="danger">{error}</Message>
     ) : (
         <>
-            <h2 className="mt-5 mb-3 secondary-blue bold text-center">Productos Destacados</h2>
+            <h2 id="carouTitle" className="mt-5 mb-3 secondary-blue bold text-center"></h2>
             <Carousel id="productCarousel" pause="hover" className="bg-primary" controls={false}>
-                {pages.map((page, index) => (
-                    <Carousel.Item key={page}>
-                        <Row className="w-100 text-center">{getCarouselItem(page, products)}</Row>
-                    </Carousel.Item>
-                ))}
+                {getPages()}
             </Carousel>
         </>
     );

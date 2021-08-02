@@ -7,6 +7,7 @@ import Message from "../components/Message";
 import Loader from "../components/Loader";
 import FormContainer from "../components/FormContainer";
 import VariantForm from "../components/VariantForm";
+import Meta from "../components/Meta";
 import { listProductsDetails, updateProduct } from "../actions/productActions";
 import { listCategories } from "../actions/categoryActions";
 import { listMaterials } from "../actions/materialActions";
@@ -201,6 +202,7 @@ const ProductEditScreen = ({ match, history }) => {
 
   return (
     <Container>
+      <Meta />
       <Link to="/admin/productlist" className="btn btn-light my-3">
         Volver
       </Link>

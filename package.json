@@ -13,6 +13,7 @@
     "data:import": "node backend/seeder",
     "data:destroy": "node backend/seeder -d",
     "excel:import": "node backend/excel",
+    "departments:import": "node backend/departments",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "author": "Germán De Bonis",

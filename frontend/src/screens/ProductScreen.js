@@ -12,6 +12,7 @@ import {
   Image,
   InputGroup,
   FormControl,
+  Modal,
 } from "react-bootstrap";
 import ProductRelatedCarousel from "../components/ProductRelatedCarousel";
 import { listProductsDetails } from "../actions/productActions";
@@ -20,13 +21,17 @@ import Message from "../components/Message";
 import Meta from "../components/Meta";
 
 const ProductScreen = ({ history, match }) => {
-  const [qty, setQty] = useState(1);
+  const [qty, setQty] = useState(0);
   const [backgroundImage, setBackgroundImage] = useState("white");
   const [backgroundPosition, setBackgroundPosition] = useState('0% 0%');
   const [variant, setVariant] = useState({});
   const [productRendered, setProductRendered] = useState(false);
   const [variantSize, setVariantSize] = useState(null);
   const [variantSizeStock, setVariantSizeStock] = useState(0);
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const dispatch = useDispatch();
 
@@ -34,7 +39,7 @@ const ProductScreen = ({ history, match }) => {
   const { loading, error, product } = productDetails;
 
   useEffect(() => {
-    if (!productRendered) {
+    if (!productRendered || product._id !== match.params.id) {
       dispatch(listProductsDetails(match.params.id));
     }
     if (product && product.name && !productRendered) {
@@ -49,13 +54,21 @@ const ProductScreen = ({ history, match }) => {
   }, [dispatch, match, product, productRendered]);
 
   const addToCartHandler = () => {
+    if (!variantSize) {
+      document.getElementById("sizes-error").innerHTML = "No seleccionó ningún talle";
+      return false;
+    }
     history.push(`/cart/${match.params.id}?qty=${qty}&size=${variantSize}&color=${variant.color._id}`);
   };
 
   const setQuantity = (e) => {
-    setQty(e.target.value);
-    if (e.target.value > product.stock) {
-      setQty(product.stock);
+    if (!variantSize) {
+      document.getElementById("sizes-error").innerHTML = "No seleccionó ningún talle";
+      return false;
+    }
+    setQty(+e.target.value);
+    if (+e.target.value > variantSizeStock) {
+      setQty(variantSizeStock);
     }
   }
 
@@ -77,9 +90,9 @@ const ProductScreen = ({ history, match }) => {
     console.log(variantSize);
   }
 
-  const handleCartDisabled = e => {
-    return !variantSize || !variant.hasOwnProperty('sizes') || (variant.hasOwnProperty('sizes') && variant.sizes.length === 0);
-  }
+  // const handleCartDisabled = e => {
+  //   return !variantSize || !variant.hasOwnProperty('sizes') || (variant.hasOwnProperty('sizes') && variant.sizes.length === 0);
+  // }
 
   const handleSizeChange = e => {
     setVariantSize(e.target.value);
@@ -114,7 +127,7 @@ const ProductScreen = ({ history, match }) => {
               </Row>
               <Row>
                 {variant && variant.images && variant.images.map((image, i) => (
-                  <Col>
+                  <Col md={2}>
                     <Image
                       src={image}
                       alt={i}
@@ -167,21 +180,58 @@ const ProductScreen = ({ history, match }) => {
                 <ListGroup.Item>
                   <strong>Talles (Stock):</strong>
                   {variant && variant.sizes ? (
-                    <InputGroup>
-                      <FormControl
-                        as="select"
-                        value={variantSize}
-                        onChange={handleSizeChange}
-                      >
-                        <option value={null}>- Elegir</option>
-                        {
-                          variant && variant.sizes.map((c) => (
-                            <option key={c.size._id} value={c.size._id}>{c.size.name} ({c.stock})</option>
-                          ))
-                        }
-                      </FormControl>
-                    </InputGroup>
+                    <div>
+                      {variant && variant.sizes.map((c) => (
+                        c.stock > 0 &&
+                        <div>{c.size.name} {c.stock ? c.stock : 0} {c.stock != 1 ? 'Unidades' : 'Unidad'}</div>
+                      ))
+                      }
+                    </div>
+                  ) : <></>
+                  }
+                  {variant && variant.sizes ? (
+                    <>
+                      <InputGroup>
+                        <FormControl
+                          as="select"
+                          value={variantSize}
+                          onChange={handleSizeChange}
+                        >
+                          <option value={null}>- Elegir</option>
+                          {
+                            variant && variant.sizes.map((c) => (
+                              c.stock > 0 &&
+                              <option key={c.size._id} value={c.size._id}>{c.size.name} ({c.stock ? c.stock : 0})</option>
+                            ))
+                          }
+                        </FormControl>
+                      </InputGroup>
+                      <span id="sizes-error" style={{ color: 'red' }}></span>
+                    </>
                   ) : <></>}
+                </ListGroup.Item>
+                <ListGroup.Item className="text-center">
+                  <Button variant="primary" onClick={handleShow}>
+                    Guía de Talles
+                  </Button>
+                  <Modal show={show} onHide={handleClose}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Guía de Talles</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <Image
+                        src={'/images/talles.png'}
+                        alt={'guiaTalles'}
+                        fluid="true"
+                        className="w100p"
+                      />
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button variant="secondary" onClick={handleClose}>
+                        Cerrar
+                      </Button>
+                    </Modal.Footer>
+                  </Modal>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <Row>
@@ -231,7 +281,7 @@ const ProductScreen = ({ history, match }) => {
                       onClick={addToCartHandler}
                       className="btn-block"
                       type="button"
-                      disabled={handleCartDisabled()}
+                    // disabled={handleCartDisabled()}
                     >
                       Agregar al Carrito
                     </Button>
@@ -244,7 +294,7 @@ const ProductScreen = ({ history, match }) => {
             <Col md={12}>
               {
                 product.related ? (
-                  <ProductRelatedCarousel categoryId={product.related._id} />
+                  <ProductRelatedCarousel categoryId={product.related._id} productId={product._id} />
                 ) : (
                   <></>
                 )

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Row, Col, Container, ListGroup, Form, Button } from "react-bootstrap";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import Meta from "../components/Meta";
 
 const FindUsScreen = ({ match }) => {
   const [map, setMap] = useState(null);
@@ -35,6 +36,7 @@ const FindUsScreen = ({ match }) => {
 
   return (
     <Container>
+      <Meta />
       <h1 className="mt-5 mb-3 secondary-blue bold text-center">¿Dónde encontrarnos?</h1>
       <Row>
         <Col md={3}>
@@ -158,10 +160,12 @@ const FindUsScreen = ({ match }) => {
                   <Form.Label>Teléfono</Form.Label>
                   <Form.Control
                     type="text"
+                    pattern="[0-9]*"
                     placeholder="Teléfono"
                     value={phone}
                     required
-                    onChange={(e) => setPhone(e.target.value)}
+                    onChange={(e) => setPhone(e.target.validity.valid ?
+                      e.target.value : phone)}
                   ></Form.Control>
                 </Form.Group>
 
@@ -232,7 +236,7 @@ const FindUsScreen = ({ match }) => {
           </MapContainer>
         </Col>
       </Row>
-    </Container>
+    </Container >
   );
 };
 

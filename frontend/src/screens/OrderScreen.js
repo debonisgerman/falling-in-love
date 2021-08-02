@@ -11,6 +11,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
+import Meta from "../components/Meta";
 import { Link } from "react-router-dom";
 import {
   getOrderDetails,
@@ -68,6 +69,7 @@ const OrderScreen = ({ match, history }) => {
     <Message variant="danger">{error}</Message>
   ) : (
     <Container>
+      <Meta />
       <h1>Pedido Nro. {order.billNumber}</h1>
       <Row>
         <Col md={8}>
@@ -77,6 +79,7 @@ const OrderScreen = ({ match, history }) => {
               <p><strong>Nombre: </strong> {order.shippingAddress.name}</p>
               <p><strong>Email: </strong> {order.shippingAddress.email}</p>
               <p><strong>Dirección:</strong> {order.shippingAddress.address}</p>
+              <p><strong>Departamento:</strong> {order.shippingAddress.department}</p>
               <p><strong>Provincia:</strong> {order.shippingAddress.province}</p>
               <p><strong>Teléfono:</strong> {order.shippingAddress.phone}</p>
               <p><strong>Factura:</strong> {order.shippingAddress.bill ? 'Si' : 'No'}</p>

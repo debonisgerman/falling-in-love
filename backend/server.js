@@ -12,9 +12,10 @@ import uploadRoutes from "./routes/uploadRoutes.js";
 import bannerRoutes from "./routes/bannerRoutes.js";
 import categoryRoutes from "./routes/categoryRoutes.js";
 import materialRoutes from "./routes/materialRoutes.js";
-import sectionRoutes from "./routes/sectionRoutes.js"
-import colorRoutes from "./routes/colorRoutes.js"
-import sizeRoutes from "./routes/sizeRoutes.js"
+import sectionRoutes from "./routes/sectionRoutes.js";
+import colorRoutes from "./routes/colorRoutes.js";
+import sizeRoutes from "./routes/sizeRoutes.js";
+import departmentRoutes from "./routes/departmentRoutes.js";
 
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 
@@ -40,6 +41,7 @@ app.use("/api/materials", materialRoutes);
 app.use("/api/sections", sectionRoutes);
 app.use("/api/colors", colorRoutes);
 app.use("/api/sizes", sizeRoutes);
+app.use("/api/departments", departmentRoutes);
 
 app.get("/api/config/paypal", (req, res) =>
   res.send(process.env.PAYPAL_CLIENT_ID)

@@ -13,6 +13,7 @@ import {
 } from "react-bootstrap";
 import Message from "../components/Message";
 import ProductCarousel from "../components/ProductCarousel";
+import Meta from "../components/Meta";
 import { addToCart, removeFromCart } from "../actions/cartActions";
 import { ORDER_CREATE_RESET } from "../constants/orderConstants";
 
@@ -50,8 +51,17 @@ const CartScreen = ({ match, location, history }) => {
     history.push("/shipping");
   };
 
+  const trunc = (x, posiciones = 0) => {
+    var s = x.toString()
+    var l = s.length
+    var decimalLength = s.indexOf('.') + 1
+    var numStr = s.substr(0, decimalLength + posiciones)
+    return Number(numStr)
+  }
+
   return (
     <Container>
+      <Meta />
       <Row>
         <Col md={8}>
           <h1>Carrito de Cotización</h1>
@@ -111,7 +121,7 @@ const CartScreen = ({ match, location, history }) => {
             <ListGroup variant="flush">
               <ListGroup.Item>
                 <h2>
-                  Subtotal (S./ {cartItems.reduce((acc, item) => acc + (item.qty * item.price), 0)})
+                  Subtotal (S./ {trunc(cartItems.reduce((acc, item) => acc + (item.qty * item.price), 0), 2)})
                 </h2>
               </ListGroup.Item>
               <ListGroup.Item>

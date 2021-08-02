@@ -3,6 +3,7 @@ import { Form, Button, Row, Col, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
+import Meta from "../components/Meta";
 import { getUserDetails, updateUserProfile } from "../actions/userActions";
 import { USER_UPDATE_PROFILE_RESET } from "../constants/userConstants";
 
@@ -49,6 +50,7 @@ const ProfileScreen = ({ history }) => {
 
   return (
     <Container>
+      <Meta />
       <Row>
         <Col>
           <h2>Perfil</h2>

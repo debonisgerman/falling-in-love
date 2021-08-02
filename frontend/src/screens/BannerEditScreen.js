@@ -5,6 +5,7 @@ import { Form, Button, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
+import Meta from "../components/Meta";
 import FormContainer from "../components/FormContainer";
 import { listBannersDetails, updateBanner } from "../actions/bannerActions";
 import {
@@ -66,8 +67,8 @@ const BannerEditScreen = ({ match, history }) => {
         imageType === "imageDesktop"
           ? "bannerDesktop"
           : imageType === "imageTablet"
-          ? "bannerTablet"
-          : "bannerMobile";
+            ? "bannerTablet"
+            : "bannerMobile";
       const { data } = await axios.post(`/api/upload/${url}`, formData, config);
       console.log(data);
       if (imageType === "imageDesktop") {
@@ -102,6 +103,7 @@ const BannerEditScreen = ({ match, history }) => {
 
   return (
     <Container>
+      <Meta />
       <Link to="/admin/bannerlist" className="btn btn-light my-3">
         Volver
       </Link>

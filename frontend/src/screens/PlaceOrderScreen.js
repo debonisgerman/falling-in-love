@@ -10,6 +10,7 @@ import {
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
+import Meta from "../components/Meta";
 import CheckoutSteps from "../components/CheckoutSteps";
 import { Link } from "react-router-dom";
 import { createOrder } from "../actions/orderActions";
@@ -59,6 +60,7 @@ const PlaceOrderScreen = ({ history }) => {
 
   return (
     <Container>
+      <Meta />
       <CheckoutSteps step1 step2 step3 step4 />
       <Row>
         <Col md={8}>
@@ -68,6 +70,7 @@ const PlaceOrderScreen = ({ history }) => {
               <p><strong>Nombre: </strong> {cart.shippingAddress.name}</p>
               <p><strong>Email: </strong> {cart.shippingAddress.email}</p>
               <p><strong>Dirección:</strong> {cart.shippingAddress.address}</p>
+              <p><strong>Departamento:</strong> {cart.shippingAddress.department}</p>
               <p><strong>Provincia:</strong> {cart.shippingAddress.province}</p>
               <p><strong>Teléfono:</strong> {cart.shippingAddress.phone}</p>
               <p><strong>Factura:</strong> {cart.shippingAddress.bill ? 'Si' : 'No'}</p>

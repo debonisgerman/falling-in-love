@@ -4,6 +4,7 @@ import { Table, Button, Row, Col, Container } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
+import Meta from "../components/Meta";
 import {
     listSections,
     deleteSection,
@@ -68,6 +69,7 @@ const SectionListScreen = ({ history, match }) => {
 
     return (
         <Container>
+            <Meta />
             <Row className="alignItems-center">
                 <Col>
                     <h1>Secciones</h1>

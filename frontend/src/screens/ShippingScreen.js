@@ -1,33 +1,63 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Form, Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import FormContainer from "../components/FormContainer";
 import CheckoutSteps from "../components/CheckoutSteps";
+import Meta from "../components/Meta";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
 import { saveShippingAddress } from "../actions/cartActions";
+import { listDepartments } from "../actions/departmentActions";
 
 const ShippingScreen = ({ history }) => {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
 
+  const departmentList = useSelector((state) => state.departmentList);
+  const { loading, error, departments } = departmentList;
+
   const [name, setName] = useState(shippingAddress.name);
   const [email, setEmail] = useState(shippingAddress.email);
   const [address, setAddress] = useState(shippingAddress.address);
+  const [department, setDepartment] = useState(shippingAddress.department);
   const [province, setProvince] = useState(shippingAddress.province);
   const [phone, setPhone] = useState(shippingAddress.phone);
   const [socialReason, setSocialReason] = useState(shippingAddress.socialReason);
   const [ruc, setRuc] = useState(shippingAddress.ruc);
   const [bill, setBill] = useState(shippingAddress.bill);
+  const [currentProvinces, setCurrentProvinces] = useState([])
 
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(listDepartments());
+  }, [dispatch]);
+
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(saveShippingAddress({ name, email, address, province, phone, socialReason, ruc, bill }));
+    dispatch(saveShippingAddress({ name, email, address, department, province, phone, socialReason, ruc, bill }));
     history.push("/payment");
   };
 
+  const handleDepartment = (value, id) => {
+    setDepartment(value);
+    const selectedDepartment = departments.find(d => d._id.toString() == id.toString());
+    createProvinceSelector(selectedDepartment);
+  }
+
+  const createProvinceSelector = (department) => {
+    let auxProvinces = [];
+    if (department && department.provinces.length > 0) {
+      department.provinces.map((p) => {
+        auxProvinces.push(p.name);
+      });
+    }
+    setCurrentProvinces(auxProvinces);
+  }
+
   return (
     <FormContainer>
+      <Meta />
       <CheckoutSteps step1 step2 />
       <h1>Envío</h1>
       <Form onSubmit={submitHandler}>
@@ -45,7 +75,7 @@ const ShippingScreen = ({ history }) => {
         <Form.Group controlId="email">
           <Form.Label>Email</Form.Label>
           <Form.Control
-            type="text"
+            type="email"
             placeholder="Email"
             value={email}
             required
@@ -64,15 +94,50 @@ const ShippingScreen = ({ history }) => {
           ></Form.Control>
         </Form.Group>
 
-        <Form.Group controlId="province">
+        <Form.Group controlId="department">
+          <Form.Label>Departamento</Form.Label>
+          <Form.Control
+            as="select"
+            value={department}
+            required
+            onChange={e => {
+              handleDepartment(e.target.value, e.target.selectedOptions[0].id)
+            }}
+          >
+            <option value={''}>- Elegir</option>
+            {loading ? (
+              <Loader />
+            ) : error ? (
+              <Message variant="danger">{error}</Message>
+            ) : (
+              departments && departments.map((c) => (
+                <option id={c._id} key={c._id} value={c.name}>{c.name}</option>
+              ))
+            )}
+          </Form.Control>
+        </Form.Group>
+
+        <Form.Group controlId="department">
           <Form.Label>Provincia</Form.Label>
           <Form.Control
-            type="text"
-            placeholder="Provincia"
+            as="select"
             value={province}
             required
-            onChange={(e) => setProvince(e.target.value)}
-          ></Form.Control>
+            onChange={e => {
+              setProvince(e.target.value)
+            }}
+          >
+            <option value={''}>- Elegir</option>
+            {loading ? (
+              <Loader />
+            ) : error ? (
+              <Message variant="danger">{error}</Message>
+            ) : (
+              currentProvinces && currentProvinces.map((c, i) => (
+                <option id={i} key={i} value={c}>{c}</option>
+              ))
+            )}
+          </Form.Control>
         </Form.Group>
 
         <Form.Group controlId="phone">
@@ -80,9 +145,11 @@ const ShippingScreen = ({ history }) => {
           <Form.Control
             type="text"
             placeholder="Teléfono"
+            pattern="[0-9]*"
             value={phone}
             required
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={(e) => setPhone(e.target.validity.valid ?
+              e.target.value : phone)}
           ></Form.Control>
         </Form.Group>
 
@@ -116,8 +183,10 @@ const ShippingScreen = ({ history }) => {
                   placeholder="RUC"
                   value={ruc}
                   required={bill}
-                  onChange={(e) => setRuc(e.target.value)}
+                  onChange={(e) => setRuc(e.target.validity.valid ?
+                    e.target.value : ruc)}
                   visible={bill}
+                  pattern="[0-9]*"
                 ></Form.Control>
               </Form.Group>
             </>

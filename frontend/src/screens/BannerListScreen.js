@@ -4,6 +4,7 @@ import { Table, Button, Row, Col, Image, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
+import Meta from "../components/Meta";
 import {
   listBanners,
   deleteBanner,
@@ -67,6 +68,7 @@ const BannerListScreen = ({ history, match }) => {
 
   return (
     <Container>
+      <Meta />
       <Row className="alignItems-center">
         <Col>
           <h1>Banners</h1>

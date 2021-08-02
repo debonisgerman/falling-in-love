@@ -1,9 +1,11 @@
 import React from "react";
 import { Row, Col, Card, Container } from "react-bootstrap";
+import Meta from "../components/Meta";
 
 const AboutUsScreen = () => {
   return (
     <Container>
+    <Meta />
       <h1 className="secondary-blue bold text-center mt-5 mb-3 text-center">
         Falling In Love
       </h1>

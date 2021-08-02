@@ -24,6 +24,7 @@ const orderSchema = mongoose.Schema(
       email: { type: String, required: true },
       address: { type: String, required: true },
       province: { type: String, required: true },
+      department: { type: String, required: true },
       phone: { type: String, required: true },
       socialReason: { type: String },
       ruc: { type: String },

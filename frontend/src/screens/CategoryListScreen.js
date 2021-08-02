@@ -4,6 +4,7 @@ import { Table, Button, Row, Col, Container, Image } from 'react-bootstrap';
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
+import Meta from "../components/Meta";
 import {
     listCategories,
     deleteCategory,
@@ -68,6 +69,7 @@ const CategoryListScreen = ({ history, match }) => {
 
     return (
         <Container>
+            <Meta />
             <Row className="alignItems-center">
                 <Col>
                     <h1>Categorías</h1>

@@ -5,6 +5,7 @@ import { Form, Button, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
+import Meta from "../components/Meta";
 import FormContainer from "../components/FormContainer";
 import { listCategoriesDetails, updateCategory } from "../actions/categoryActions";
 import {
@@ -87,6 +88,7 @@ const CategoryEditScreen = ({ match, history }) => {
 
     return (
         <Container>
+            <Meta />
             <Link to="/admin/categorylist" className="btn btn-light my-3">
                 Volver
             </Link>
