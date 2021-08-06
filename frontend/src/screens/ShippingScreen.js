@@ -148,8 +148,7 @@ const ShippingScreen = ({ history }) => {
             pattern="[0-9]*"
             value={phone}
             required
-            onChange={(e) => setPhone(e.target.validity.valid ?
-              e.target.value : phone)}
+            onChange={(e) => setPhone(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
@@ -183,8 +182,7 @@ const ShippingScreen = ({ history }) => {
                   placeholder="RUC"
                   value={ruc}
                   required={bill}
-                  onChange={(e) => setRuc(e.target.validity.valid ?
-                    e.target.value : ruc)}
+                  onChange={(e) => setRuc(e.target.value)}
                   visible={bill}
                   pattern="[0-9]*"
                 ></Form.Control>

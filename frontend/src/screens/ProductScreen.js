@@ -58,6 +58,10 @@ const ProductScreen = ({ history, match }) => {
       document.getElementById("sizes-error").innerHTML = "No seleccionó ningún talle";
       return false;
     }
+    if (qty <= 0){
+      document.getElementById("qty-error").innerHTML = "No seleccionó la cantidad";
+      return false
+    }
     history.push(`/cart/${match.params.id}?qty=${qty}&size=${variantSize}&color=${variant.color._id}`);
   };
 
@@ -272,6 +276,7 @@ const ProductScreen = ({ history, match }) => {
                           min="0"
                           max={variantSizeStock}
                         ></Form.Control>
+                        <span id="qty-error" style={{ color: 'red' }}></span>
                       </Col>
                     </Row>
                   </ListGroup.Item>

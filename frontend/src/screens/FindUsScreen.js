@@ -164,8 +164,7 @@ const FindUsScreen = ({ match }) => {
                     placeholder="Teléfono"
                     value={phone}
                     required
-                    onChange={(e) => setPhone(e.target.validity.valid ?
-                      e.target.value : phone)}
+                    onChange={(e) => setPhone(e.target.value)}
                   ></Form.Control>
                 </Form.Group>
 
