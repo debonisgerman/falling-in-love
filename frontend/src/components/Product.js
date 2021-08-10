@@ -42,7 +42,7 @@ const Product = ({ product }) => {
           {product.price ? ` S./ ${product.price}` : "No definido"}
         </Card.Text>
         <Card.Text as="p">
-          <strong>Talles: </strong>
+          <strong>Tallas: </strong>
           {
             product.variants &&
               product.variants.length > 0 ?

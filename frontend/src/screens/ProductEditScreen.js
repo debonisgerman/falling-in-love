@@ -175,6 +175,7 @@ const ProductEditScreen = ({ match, history }) => {
     if (color) {
       let newVariants = [...variants];
       const otherVariants = newVariants.filter(v => v.color !== color._id);
+      const variantIndex = newVariants.findIndex(v => v.color === color._id)
       newVariants = newVariants.filter(v => v.color === color._id);
       if (newVariants.length > 0) {
         newVariants = newVariants[0];
@@ -192,7 +193,9 @@ const ProductEditScreen = ({ match, history }) => {
           });
         }
         newVariants.sizes = newSizes;
-        setVariants([...otherVariants, ...[newVariants]]);
+        const newArray = [...otherVariants];
+        newArray.splice(variantIndex, 0, newVariants);
+        setVariants([...newArray]);
       } else {
         console.log("Something went wrong ", newVariants);
       }

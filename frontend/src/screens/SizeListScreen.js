@@ -72,11 +72,11 @@ const SizeListScreen = ({ history, match }) => {
             <Meta />
             <Row className="alignItems-center">
                 <Col>
-                    <h1>Talles</h1>
+                    <h1>Tallas</h1>
                 </Col>
                 <Col className="text-right">
                     <Button className="my-3" onClick={createSizeHandler}>
-                        <i className="fas fa-plus" /> Crear Talle
+                        <i className="fas fa-plus" /> Crear Talla
                     </Button>
                 </Col>
             </Row>

@@ -1,5 +1,17 @@
+@font-face {
+  font-family: 'Abril';
+  src: url(./fonts/Abril_Display_Regular.otf) format('truetype') font-weight-normal,
+       url(./fonts/Abril_Display_Bold.otf) format('truetype') font-weight-bold,
+       url(./fonts/Abril_Display_BoldItalic.otf) format('truetype') font-italic font-weight-bold,
+       url(./fonts/Abril_Display_Italic.otf) format('truetype') font-italic font-weight-normal;
+}
+
+html {
+  overflow-x: hidden;
+}
+
 * {
-  font-family: "Poppins", sans-serif;
+  font-family: "Abril";
 }
 
 .bg {
@@ -25,8 +37,10 @@ h1 {
 }
 
 h2 {
-  font-size: 1.4rem;
+  font-size: 2.3rem;
   padding: 0.5rem 0;
+  font-style: italic;
+  text-transform: uppercase;
 }
 
 .rating span {
@@ -261,15 +275,31 @@ footer a:hover {
 }
 
 .CardLinkContainer {
-  cursor: pointer;
-  box-shadow: 0 0px 0px rgba(0, 0, 0, 0.15);
-  transition: box-shadow 0.3s ease-in-out;
+  background: transparent;
+  border: none;
+  color: #780028;
 }
 
-.CardLinkContainer:hover {
+.CardLinkContainer * {
+  color: #780028;
+}
+
+.italic {
+  text-decoration: italic;
+}
+
+.italic-underline {
+  text-decoration: italic underline;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+/*.CardLinkContainer:hover {
   cursor: pointer;
   box-shadow: 4px 4px 7px #333;
-}
+} */
 
 .dark-blue {
   color: #b9535c;
@@ -324,6 +354,21 @@ footer a:hover {
   display: flex;
 }
 
+.border-title-bottom {
+  padding-bottom: .8rem;
+  margin: 0 auto;
+  /* width: 350px; */
+  /* display: block; */
+}
+
+.border-title-bottom::after {
+  content: '';
+  width: 270px;
+  border-bottom: 1.5px solid #780028;
+  margin: 0 auto;
+  display: block;
+  padding-top: 1rem;
+}
 
 
 
@@ -332,4 +377,28 @@ footer a:hover {
     padding-left: 0;
     padding-right: 0;
   }
+}
+
+.relative {
+  position: relative;
+  width: 100%;
+  padding: 20px;
+  overflow: hidden;
+}
+
+.flower-container {
+  position: absolute;
+  width: 100px;
+}
+
+.flower-left {
+  bottom: -1.2rem;
+  left: 0;
+  transform: rotate(45deg);
+}
+
+.flower-right {
+  right: 2px;
+  top: -1.2rem;
+  transform: rotate(225deg);
 }

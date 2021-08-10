@@ -22,7 +22,7 @@ const ProductCarousel = () => {
     } else {
       const pagesCount = Math.ceil(products.length / 3);
       if (document.getElementById("destTitle") && products.length > 0) {
-        document.getElementById("destTitle").innerHTML = "Productos Destacados";
+        document.getElementById("destTitle").innerHTML = "LOS PREFERIDOS";
       }
       pages = [];
       for (let i = 0; i < pagesCount; i++) {
@@ -81,7 +81,7 @@ const ProductCarousel = () => {
     <Message variant="danger">{error}</Message>
   ) : (
     <>
-      <h2 id="destTitle" className="mt-5 mb-3 secondary-blue bold text-center"></h2>
+      <h2 id="destTitle" className="mt-5 mb-3 secondary-blue bold text-center border-title-bottom"></h2>
       <Carousel id="productCarousel" pause="hover" className="bg-primary" controls={false}>
         {getPages()}
       </Carousel>

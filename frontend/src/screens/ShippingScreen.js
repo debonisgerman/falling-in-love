@@ -29,9 +29,16 @@ const ShippingScreen = ({ history }) => {
 
   const dispatch = useDispatch();
 
+
   useEffect(() => {
     dispatch(listDepartments());
   }, [dispatch]);
+
+  setTimeout(() => {
+    if (department) {
+      handleDepartment(department);
+    }
+  }, 300);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -41,7 +48,7 @@ const ShippingScreen = ({ history }) => {
 
   const handleDepartment = (value, id) => {
     setDepartment(value);
-    const selectedDepartment = departments.find(d => d._id.toString() == id.toString());
+    const selectedDepartment = departments.find(d => d.name.toString() == value);
     createProvinceSelector(selectedDepartment);
   }
 
@@ -53,6 +60,9 @@ const ShippingScreen = ({ history }) => {
       });
     }
     setCurrentProvinces(auxProvinces);
+    if (province) {
+      setProvince(province);
+    }
   }
 
   return (

@@ -7,7 +7,6 @@ import {
   ListGroup,
   Card,
   Button,
-  Form,
   Container,
   Image,
   InputGroup,
@@ -27,8 +26,8 @@ const ProductScreen = ({ history, match }) => {
   const [variant, setVariant] = useState({});
   const [productRendered, setProductRendered] = useState(false);
   const [variantSize, setVariantSize] = useState(null);
-  const [variantSizeStock, setVariantSizeStock] = useState(0);
   const [show, setShow] = useState(false);
+  const [qtySelector, setQtySelector] = useState([]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -45,6 +44,7 @@ const ProductScreen = ({ history, match }) => {
     if (product && product.name && !productRendered) {
       if (product.variants && product.variants.length > 0) {
         setVariant(product.variants[0]);
+        createQtySelector(0);
         setBackgroundImage(product.variants[0].images[0].split("\\").join("//"));
       } else {
         setBackgroundImage('/images/logo.png');
@@ -58,23 +58,12 @@ const ProductScreen = ({ history, match }) => {
       document.getElementById("sizes-error").innerHTML = "No seleccionó ningún talle";
       return false;
     }
-    if (qty <= 0){
+    if (qty <= 0) {
       document.getElementById("qty-error").innerHTML = "No seleccionó la cantidad";
       return false
     }
     history.push(`/cart/${match.params.id}?qty=${qty}&size=${variantSize}&color=${variant.color._id}`);
   };
-
-  const setQuantity = (e) => {
-    if (!variantSize) {
-      document.getElementById("sizes-error").innerHTML = "No seleccionó ningún talle";
-      return false;
-    }
-    setQty(+e.target.value);
-    if (+e.target.value > variantSizeStock) {
-      setQty(variantSizeStock);
-    }
-  }
 
   const handleMouseMove = e => {
     const { left, top, width, height } = e.target.getBoundingClientRect()
@@ -88,21 +77,32 @@ const ProductScreen = ({ history, match }) => {
   }
 
   const handleVariantChange = e => {
-    setVariant(product.variants.find(p => p.color._id == e.target.value));
-    setBackgroundImage(product.variants.find(p => p.color._id == e.target.value).images[0].split("\\").join("//"));
+    setVariant(product.variants.find(p => p.color._id === e.target.value));
+    setBackgroundImage(product.variants.find(p => p.color._id === e.target.value).images[0].split("\\").join("//"));
     setVariantSize(0);
-    console.log(variantSize);
+    createQtySelector(0);
   }
-
-  // const handleCartDisabled = e => {
-  //   return !variantSize || !variant.hasOwnProperty('sizes') || (variant.hasOwnProperty('sizes') && variant.sizes.length === 0);
-  // }
 
   const handleSizeChange = e => {
     setVariantSize(e.target.value);
-    setVariantSizeStock(variant.sizes.find(x => x.size._id == e.target.value).stock);
-    if (+qty > +variant.sizes.find(x => x.size._id == e.target.value).stock) {
-      setQty(variant.sizes.find(x => x.size._id == e.target.value).stock);
+    if (e.target.value != 0) {
+      createQtySelector(+variant.sizes.find(x => x.size._id == e.target.value).stock);
+      if (+qty > +variant.sizes.find(x => x.size._id == e.target.value).stock) {
+        setQty(variant.sizes.find(x => x.size._id == e.target.value).stock);
+      }
+    } else {
+      setQty(0);
+    }
+  }
+
+  const createQtySelector = (size) => {
+    const elems = [];
+    for (let i = 1; i <= size; i++) {
+      elems.push(<option key={i} value={i}>{i}</option>)
+    }
+    setQtySelector(elems);
+    if (size > 0) {
+      setQty(1)
     }
   }
 
@@ -182,7 +182,7 @@ const ProductScreen = ({ history, match }) => {
                   {product.section ? product.section.reduce((accumulator, currentValue) => accumulator = accumulator + ", " + currentValue.name, "").slice(2) : "No definido"}
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <strong>Talles (Stock):</strong>
+                  <strong>Tallas (Stock):</strong>
                   {variant && variant.sizes ? (
                     <div>
                       {variant && variant.sizes.map((c) => (
@@ -201,11 +201,11 @@ const ProductScreen = ({ history, match }) => {
                           value={variantSize}
                           onChange={handleSizeChange}
                         >
-                          <option value={null}>- Elegir</option>
+                          <option value={0}>- Elegir</option>
                           {
                             variant && variant.sizes.map((c) => (
                               c.stock > 0 &&
-                              <option key={c.size._id} value={c.size._id}>{c.size.name} ({c.stock ? c.stock : 0})</option>
+                              <option key={c.size._id} value={c.size._id}>{c.size.name}</option>
                             ))
                           }
                         </FormControl>
@@ -216,16 +216,16 @@ const ProductScreen = ({ history, match }) => {
                 </ListGroup.Item>
                 <ListGroup.Item className="text-center">
                   <Button variant="primary" onClick={handleShow}>
-                    Guía de Talles
+                    Guía de Tallas
                   </Button>
                   <Modal show={show} onHide={handleClose}>
                     <Modal.Header closeButton>
-                      <Modal.Title>Guía de Talles</Modal.Title>
+                      <Modal.Title>Guía de Tallas</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                       <Image
-                        src={'/images/talles.png'}
-                        alt={'guiaTalles'}
+                        src={'/images/tallas.png'}
+                        alt={'guiaTallas'}
                         fluid="true"
                         className="w100p"
                       />
@@ -268,15 +268,13 @@ const ProductScreen = ({ history, match }) => {
                     <Row className="align-items-center">
                       <Col>Cantidad</Col>
                       <Col>
-                        <Form.Control
-                          type="number"
-                          placeholder="Cantidad"
+                        <FormControl
+                          as="select"
                           value={qty}
-                          onChange={(e) => setQuantity(e)}
-                          min="0"
-                          max={variantSizeStock}
-                        ></Form.Control>
-                        <span id="qty-error" style={{ color: 'red' }}></span>
+                          onChange={(e) => setQty(e.target.value)}
+                        >
+                          {qtySelector}
+                        </FormControl>
                       </Col>
                     </Row>
                   </ListGroup.Item>

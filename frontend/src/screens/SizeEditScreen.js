@@ -60,7 +60,7 @@ const SizeEditScreen = ({ match, history }) => {
                 Volver
             </Link>
             <FormContainer>
-                <h1>Editar Talle</h1>
+                <h1>Editar Talla</h1>
                 {loadingUpdate && <Loader />}
                 {errorUpdate && <Message variant="danger">{errorUpdate}</Message>}
                 {loading ? (

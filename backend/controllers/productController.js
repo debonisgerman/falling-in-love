@@ -388,8 +388,6 @@ const createProduct = asyncHandler(async (req, res) => {
     name: "Nombre",
     image: "/images/logo.png",
     description: "Descripción",
-    material: "",
-    section: "Sección",
     code: "0",
     size: [],
     leading: false,

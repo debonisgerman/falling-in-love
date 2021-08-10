@@ -38,7 +38,7 @@ const sendMail = async (data, order, orderItems) => {
       return `
                 <li>Producto: ${item.name}</li>
                 <li>Color: ${item.colorName}</li>
-                <li>Talle: ${item.sizeName}</li>
+                <li>Talla: ${item.sizeName}</li>
                 <li>Cantidad: ${item.qty}</li>
                 <hr />
               `;
@@ -77,7 +77,7 @@ const sendMail = async (data, order, orderItems) => {
       return `
                 <li>Producto: ${item.name}</li>
                 <li>Color: ${item.colorName}</li>
-                <li>Talle: ${item.sizeName}</li>
+                <li>Talla: ${item.sizeName}</li>
                 <li>Cantidad: ${item.qty}</li>
                 <hr />
               `;

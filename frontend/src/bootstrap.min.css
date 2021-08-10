@@ -627,6 +627,16 @@
          max-width: 1140px
      }
  }
+
+ @media (min-width:1500px) {
+    .container,
+    .container-lg,
+    .container-md,
+    .container-sm,
+    .container-xl {
+        max-width: 1400px
+    }
+}
  
  .row {
      display: -ms-flexbox;

@@ -124,7 +124,7 @@ const OrderScreen = ({ match, history }) => {
                             {item.name}
                           </Link>
                           <p className="mt-2 mb-1">
-                            <strong>Talle: {item.sizeName}</strong>
+                            <strong>Talla: {item.sizeName}</strong>
                           </p>
                           <p>
                             <strong>color: {item.colorName}</strong>

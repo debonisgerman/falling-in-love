@@ -76,6 +76,15 @@ const PlaceOrderScreen = ({ history }) => {
               <p><strong>Factura:</strong> {cart.shippingAddress.bill ? 'Si' : 'No'}</p>
               <p><strong>Razón Social:</strong> {cart.shippingAddress.socialReason ? cart.shippingAddress.socialReason : '-'}</p>
               <p><strong>RUC:</strong> {cart.shippingAddress.ruc ? cart.shippingAddress.ruc : '-'}</p>
+              <div className="mb-2">
+                <a
+                  href="#"
+                  rel="noreferrer"
+                >
+                  <i className="fas fa-book pr-2"></i>
+                  Políticas de Envío
+                </a>
+              </div>
             </ListGroup.Item>
 
             <ListGroup.Item>
@@ -100,7 +109,7 @@ const PlaceOrderScreen = ({ history }) => {
                             {item.name}
                           </Link>
                           <p className="mt-2 mb-1">
-                            <strong>Talle: {item.sizeName}</strong>
+                            <strong>Talla: {item.sizeName}</strong>
                           </p>
                           <p>
                             <strong>color: {item.colorName}</strong>

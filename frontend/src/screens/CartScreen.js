@@ -87,17 +87,7 @@ const CartScreen = ({ match, location, history }) => {
                       <div>S./ {item.price}</div>
                     </Col>
                     <Col md={2}>
-                      <Form.Control
-                        type="number"
-                        placeholder="Cantidad"
-                        value={item.qty}
-                        onChange={(e) =>
-                          dispatch(
-                            addToCart(item.product, Number(e.target.value), size, color)
-                          )
-                        }
-                        min="0"
-                      ></Form.Control>
+                      <div>{item.qty}{item.qty > 1 ? ' Unidades' : ' Unidad'}</div>
                     </Col>
                     <Col md={2}>
                       <Button

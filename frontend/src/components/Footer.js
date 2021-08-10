@@ -9,7 +9,7 @@ const Footer = () => {
         <Row className="py-3">
           <Col md={4} className="text-center">
             <Image
-              src="/images/logo.png"
+              src="/images/logo2.png"
               alt="logo"
               fluid="true"
               className="logoFooter"
@@ -42,6 +42,16 @@ const Footer = () => {
                 >
                   <i className="fas fa-envelope pr-2"></i>
                   fallinginloveperu@outlook.com
+                </a>
+              </div>
+              <div>
+                <a
+                  href="#"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <i className="fas fa-book pr-2"></i>
+                  Libro de Reclamaciones
                 </a>
               </div>
             </div>

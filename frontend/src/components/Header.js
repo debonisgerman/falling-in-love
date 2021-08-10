@@ -20,7 +20,7 @@ const Header = () => {
           <LinkContainer to="/">
             <Navbar.Brand>
               <Image
-                src="/images/logo.png"
+                src="/images/logo2.png"
                 alt="logo"
                 fluid="true"
                 className="logoHeader"
@@ -101,7 +101,7 @@ const Header = () => {
                   </LinkContainer>
                   <LinkContainer to="/admin/sizelist">
                     <NavDropdown.Item>
-                      <i className="far fa-file-plus"></i> Talles
+                      <i className="far fa-file-plus"></i> Tallas
                     </NavDropdown.Item>
                   </LinkContainer>
                 </NavDropdown>
