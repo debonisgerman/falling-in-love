@@ -202,6 +202,11 @@ const ProductEditScreen = ({ match, history }) => {
     }
   }
 
+  const handleRemoveVariant = (color) => {
+    let newVariants = [...variants];
+    setVariants([...newVariants.filter(v => v.color !== color._id)]);
+  }
+
 
   return (
     <Container>
@@ -412,6 +417,7 @@ const ProductEditScreen = ({ match, history }) => {
                     key={i}
                     variant={v}
                     updateVariants={handleVariantsUpdate}
+                    removeVariant={handleRemoveVariant}
                   />
                 </>
               ))

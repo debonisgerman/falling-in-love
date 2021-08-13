@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import SubHeader from "./components/SubHeader";
 import ShopScreen from "./screens/ShopScreen";
 import ProductScreen from "./screens/ProductScreen";
 import CartScreen from "./screens/CartScreen";
@@ -37,6 +38,7 @@ const App = () => {
   return (
     <Router>
       <Header />
+      <SubHeader />
       <main className="pb-3 w-100">
         <Route path="/admin/material/:id/edit" component={MaterialEditScreen} />
         <Route path="/admin/materiallist" component={MaterialListScreen} />

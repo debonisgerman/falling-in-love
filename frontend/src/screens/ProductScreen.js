@@ -219,15 +219,16 @@ const ProductScreen = ({ history, match }) => {
                     Guía de Tallas
                   </Button>
                   <Modal show={show} onHide={handleClose}>
-                    <Modal.Header closeButton>
-                      <Modal.Title>Guía de Tallas</Modal.Title>
-                    </Modal.Header>
                     <Modal.Body>
                       <Image
                         src={'/images/tallas.png'}
                         alt={'guiaTallas'}
                         fluid="true"
-                        className="w100p"
+                        style={{
+                          width: '80%',
+                          margin: '0 auto',
+                          display: 'block'
+                        }}
                       />
                     </Modal.Body>
                     <Modal.Footer>

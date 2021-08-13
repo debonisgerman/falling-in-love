@@ -5,10 +5,10 @@ import Loader from "./Loader";
 
 
 const VariantForm = (props) => {
-    const { colors, color, sizesArray, updateVariants, variant } = props;
+    const { colors, color, sizesArray, updateVariants, variant, removeVariant } = props;
 
-    const [sizes, setSizes] = useState({});
-    const [images, setImages] = useState({});
+    const [sizes, setSizes] = useState(variant.sizes ? variant.sizes : {});
+    const [images, setImages] = useState(variant.images ? variant.images : {});
     const [uploading, setUploading] = useState(false);
     const [variantFilled, setVariantFilled] = useState(false);
 
@@ -17,7 +17,10 @@ const VariantForm = (props) => {
         && Object.keys(o1).every(p => o1[p] === o2[p]);
 
     useEffect(() => {
-        if (variant && !variantFilled) {
+        const foundVariant = variant.images.find(
+            x => x.indexOf(images && images.image1 && images.image1.split("\\")[1]) !== -1
+        )
+        if ((variant && !variantFilled) || !foundVariant) {
             let variantSizes = {}
             for (let i in variant.sizes) {
                 let sizeFound = sizesArray.find(s => s._id === variant.sizes[i].size);
@@ -39,7 +42,7 @@ const VariantForm = (props) => {
         } else {
             updateVariants(sizes, images, selectedColor);
         }
-    }, [images, sizes]);
+    }, [images, sizes, variant]);
 
     const selectedColor = colors.find(c => c._id === color);
 
@@ -82,11 +85,15 @@ const VariantForm = (props) => {
         }
     };
 
+    const deleteVariant = () => {
+        removeVariant(selectedColor)
+    }
+
 
     return (
-        <>
+        <div id={`variant-${selectedColor ? selectedColor.name : ''}`}>
             <hr className="mt-5" />
-            <Form.Group className='align-items-center'>
+            <Form.Group className='align-items-around p-relative'>
                 <div
                     style={{
                         backgroundColor: selectedColor ? selectedColor.color : '',
@@ -101,6 +108,12 @@ const VariantForm = (props) => {
                 <span>
                     {selectedColor ? selectedColor.name : ''}
                 </span>
+                <div
+                    style={{ position: 'absolute', right: '0', top: '0', cursor: 'pointer' }}
+                    onClick={deleteVariant}
+                >
+                    <i className="fas fa-trash"></i>
+                </div>
             </Form.Group>
             <Form.Group>
                 <Form.Label>Stock</Form.Label>
@@ -203,7 +216,7 @@ const VariantForm = (props) => {
                 ></Form.File>
             </Form.Group>
             <hr />
-        </>
+        </div>
     )
 }
 

@@ -37,7 +37,7 @@ const Header = () => {
               </LinkContainer>
               <LinkContainer to="/find-us">
                 <Nav.Link>
-                  <i className="fas fa-map-marker-alt"></i> Encuéntranos
+                  <i className="fas fa-map-marker-alt"></i> Contacto
                 </Nav.Link>
               </LinkContainer>
               <LinkContainer to="/shop">

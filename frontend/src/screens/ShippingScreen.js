@@ -20,6 +20,7 @@ const ShippingScreen = ({ history }) => {
   const [email, setEmail] = useState(shippingAddress.email);
   const [address, setAddress] = useState(shippingAddress.address);
   const [department, setDepartment] = useState(shippingAddress.department);
+  const [filledDepartment, setFilledDepartment] = useState(false);
   const [province, setProvince] = useState(shippingAddress.province);
   const [phone, setPhone] = useState(shippingAddress.phone);
   const [socialReason, setSocialReason] = useState(shippingAddress.socialReason);
@@ -35,10 +36,11 @@ const ShippingScreen = ({ history }) => {
   }, [dispatch]);
 
   setTimeout(() => {
-    if (department) {
+    if (department && !filledDepartment) {
       handleDepartment(department);
+      setFilledDepartment(true);
     }
-  }, 300);
+  }, 1000);
 
   const submitHandler = (e) => {
     e.preventDefault();

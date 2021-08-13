@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Row,
@@ -7,6 +7,7 @@ import {
   Image,
   Card,
   Container,
+  Modal
 } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
@@ -18,6 +19,10 @@ import { CART_RESET_ITEM } from "../constants/cartConstants";
 
 const PlaceOrderScreen = ({ history }) => {
   const dispatch = useDispatch();
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const cart = useSelector((state) => state.cart);
 
@@ -28,7 +33,7 @@ const PlaceOrderScreen = ({ history }) => {
   cart.itemsPrice = addDecimals(
     cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
   );
-  cart.shippingPrice = addDecimals(15);
+  cart.shippingPrice = cart.shippingAddress.province !== 'Lima' ?  addDecimals(20) : addDecimals(15);
   cart.totalPrice = (
     Number(cart.itemsPrice) +
     Number(cart.shippingPrice)
@@ -80,10 +85,32 @@ const PlaceOrderScreen = ({ history }) => {
                 <a
                   href="#"
                   rel="noreferrer"
+                  onClick={handleShow}
                 >
                   <i className="fas fa-book pr-2"></i>
                   Políticas de Envío
                 </a>
+                <Modal show={show} onHide={handleClose}>
+                  <Modal.Body>
+                    <h4><b>ENVÍOS Y ENTREGAS</b></h4>
+                    <h6 className="mb-1 mt-4">LIMA METROPOLITANA:</h6>
+                    <p className="mb-0">Todas las compras por montos menores a S/150 tendrán un costo de envío de S/15. <b>Envíos gratis por compras mayores a S/150.</b></p>
+                    <p className="mb-0">Tiempo de entrega de 3 días hábiles contados desde la fecha que realizaste tu compra, en el horario de 9am a 7pm.</p>
+                    <h6 className="mb-1 mt-4">RECÍBELO HASTA EN 24 HORAS - LIMA METROPOLITANA:</h6>
+                    <p className="mb-0">Tiene un costo fijo de S/20.</p>
+                    <p className="mb-0">Tiempo de entrega dentro de las siguientes 24 horas hábiles. (Consulta si tu distrito está incluido dentro de la cobertura)</p>
+                    <h6 className="mb-1 mt-4">PROVINCIAS DEL PERÚ</h6>
+                    <p className="mb-0">Todas las compras por montos menores a S/150 tendrán un costo de envío de S/20. <b>Envíos gratis por compras mayores a S/150.</b></p>
+                    <p className="mb-0">Tiempo de entrega de 3 a 5 días hábiles contados desde la fecha que realizaste tu compra.</p>
+                    <p className="mb-0">Los envíos se hacen por Olva Courier y se te brindara el número de tracking con el que podrás hacer seguimiento de tu pedido.</p>
+                    <p className="mb-0">El pedido se puede programar para que llegue a la dirección dada al momento de realizar la compra o también para recojo en la agencia de Olva Courier de la ciudad de destino.</p>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                      Cerrar
+                    </Button>
+                  </Modal.Footer>
+                </Modal>
               </div>
             </ListGroup.Item>
 

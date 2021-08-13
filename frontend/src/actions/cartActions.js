@@ -8,7 +8,7 @@ import {
 
 export const addToCart = (id, qty, size, color) => async (dispatch, getState) => {
   const { data } = await axios.get(`/api/products/${id}`);
-  const variant = data.variants.find(v => v.color._id == color);
+  const variant = data.variants.find(v => v.color._id === color);
 
 
   dispatch({
@@ -22,7 +22,7 @@ export const addToCart = (id, qty, size, color) => async (dispatch, getState) =>
       color: color,
       colorName: variant.color.name,
       size: size,
-      sizeName: variant.sizes.find(s => s.size._id == size).size.name,
+      sizeName: variant.sizes.find(s => s.size._id === size).size.name,
     },
   });
 

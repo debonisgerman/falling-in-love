@@ -240,11 +240,11 @@ b {
 }
 
 #productCarousel img {
-  margin: 80px 0px 30px 0px;
+  margin: 0px 0px 80px 0px;
 }
 
 #productCarousel .carousel-caption {
-  bottom: auto;
+  top: auto;
   padding-left: 50px;
   padding-right: 50px;
   width: 100%;
@@ -282,6 +282,25 @@ footer a:hover {
 
 .CardLinkContainer * {
   color: #780028;
+}
+
+.CardLinkContainer .h5 {
+  margin-top: 1rem;
+}
+
+.CardLinkContainer .card-body {
+  padding-top: 0;
+}
+
+.CardLinkContainer p.card-text {
+  margin-bottom: 1.5rem;
+}
+
+.CardLinkContainer div.card-text:last-of-type {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 .italic {
@@ -382,7 +401,7 @@ footer a:hover {
 .relative {
   position: relative;
   width: 100%;
-  padding: 20px;
+  padding: 50px;
   overflow: hidden;
 }
 
@@ -401,4 +420,8 @@ footer a:hover {
   right: 2px;
   top: -1.2rem;
   transform: rotate(225deg);
+}
+
+.subheader {
+  color: #fbc0c1;
 }

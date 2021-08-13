@@ -50,7 +50,7 @@ const ProductCarousel = () => {
       for (let i = page; i < rounds; i++) {
         if (products[i - 1]) {
           items.push(
-            <Col md={4} key={products[i - 1]._id}>
+            <Col md={3} key={products[i - 1]._id}>
               <Link onClick={() => handleLink(products[i - 1])}>
                 <Image
                   src={
@@ -65,6 +65,7 @@ const ProductCarousel = () => {
                 />
                 <Carousel.Caption className="carosuel-caption">
                   <h5>{products[i - 1].name}</h5>
+                  <h5>S./ {products[i - 1].price}</h5>
                 </Carousel.Caption>
               </Link>
             </Col>

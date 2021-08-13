@@ -44,7 +44,8 @@ const Footer = () => {
                   fallinginloveperu@outlook.com
                 </a>
               </div>
-              <div>
+              <hr className="bg-light" />
+              <div className="flex justify-content-around align-items-center">
                 <a
                   href="#"
                   target="_blank"
@@ -52,6 +53,14 @@ const Footer = () => {
                 >
                   <i className="fas fa-book pr-2"></i>
                   Libro de Reclamaciones
+                </a>
+                <a
+                  href="#"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <i className="fas fa-book pr-2"></i>
+                  Términos y Condiciones
                 </a>
               </div>
             </div>

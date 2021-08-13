@@ -42,7 +42,7 @@ const HomeScreen = () => {
         <Container>
           <h2 className="mt-5 mb-3 secondary-blue bold text-center border-title-bottom">ÚNICA Y LIBRE</h2>
           <h5 className="text-center"><i>Conviértete en una chica Falling in Love, ten la libertad de usar lo que te haga sentir única</i></h5>
-          <h5 className="text-center"><i>Nuestras prendas te ayudarán a resaltar tu sensualidad sin dejar de lado tu comodidad.</i></h5>
+          <h5 className="mb-5 text-center"><i>Nuestras prendas te ayudarán a resaltar tu sensualidad sin dejar de lado tu comodidad.</i></h5>
         </Container>
       </div>
       <Row className="bg-light">
@@ -76,7 +76,7 @@ const HomeScreen = () => {
                       </Card.Text>
                       <Card.Text as="div" className="text-center">
                         <LinkContainer
-                          to="/shop"
+                          to={`/shop?category=${category.name}`}
                         >
                           <div className="btn btn-outline-primary rounded"><i>Comprar</i></div>
                         </LinkContainer>

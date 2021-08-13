@@ -1,34 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Row, Col, Container, ListGroup, Form, Button } from "react-bootstrap";
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import Meta from "../components/Meta";
 
 const FindUsScreen = ({ match }) => {
-  const [map, setMap] = useState(null);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
-
-  const filterMap = (filter) => {
-    if (filter === "paruro") {
-      map.setView([-12.054208809262152, -77.0255821313492], 17);
-      document.getElementsByClassName("leaflet-marker-icon")[0].click();
-    }
-    if (filter === "lampa") {
-      map.setView([-12.053952, -77.03429], 17);
-      document.getElementsByClassName("leaflet-marker-icon")[1].click();
-    }
-  };
-
-  useEffect(() => {
-    if (match.params.map) {
-      if (map) {
-        filterMap(match.params.map);
-      }
-    }
-  });
+  const [commentary, setCommentary] = useState("");
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -37,91 +17,61 @@ const FindUsScreen = ({ match }) => {
   return (
     <Container>
       <Meta />
-      <h1 className="mt-5 mb-3 secondary-blue bold text-center">¿Dónde encontrarnos?</h1>
+
       <Row>
         <Col md={3}>
+          <h1 className="mb-3 secondary-blue bold text-center">¿Dónde encontrarnos?</h1>
           <ListGroup variant="flush">
-            <ListGroup.Item
-              onClick={() => filterMap("paruro")}
-              className="no-border pb-0"
-              style={{ cursor: "pointer" }}
-            >
-              <i className="fas fa-map-marker-alt pr-2"></i>
-              Aquí estamos
+            <ListGroup.Item className="no-border  secondary-blue">
+              <h5>
+                <a href="tel:913059930" target="_blank" rel="noreferrer">
+                  <i className="fas fa-phone pr-2"></i>
+                  913059930
+                </a>
+              </h5>
             </ListGroup.Item>
-            <ListGroup.Item className="pt-0">
-              <Row className="mt-2">
-                <Col>
-                  <div>
-                    <a href="tel:913059930" target="_blank" rel="noreferrer">
-                      <i className="fas fa-phone pr-2"></i>
-                      913059930
-                    </a>
-                  </div>
-                </Col>
-                <Col>
-                  <div>
-                    <a
-                      href="https://wa.me/message/BC3M5NM7LNWAE1"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <i className="fab fa-whatsapp pr-2"></i>
-                      913059930
-                    </a>
-                  </div>
-                </Col>
-              </Row>
+            <ListGroup.Item className="no-border secondary-blue">
+              <h5>
+                <a
+                  href="https://wa.me/message/BC3M5NM7LNWAE1"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <i className="fab fa-whatsapp pr-2"></i>
+                  913059930
+                </a>
+              </h5>
             </ListGroup.Item>
-            <ListGroup.Item
-              onClick={() => filterMap("lampa")}
-              className="no-border pb-0"
-              style={{ cursor: "pointer", display: "none" }}
-            >
-              <i className="fas fa-map-marker-alt pr-2"></i>
-              Lorem Ipsum
+            <ListGroup.Item className="no-border secondary-blue">
+              <h5>
+                <a
+                  href="mailto:fallinginloveperu@outlook.com"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <i className="fas fa-envelope pr-2"></i>
+                  fallinginloveperu@outlook.com
+                </a>
+              </h5>
             </ListGroup.Item>
-            <ListGroup.Item className="pt-0"
-              style={{ cursor: "pointer", display: "none" }}>
-              <Row className="mt-2">
-                <Col>
-                  <div>
-                    <a href="tel:11111111" target="_blank" rel="noreferrer">
-                      <i className="fas fa-phone pr-2"></i>
-                      11111111
-                    </a>
-                  </div>
-                </Col>
-              </Row>
-              <Row className="mt-2">
-                <Col>
-                  <div>
-                    <a
-                      href="#"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <i className="fab fa-whatsapp pr-2"></i>
-                      11111111
-                    </a>
-                  </div>
-                </Col>
-                <Col>
-                  <div>
-                    <a
-                      href="#"
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <i className="fab fa-whatsapp pr-2"></i>
-                      11111111
-                    </a>
-                  </div>
-                </Col>
-              </Row>
+            <ListGroup.Item className="no-border secondary-blue">
+              <h5>
+                <a
+                  href="mailto:fallinginloveperu@outlook.com"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <i className="fas fa-clock pr-2"></i>
+                  Lunes a Viernes 9 a 18hs.
+                </a>
+              </h5>
             </ListGroup.Item>
+          </ListGroup>
+        </Col>
+        <Col>
+          <h1 className="mb-3 secondary-blue bold text-center">Déjanos tu consulta</h1>
+          <ListGroup variant="flush">
             <ListGroup.Item>
-              <h4>Déjanos tu consulta</h4>
               <Form onSubmit={submitHandler}>
                 <Form.Group controlId="name">
                   <Form.Label>Nombre y Apellido</Form.Label>
@@ -168,71 +118,23 @@ const FindUsScreen = ({ match }) => {
                   ></Form.Control>
                 </Form.Group>
 
+                <Form.Group controlId="phone">
+                  <Form.Label>Comentario</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    placeholder="Comentario"
+                    value={commentary}
+                    required
+                    onChange={(e) => setCommentary(e.target.value)}
+                  ></Form.Control>
+                </Form.Group>
+
                 <Button className="btn-block" type="submit" variant="primary">
                   Enviar
                 </Button>
               </Form>
             </ListGroup.Item>
           </ListGroup>
-        </Col>
-        <Col md={9}>
-          <MapContainer
-            center={[-12.054208809262152, -77.0255821313492]}
-            zoom={15}
-            scrollWheelZoom={false}
-            style={{ height: "37rem" }}
-            whenCreated={setMap}
-          >
-            <TileLayer
-              attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <Marker
-              data-id="paruro"
-              position={[-12.054208809262152, -77.0255821313492]}
-            >
-              <Popup>
-                <div style={{ width: "13rem" }}>
-                  <Row>
-                    <h6 style={{ width: "100%" }} className="text-center">
-                      Lorem Ipsum
-                    </h6>
-                  </Row>
-                  <Row className="my-2">
-                    <Col className="text-center">
-                      <a
-                        href="#"
-                        target="_blank"
-                        rel="noreferrer"
-                        style={{ color: "green" }}
-                      >
-                        <i
-                          className="fas fa-map-marker-alt py-2"
-                          style={{ fontSize: "25px" }}
-                        ></i>
-                        <br />
-                        Google Maps
-                      </a>
-                    </Col>
-                    <Col className="text-center">
-                      <a
-                        href="#"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <i
-                          className="fab fa-waze py-2"
-                          style={{ fontSize: "25px" }}
-                        ></i>
-                        <br />
-                        Waze
-                      </a>
-                    </Col>
-                  </Row>
-                </div>
-              </Popup>
-            </Marker>
-          </MapContainer>
         </Col>
       </Row>
     </Container >
