@@ -10,7 +10,7 @@ const Product = ({ product }) => {
     '/images/logo.png';
 
     const handleLink = e => {
-      window.location.href = window.location.href.split("/shop").join("") + `/product/${product._id}`;
+      window.location.href = window.location.href.split("/shop")[0] + `/product/${product._id}`;
     }
 
   return (

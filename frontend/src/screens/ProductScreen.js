@@ -18,6 +18,7 @@ import { listProductsDetails } from "../actions/productActions";
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import Meta from "../components/Meta";
+import { isMobile } from 'react-device-detect'
 
 const ProductScreen = ({ history, match }) => {
   const [qty, setQty] = useState(0);
@@ -43,6 +44,14 @@ const ProductScreen = ({ history, match }) => {
     }
     if (product && product.name && !productRendered) {
       if (product.variants && product.variants.length > 0) {
+        let sizes = [];
+        sizes.push(product.variants[0].sizes.find(x => x.size.name === "XS"))
+        sizes.push(product.variants[0].sizes.find(x => x.size.name === "S"))
+        sizes.push(product.variants[0].sizes.find(x => x.size.name === "M"))
+        sizes.push(product.variants[0].sizes.find(x => x.size.name === "L"))
+        sizes.push(product.variants[0].sizes.find(x => x.size.name === "XL"))
+        sizes = sizes.filter(x => x);
+        product.variants[0].sizes = sizes;
         setVariant(product.variants[0]);
         createQtySelector(0);
         setBackgroundImage(product.variants[0].images[0].split("\\").join("//"));
@@ -66,6 +75,12 @@ const ProductScreen = ({ history, match }) => {
   };
 
   const handleMouseMove = e => {
+    console.log("DEVICE", isMobile);
+    e.preventDefault();
+    if (isMobile) {
+      e.target.style.backgroundSize = '100%';
+      return;
+    }
     const { left, top, width, height } = e.target.getBoundingClientRect()
     const x = (e.pageX - left) / width * 100
     const y = (e.pageY - top) / height * 100
@@ -77,7 +92,17 @@ const ProductScreen = ({ history, match }) => {
   }
 
   const handleVariantChange = e => {
-    setVariant(product.variants.find(p => p.color._id === e.target.value));
+    const pvariant = product.variants.find(p => p.color._id === e.target.value);
+    let sizes = [];
+    sizes.push(pvariant.sizes.find(x => x.size.name === "XS"))
+    sizes.push(pvariant.sizes.find(x => x.size.name === "S"))
+    sizes.push(pvariant.sizes.find(x => x.size.name === "M"))
+    sizes.push(pvariant.sizes.find(x => x.size.name === "L"))
+    sizes.push(pvariant.sizes.find(x => x.size.name === "XL"))
+    sizes = sizes.filter(x => x);
+    pvariant.sizes = sizes;
+
+    setVariant(pvariant);
     setBackgroundImage(product.variants.find(p => p.color._id === e.target.value).images[0].split("\\").join("//"));
     setVariantSize(0);
     createQtySelector(0);
@@ -109,7 +134,7 @@ const ProductScreen = ({ history, match }) => {
   return (
     <Container>
       <Link className="btn btn-light my-3" to="/shop">
-        Volver
+        Volver {isMobile}
       </Link>
       {loading ? (
         <Loader />
@@ -119,11 +144,12 @@ const ProductScreen = ({ history, match }) => {
         <>
           <Meta title={product.name} />
           <Row>
-            <Col md={4}>
+            <Col sm={4} md={4}>
               <Row>
                 <figure
                   className="product-figure"
                   onMouseMove={handleMouseMove}
+                  onDrag={handleMouseMove}
                   style={{ backgroundPosition, backgroundImage: `url(${backgroundImage})`, backgroundRepeat: 'no-repeat' }}
                 >
                   <img src={backgroundImage} alt={product.name} />
@@ -131,7 +157,7 @@ const ProductScreen = ({ history, match }) => {
               </Row>
               <Row>
                 {variant && variant.images && variant.images.map((image, i) => (
-                  <Col md={2}>
+                  <Col xs={2} sm={2} md={2} >
                     <Image
                       src={image}
                       alt={i}
@@ -186,8 +212,8 @@ const ProductScreen = ({ history, match }) => {
                   {variant && variant.sizes ? (
                     <div>
                       {variant && variant.sizes.map((c) => (
-                        c.stock > 0 &&
-                        <div>{c.size.name} {c.stock ? c.stock : 0} {c.stock != 1 ? 'Unidades' : 'Unidad'}</div>
+                        c && c.stock && c.stock > 0 &&
+                        <div key={c.size._id}>{c.size.name} {c.stock ? c.stock : 0} {c.stock != 1 ? 'Unidades' : 'Unidad'}</div>
                       ))
                       }
                     </div>
@@ -204,7 +230,7 @@ const ProductScreen = ({ history, match }) => {
                           <option value={0}>- Elegir</option>
                           {
                             variant && variant.sizes.map((c) => (
-                              c.stock > 0 &&
+                              c && c.stock && c.stock > 0 &&
                               <option key={c.size._id} value={c.size._id}>{c.size.name}</option>
                             ))
                           }

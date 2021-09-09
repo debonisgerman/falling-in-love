@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { LinkContainer } from "react-router-bootstrap";
-import { Table, Button, Container } from "react-bootstrap";
+import { Table, Button, Container, FormControl, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
@@ -9,6 +9,7 @@ import { listOrders } from "../actions/orderActions";
 
 const OrderListScreen = ({ history }) => {
   const dispatch = useDispatch();
+  const [listedOrders, setListedOrders] = useState([])
 
   const orderList = useSelector((state) => state.orderList);
   const { loading, error, orders } = orderList;
@@ -22,12 +23,53 @@ const OrderListScreen = ({ history }) => {
     } else {
       history.push("/login");
     }
+    if (listedOrders.length == 0) {
+      handleStatus('Todos');
+    }
   }, [dispatch, history, userInfo]);
+
+  const handleStatus = (val) => {
+    console.log(val);
+    switch (val) {
+      case 'Todos':
+        setListedOrders(orders);
+        break;
+      case 'No Pagados':
+        setListedOrders(orders.filter(x => !x.isPriced));
+        break;
+      case 'Pagados':
+        setListedOrders(orders.filter(x => x.isPriced));
+        break;
+      case 'No Enviados':
+        setListedOrders(orders.filter(x => !x.isDelivered));
+        break;
+      case 'Enviados':
+        setListedOrders(orders.filter(x => x.isDelivered));
+        break;
+    }
+  }
 
   return (
     <Container>
       <Meta />
       <h1>Pedidos</h1>
+      <Row>
+        <Col md={4}>
+          <FormControl
+            as="select"
+            onChange={(e) => handleStatus(e.target.value)}
+            label="Estado"
+          >
+            <option key={0} value={'Todos'}>Todos</option>
+            <option key={1} value={'No Pagados'}>No Pagados</option>
+            <option key={2} value={'Pagados'}>Pagados</option>
+            <option key={3} value={'No Enviados'}>No Enviados</option>
+            <option key={4} value={'Enviados'}>Enviados</option>
+          </FormControl>
+        </Col>
+      </Row>
+      <br />
+
       {loading ? (
         <Loader />
       ) : error ? (
@@ -47,7 +89,7 @@ const OrderListScreen = ({ history }) => {
             </tr>
           </thead>
           <tbody>
-            {orders.map((order) => (
+            {listedOrders.length > 0 && listedOrders.sort((a, b) => b.billNumber - a.billNumber).map((order) => (
               <tr key={order._id}>
                 <td>{order.billNumber}</td>
                 <td>{order.shippingAddress.name}</td>

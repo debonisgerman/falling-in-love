@@ -1,25 +1,24 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { Form, Button, Container, Col, Row } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import Loader from "./Loader";
 
 
 const VariantForm = (props) => {
-    const { colors, color, sizesArray, updateVariants, variant, removeVariant } = props;
+    const { colors, color, sizesArray, updateVariants, variant, removeVariant, variants, variantFill } = props;
 
     const [sizes, setSizes] = useState(variant.sizes ? variant.sizes : {});
     const [images, setImages] = useState(variant.images ? variant.images : {});
     const [uploading, setUploading] = useState(false);
-    const [variantFilled, setVariantFilled] = useState(false);
+    const [variantFilled, setVariantFilled] = useState(variantFill ? variantFill : false);
 
     const objectsEqual = (o1, o2) =>
         Object.keys(o1).length === Object.keys(o2).length
         && Object.keys(o1).every(p => o1[p] === o2[p]);
 
     useEffect(() => {
-        const foundVariant = variant.images.find(
-            x => x.indexOf(images && images.image1 && images.image1.split("\\")[1]) !== -1
-        )
+        console.log(variants)
+        const foundVariant = variants.find(x => x.color === variant.color);
         if ((variant && !variantFilled) || !foundVariant) {
             let variantSizes = {}
             for (let i in variant.sizes) {
@@ -36,13 +35,33 @@ const VariantForm = (props) => {
                 setSizes(variantSizes);
                 setImages(variantImages);
             } else {
-                updateVariants(sizes, images, selectedColor);
+                updateVariants(sizes, images, selectedColor, variants);
             }
             setVariantFilled(true);
         } else {
-            updateVariants(sizes, images, selectedColor);
+            let variantSizes = {}
+            for (let i in variant.sizes) {
+                let sizeFound = sizesArray.find(s => s._id === variant.sizes[i].size);
+                if (sizeFound) {
+                    variantSizes[sizeFound.name] = variant.sizes[i].stock;
+                }
+            }
+            const sizesNotFound = sizesArray.filter(x => Object.keys(variantSizes).indexOf(x.name) === -1);
+            for (let i in sizesNotFound) {
+                variantSizes[sizesNotFound[i].name] = 0;
+            }
+
+            let variantImages = {};
+            for (let i = 0; i < variant.images.length; i++) {
+                variantImages[`image${i + 1}`] = variant.images[i];
+            }
+            for (let i = variant.images.length; i < 5; i++) {
+                variantImages[`image${i + 1}`] = '';
+            }
+            setSizes(variantSizes);
+            setImages(variantImages);
         }
-    }, [images, sizes, variant]);
+    }, [variant]);
 
     const selectedColor = colors.find(c => c._id === color);
 
@@ -50,16 +69,23 @@ const VariantForm = (props) => {
         let newstock = { ...sizes };
         newstock[e.target.id] = e.target.value;
         setSizes(newstock);
+        sizes[e.target.id] = e.target.value
+        updateVariants(sizes, images, selectedColor, variants);
     }
 
     const handleImages = (e) => {
         let newImage = { ...images };
-        const img = e.target.id.split('-')[1];
+        let img = e.target.id.split('-')[1];
+        if (!img) {
+            img = 'image' + [Object.keys(newImage).length + 1];
+        }
         newImage[img] = e.target.value;
         setImages(newImage);
+        images[img] = e.target.value;
+        updateVariants(sizes, images, selectedColor, variants);
     }
 
-    const uploadFileHandler = async (e, imageType) => {
+    const uploadFileHandler = async (e, imageType, id) => {
         const file = e.target.files[0];
         console.log(file);
         const formData = new FormData();
@@ -77,7 +103,13 @@ const VariantForm = (props) => {
             let newImage = { ...images };
             newImage[imageType] = data;
             setImages(newImage);
-
+            const el = {
+                target: {
+                    id: id ? id : e.target.parentElement.parentElement.children[1].id,
+                    value: data
+                }
+            }
+            handleImages(el);
             setUploading(false);
         } catch (error) {
             console.error(error);
@@ -86,7 +118,7 @@ const VariantForm = (props) => {
     };
 
     const deleteVariant = () => {
-        removeVariant(selectedColor)
+        removeVariant([...variants.filter(v => v.color !== selectedColor._id)]);
     }
 
 
@@ -148,7 +180,7 @@ const VariantForm = (props) => {
                     label="Elegir Imagen"
                     custom
                     name="image"
-                    onChange={(e) => uploadFileHandler(e, "image1")}
+                    onChange={(e) => uploadFileHandler(e, "image1", selectedColor ? `${selectedColor.color}-image1` : '')}
                 ></Form.File>
             </Form.Group>
             <Form.Group>

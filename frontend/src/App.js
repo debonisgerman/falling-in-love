@@ -33,6 +33,8 @@ import ColorEditScreen from "./screens/ColorEditScreen";
 import ColorListScreen from "./screens/ColorListScreen";
 import SizeEditScreen from "./screens/SizeEditScreen";
 import SizeListScreen from "./screens/SizeListScreen";
+import SubHeaderEditScreen from "./screens/SubHeaderEditScreen";
+import SubHeaderListScreen from "./screens/SubHeaderListScreen";
 
 const App = () => {
   return (
@@ -42,6 +44,9 @@ const App = () => {
       <main className="pb-3 w-100">
         <Route path="/admin/material/:id/edit" component={MaterialEditScreen} />
         <Route path="/admin/materiallist" component={MaterialListScreen} />
+        <Route path="/admin/subheader/:id/edit" component={SubHeaderEditScreen} />
+        <Route path="/admin/subheaderlist" component={SubHeaderListScreen} />
+        <Route path="/admin/color/:id/edit" component={ColorEditScreen} />
         <Route path="/admin/size/:id/edit" component={SizeEditScreen} />
         <Route path="/admin/sizelist" component={SizeListScreen} />
         <Route path="/admin/color/:id/edit" component={ColorEditScreen} />

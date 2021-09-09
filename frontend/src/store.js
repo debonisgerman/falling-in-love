@@ -74,6 +74,13 @@ import {
 import {
   departmentListReducer,
 } from "./reducers/departmentReducers";
+import {
+  subHeaderCreateReducer,
+  subHeaderDeleteReducer,
+  subHeaderDetailsReducer,
+  subHeaderListReducer,
+  subHeaderUpdateReducer,
+} from "./reducers/subHeaderReducers";
 
 const reducer = combineReducers({
   productList: productListReducer,
@@ -129,6 +136,11 @@ const reducer = combineReducers({
   sizeList: sizeListReducer,
   sizeUpdate: sizeUpdateReducer,
   departmentList: departmentListReducer,
+  subHeaderCreate: subHeaderCreateReducer,
+  subHeaderDelete: subHeaderDeleteReducer,
+  subHeaderDetails: subHeaderDetailsReducer,
+  subHeaderList: subHeaderListReducer,
+  subHeaderUpdate: subHeaderUpdateReducer,
 });
 
 const cartItemsFromStorage = localStorage.getItem("cartItems")

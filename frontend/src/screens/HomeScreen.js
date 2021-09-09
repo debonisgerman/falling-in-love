@@ -25,20 +25,6 @@ const HomeScreen = () => {
       <Meta />
       <BannerCarousel />
       <div className="relative">
-        <div className="flower-container flower-left">
-          <Image
-            src='/images/flores.png'
-            alt='floresIzq'
-            fluid="true"
-          />
-        </div>
-        <div className="flower-container flower-right">
-          <Image
-            src='/images/flores.png'
-            alt='floresIzq'
-            fluid="true"
-          />
-        </div>
         <Container>
           <h2 className="mt-5 mb-3 secondary-blue bold text-center border-title-bottom">ÚNICA Y LIBRE</h2>
           <h5 className="text-center"><i>Conviértete en una chica Falling in Love, ten la libertad de usar lo que te haga sentir única</i></h5>
@@ -78,7 +64,7 @@ const HomeScreen = () => {
                         <LinkContainer
                           to={`/shop?category=${category.name}`}
                         >
-                          <div className="btn btn-outline-primary rounded"><i>Comprar</i></div>
+                          <div className="btn btn-primary rounded"><i className="text-white">Comprar</i></div>
                         </LinkContainer>
                       </Card.Text>
                     </Card.Body>

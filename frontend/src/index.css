@@ -1,9 +1,6 @@
 @font-face {
   font-family: 'Abril';
-  src: url(./fonts/Abril_Display_Regular.otf) format('truetype') font-weight-normal,
-       url(./fonts/Abril_Display_Bold.otf) format('truetype') font-weight-bold,
-       url(./fonts/Abril_Display_BoldItalic.otf) format('truetype') font-italic font-weight-bold,
-       url(./fonts/Abril_Display_Italic.otf) format('truetype') font-italic font-weight-normal;
+  src: url(./fonts/Abril_Display_Regular.otf) format('truetype') font-weight-normal, url(./fonts/Abril_Display_Bold.otf) format('truetype') font-weight-bold, url(./fonts/Abril_Display_BoldItalic.otf) format('truetype') font-italic font-weight-bold, url(./fonts/Abril_Display_Italic.otf) format('truetype') font-italic font-weight-normal;
 }
 
 html {
@@ -48,6 +45,7 @@ h2 {
 }
 
 /* logo */
+
 .logoHeader {
   width: 65px;
   opacity: 0.8;
@@ -62,11 +60,11 @@ h2 {
 }
 
 /* carousel */
-.carousel-item-next,
-.carousel-item-prev,
-.carousel-item.active {
+
+.carousel-item-next, .carousel-item-prev, .carousel-item.active {
   display: flex;
 }
+
 .carousel-caption {
   position: absolute;
   top: 0;
@@ -98,6 +96,7 @@ h2 {
 }
 
 /* Marquee  */
+
 .marquee {
   width: 100%;
   line-height: 50px;
@@ -105,17 +104,20 @@ h2 {
   overflow: hidden;
   box-sizing: border-box;
 }
+
 .marquee p {
   display: inline-block;
   padding-left: 100%;
   animation: marquee 15s linear infinite;
 }
+
 .marquee img {
   width: 90px;
   min-width: 90px;
   filter: grayscale(100%);
   cursor: pointer;
 }
+
 .marquee img:hover {
   filter: grayscale(0%);
 }
@@ -138,13 +140,10 @@ h2 {
     padding: 0;
     border-radius: 4px;
   }
-
-  .carousel-control-next,
-  .carousel-control-prev {
+  .carousel-control-next, .carousel-control-prev {
     display: none;
   }
-  html,
-  body {
+  html, body {
     max-width: 100vw !important;
     overflow-x: hidden !important;
   }
@@ -340,7 +339,6 @@ footer a:hover {
   cursor: pointer;
 }
 
-
 .product-figure:hover img {
   opacity: 0;
 }
@@ -354,19 +352,19 @@ footer a:hover {
 
 .no-stock-bow {
   position: absolute;
-    transform: rotate(320deg);
-    text-transform: uppercase;
-    background: #b9535c;
-    color: #fff;
-    width: 30%;
-    margin: 0 auto;
-    left: -4.5rem;
-    right: 0;
-    top: 2rem;
-    border-radius: 3px;
-    font-weight: bold;
-    text-align: center;
-    opacity: 0.8;
+  transform: rotate(320deg);
+  text-transform: uppercase;
+  background: #b9535c;
+  color: #fff;
+  width: 30%;
+  margin: 0 auto;
+  left: -4.5rem;
+  right: 0;
+  top: 2rem;
+  border-radius: 3px;
+  font-weight: bold;
+  text-align: center;
+  opacity: 0.8;
 }
 
 .flex {
@@ -388,8 +386,6 @@ footer a:hover {
   display: block;
   padding-top: 1rem;
 }
-
-
 
 @media only screen and (max-width: 768px) {
   #productCarousel .carousel-caption {
@@ -424,4 +420,34 @@ footer a:hover {
 
 .subheader {
   color: #fbc0c1;
+}
+
+@media only screen and (min-width: 1300px) {
+  .list-group {
+    font-size: .9rem;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  h5 {
+    font-size: 0.9rem;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  h5 {
+    font-size: 0.7rem;
+  }
+  #productCarousel img {
+    margin: 0px 0px 100px 0px;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  h5 {
+    font-size: 0.7rem;
+  }
+  #productCarousel img {
+    margin: 0px 0px 100px 0px;
+  }
 }

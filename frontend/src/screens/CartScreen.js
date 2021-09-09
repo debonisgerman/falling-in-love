@@ -16,6 +16,7 @@ import ProductCarousel from "../components/ProductCarousel";
 import Meta from "../components/Meta";
 import { addToCart, removeFromCart } from "../actions/cartActions";
 import { ORDER_CREATE_RESET } from "../constants/orderConstants";
+import { isMobile } from 'react-device-detect';
 
 const CartScreen = ({ match, location, history }) => {
   const productId = match.params.id;
@@ -83,11 +84,24 @@ const CartScreen = ({ match, location, history }) => {
                       />
                     </Col>
                     <Col md={5}>
-                      <Link to={`/product/${item.product}`}>{item.name}</Link>
-                      <div>S./ {item.price}</div>
+                      <Link
+                        style={{ fontSize: '1.1rem' }}
+                        to={`/product/${item.product}`}
+                      >
+                        {item.name}
+                      </Link>
+                      <div
+                        style={{ fontSize: '1.1rem' }}
+                      >
+                        S./ {item.price}
+                      </div>
                     </Col>
                     <Col md={2}>
-                      <div>{item.qty}{item.qty > 1 ? ' Unidades' : ' Unidad'}</div>
+                      <div
+                        style={{ fontSize: '1.1rem' }}
+                      >
+                        {item.qty}{item.qty > 1 ? ' Unidades' : ' Unidad'}
+                      </div>
                     </Col>
                     <Col md={2}>
                       <Button
@@ -104,7 +118,9 @@ const CartScreen = ({ match, location, history }) => {
             </ListGroup>
           )}
           <br />
-          <ProductCarousel />
+          {!isMobile &&
+            <ProductCarousel />
+          }
         </Col>
         <Col md={4}>
           <Card>
@@ -127,6 +143,9 @@ const CartScreen = ({ match, location, history }) => {
             </ListGroup>
           </Card>
         </Col>
+        {isMobile &&
+          <ProductCarousel />
+        }
       </Row>
     </Container>
   );

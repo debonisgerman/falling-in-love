@@ -122,7 +122,7 @@ const ShippingScreen = ({ history }) => {
             ) : error ? (
               <Message variant="danger">{error}</Message>
             ) : (
-              departments && departments.map((c) => (
+              departments && departments.sort((a, b) => a.name > b.name).map((c) => (
                 <option id={c._id} key={c._id} value={c.name}>{c.name}</option>
               ))
             )}
@@ -145,7 +145,7 @@ const ShippingScreen = ({ history }) => {
             ) : error ? (
               <Message variant="danger">{error}</Message>
             ) : (
-              currentProvinces && currentProvinces.map((c, i) => (
+              currentProvinces && currentProvinces.sort((a, b) => a > b).map((c, i) => (
                 <option id={i} key={i} value={c}>{c}</option>
               ))
             )}
@@ -197,6 +197,7 @@ const ShippingScreen = ({ history }) => {
                   onChange={(e) => setRuc(e.target.value)}
                   visible={bill}
                   pattern="[0-9]*"
+                  maxLength={11}
                 ></Form.Control>
               </Form.Group>
             </>

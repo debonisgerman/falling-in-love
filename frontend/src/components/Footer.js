@@ -46,14 +46,12 @@ const Footer = () => {
               </div>
               <hr className="bg-light" />
               <div className="flex justify-content-around align-items-center">
-                <a
-                  href="#"
-                  target="_blank"
-                  rel="noreferrer"
+                <Link
+                  to="/find-us"
                 >
                   <i className="fas fa-book pr-2"></i>
                   Libro de Reclamaciones
-                </a>
+                </Link>
                 <a
                   href="#"
                   target="_blank"

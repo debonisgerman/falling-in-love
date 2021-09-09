@@ -35,6 +35,8 @@ const ProductEditScreen = ({ match, history }) => {
   const [price, setPrice] = useState(0);
   const [variants, setVariants] = useState([]);
   const [colorSelect, setColorSelect] = useState("");
+  const [variantForm, setVariantForm] = useState("");
+  const [auxVariant, setAuxVariant] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -116,6 +118,8 @@ const ProductEditScreen = ({ match, history }) => {
             })
           }
           setVariants(aux);
+          setAuxVariant(aux);
+          updateVariantForm(aux);
         }
       }
     }
@@ -163,17 +167,54 @@ const ProductEditScreen = ({ match, history }) => {
     setMaterial(newMaterials);
   }
 
+  const updateVariantForm = (newVariants) => {
+
+    if (newVariants) {
+      setVariantForm(colors.length > 0 && sizes.length > 0 && newVariants.map((v, i) => (
+        <>
+          {<VariantForm
+            color={v.color}
+            colors={colors}
+            sizesArray={sizes}
+            key={i}
+            variant={v}
+            updateVariants={handleVariantsUpdate}
+            removeVariant={handleRemoveVariant}
+            variants={newVariants}
+          />}
+        </>
+      )))
+    } else {
+
+      setVariantForm(colors.length > 0 && sizes.length > 0 && variants.length > 0 && variants.map((v, i) => (
+        <>
+          {<VariantForm
+            color={v.color}
+            colors={colors}
+            sizesArray={sizes}
+            key={i}
+            variant={v}
+            updateVariants={handleVariantsUpdate}
+            removeVariant={handleRemoveVariant}
+            variants={variants}
+          />}
+        </>
+      )))
+    }
+  }
+
   const handleVariants = (e) => {
     let newVariants = [...variants];
     newVariants.push({ color: colorSelect, images: [], sizes: [] });
     setVariants(newVariants);
     setColorSelect("");
+    updateVariantForm(newVariants);
   }
 
-  const handleVariantsUpdate = (sizesV, images, color) => {
+  const handleVariantsUpdate = (sizesV, images, color, updatedVariants) => {
     console.log(sizesV, images, color);
     if (color) {
-      let newVariants = [...variants];
+      let newVariants = [...updatedVariants];
       const otherVariants = newVariants.filter(v => v.color !== color._id);
       const variantIndex = newVariants.findIndex(v => v.color === color._id)
       newVariants = newVariants.filter(v => v.color === color._id);
@@ -196,15 +237,16 @@ const ProductEditScreen = ({ match, history }) => {
         const newArray = [...otherVariants];
         newArray.splice(variantIndex, 0, newVariants);
         setVariants([...newArray]);
+        updateVariantForm([...newArray]);
       } else {
         console.log("Something went wrong ", newVariants);
       }
     }
   }
 
-  const handleRemoveVariant = (color) => {
-    let newVariants = [...variants];
-    setVariants([...newVariants.filter(v => v.color !== color._id)]);
+  const handleRemoveVariant = (newVariants) => {
+    setVariants([...newVariants]);
+    updateVariantForm([...newVariants])
   }
 
 
@@ -408,19 +450,7 @@ const ProductEditScreen = ({ match, history }) => {
               </Row>
             </Form.Group>
             {
-              colors.length > 0 && sizes.length > 0 && variants.length > 0 && variants.map((v, i) => (
-                <>
-                  <VariantForm
-                    color={v.color}
-                    colors={colors}
-                    sizesArray={sizes}
-                    key={i}
-                    variant={v}
-                    updateVariants={handleVariantsUpdate}
-                    removeVariant={handleRemoveVariant}
-                  />
-                </>
-              ))
+              variantForm
             }
 
             <Form.Group controlId="leading">

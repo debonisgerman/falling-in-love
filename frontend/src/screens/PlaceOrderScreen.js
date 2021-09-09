@@ -143,7 +143,7 @@ const PlaceOrderScreen = ({ history }) => {
                           </p>
                         </Col>
                         <Col md={4}>
-                          {item.qty} x ${item.price} = S./
+                          {item.qty} x S./ {item.price} = S./
                           {(item.qty * item.price).toFixed(2)}
                         </Col>
                       </Row>

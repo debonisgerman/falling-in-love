@@ -6,7 +6,7 @@ const sendMail = async (data, order, orderItems) => {
     host: "smtp.gmail.com",
     auth: {
       user: "debonis.german@gmail.com",
-      pass: "Alessia20!",
+      pass: "unapass",
     },
   });
 

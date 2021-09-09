@@ -126,7 +126,10 @@ const ProductListScreen = ({ history, match }) => {
                   <td>{product.material ? product.material.reduce((accumulator, currentValue) => accumulator = accumulator + ", " + currentValue.name, "").slice(2) : ''}</td>
                   <td>{product.category ? product.category.name : ''}</td>
                   <td>{product.section ? product.section.reduce((accumulator, currentValue) => accumulator = accumulator + ", " + currentValue.name, "").slice(2) : ''}</td>
-                  <td>{product.stock}</td>
+                  <td>{product.variants ?
+                    product.variants.reduce((accumulator, currentValue) => accumulator = accumulator + currentValue.sizes.reduce((ac, cv) => ac + cv.stock, 0), 0)
+                    : 0
+                  }</td>
                   <td>{product.published ? 'Si' : 'No'}</td>
                   <td>
                     <LinkContainer to={`/admin/product/${product._id}/edit`}>
