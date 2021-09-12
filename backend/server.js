@@ -16,8 +16,7 @@ import sectionRoutes from "./routes/sectionRoutes.js";
 import colorRoutes from "./routes/colorRoutes.js";
 import sizeRoutes from "./routes/sizeRoutes.js";
 import departmentRoutes from "./routes/departmentRoutes.js";
-import subHeaderRoutes from "./routes/subHeaderRoutes.js";
-
+import subHeaderRoutes from "./routes/subheaderRoutes.js";
 
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 
