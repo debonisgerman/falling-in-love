@@ -122,7 +122,11 @@ const ShippingScreen = ({ history }) => {
             ) : error ? (
               <Message variant="danger">{error}</Message>
             ) : (
-              departments && departments.sort((a, b) => a.name > b.name).map((c) => (
+              departments && departments.sort((a, b) => {
+                if (a.name < b.name) { return -1; }
+                if (a.name > b.name) { return 1; }
+                return 0;
+              }).map((c) => (
                 <option id={c._id} key={c._id} value={c.name}>{c.name}</option>
               ))
             )}
@@ -169,7 +173,14 @@ const ShippingScreen = ({ history }) => {
             type="checkbox"
             label="Factura"
             checked={bill}
-            onChange={(e) => setBill(e.target.checked)}
+            onChange={(e) => {
+              setBill(e.target.checked)
+              if (!e.target.checked) {
+                setSocialReason("");
+                setRuc("");
+              }
+            }
+            }
           ></Form.Check>
         </Form.Group>
         {

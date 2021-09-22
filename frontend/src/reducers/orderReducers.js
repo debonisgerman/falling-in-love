@@ -21,6 +21,10 @@ import {
   ORDER_PRICED_SUCCESS,
   ORDER_PRICED_FAIL,
   ORDER_PRICED_RESET,
+  ORDER_SHIPPED_REQUEST,
+  ORDER_SHIPPED_SUCCESS,
+  ORDER_SHIPPED_FAIL,
+  ORDER_SHIPPED_RESET,
 } from "../constants/orderConstants";
 
 export const orderCreateReducer = (state = {}, action) => {
@@ -159,6 +163,29 @@ export const orderPricedReducer = (state = {}, action) => {
         error: action.payload,
       };
     case ORDER_PRICED_RESET:
+      return {};
+    default:
+      return state;
+  }
+};
+
+export const orderShippedReducer = (state = {}, action) => {
+  switch (action.type) {
+    case ORDER_SHIPPED_REQUEST:
+      return {
+        loading: true,
+      };
+    case ORDER_SHIPPED_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+      };
+    case ORDER_SHIPPED_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+    case ORDER_SHIPPED_RESET:
       return {};
     default:
       return state;

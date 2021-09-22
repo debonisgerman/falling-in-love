@@ -17,6 +17,7 @@ import colorRoutes from "./routes/colorRoutes.js";
 import sizeRoutes from "./routes/sizeRoutes.js";
 import departmentRoutes from "./routes/departmentRoutes.js";
 import subHeaderRoutes from "./routes/subheaderRoutes.js";
+import profileRoutes from "./routes/profileRoutes.js";
 
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 
@@ -44,6 +45,7 @@ app.use("/api/colors", colorRoutes);
 app.use("/api/sizes", sizeRoutes);
 app.use("/api/departments", departmentRoutes);
 app.use("/api/subheaders", subHeaderRoutes);
+app.use("/api/profiles", profileRoutes);
 
 app.get("/api/config/paypal", (req, res) =>
   res.send(process.env.PAYPAL_CLIENT_ID)

@@ -65,7 +65,10 @@ const CartScreen = ({ match, location, history }) => {
       <Meta />
       <Row>
         <Col md={8}>
-          <h1>Carrito de Cotización</h1>
+          <Link className="btn btn-light my-3 rounded" to="/shop">
+          <i className="fas fa-store-alt pr-2" />Seguir Comprando
+          </Link>
+          <h1><i>Carrito de compras</i></h1>
           {cartItems.length === 0 ? (
             <Message>
               El carrito está vacío <Link to="/shop">Volver</Link>

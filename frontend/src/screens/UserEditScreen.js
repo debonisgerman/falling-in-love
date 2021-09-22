@@ -6,46 +6,48 @@ import Message from "../components/Message";
 import Loader from "../components/Loader";
 import Meta from "../components/Meta";
 import FormContainer from "../components/FormContainer";
-import { getUserDetails, updateUser } from "../actions/userActions";
-import { USER_UPDATE_RESET } from "../constants/userConstants";
+import { listProfilesDetails, updateProfile } from "../actions/profileActions";
+import { PROFILE_UPDATE_RESET } from "../constants/profileConstants";
 
 const UserEditScreen = ({ match, history }) => {
   const userId = match.params.id;
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
+  const [updatePassword, setUpdatePassword] = useState(false);
 
   const dispatch = useDispatch();
 
-  const userDetails = useSelector((state) => state.userDetails);
-  const { loading, error, user } = userDetails;
+  const profileDetails = useSelector((state) => state.profileDetails);
+  const { loading, error, profile } = profileDetails;
+  const profileUpdate = useSelector((state) => state.profileUpdate);
 
-  const userUpdate = useSelector((state) => state.userUpdate);
   const {
     loading: loadingUpdate,
     error: errorUpdate,
     success: successUpdate,
-  } = userUpdate;
+  } = profileUpdate;
 
   useEffect(() => {
     if (successUpdate) {
-      dispatch({ type: USER_UPDATE_RESET });
+      dispatch({ type: PROFILE_UPDATE_RESET });
       history.push("/admin/userlist");
     } else {
-      if (!user.name || user._id !== userId) {
-        dispatch(getUserDetails(userId));
+      if (!profile.name || profile._id !== userId) {
+        dispatch(listProfilesDetails(userId));
       } else {
-        setName(user.name);
-        setEmail(user.email);
-        setIsAdmin(user.isAdmin);
+        setName(profile.name);
+        setEmail(profile.email);
+        setIsAdmin(profile.isAdmin);
       }
     }
-  }, [user, dispatch, userId, successUpdate, history]);
+  }, [profile, dispatch, userId, successUpdate, history]);
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(updateUser({ _id: user._id, name, email, isAdmin }));
+    dispatch(updateProfile({ _id: profile._id, name, email, isAdmin, password, updatePassword }));
   };
 
   return (
@@ -80,6 +82,24 @@ const UserEditScreen = ({ match, history }) => {
                 placeholder="Ingrese Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+              ></Form.Control>
+            </Form.Group>
+            <Form.Group controlId="updatePassword">
+              <Form.Check
+                type="checkbox"
+                label="Actualizar contraseña"
+                checked={updatePassword}
+                onChange={(e) => setUpdatePassword(e.target.checked)}
+              ></Form.Check>
+            </Form.Group>
+            <Form.Group controlId="password">
+              <Form.Label>Contraseña</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder=""
+                value={password}
+                disabled={!updatePassword}
+                onChange={(e) => setPassword(e.target.value)}
               ></Form.Control>
             </Form.Group>
             <Form.Group controlId="isadmin">

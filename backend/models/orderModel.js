@@ -65,6 +65,14 @@ const orderSchema = mongoose.Schema(
     pricedAt: {
       type: Date,
     },
+    isShipping: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    shippedAt: {
+      type: Date,
+    },
     billNumber: {
       type: Number,
     },

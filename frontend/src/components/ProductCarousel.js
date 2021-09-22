@@ -62,6 +62,7 @@ const ProductCarousel = () => {
                   }
                   alt={products[i - 1].name}
                   fluid="true"
+                  className="m-w-70-m0a"
                 />
                 <Carousel.Caption className="carosuel-caption">
                   <h5>{products[i - 1].name}</h5>

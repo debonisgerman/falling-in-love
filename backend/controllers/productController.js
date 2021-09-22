@@ -26,23 +26,25 @@ const getProducts = asyncHandler(async (req, res) => {
       priceFrom = price;
     }
   }
-
+  console.log("HERE");
   if (category) {
-    category = await Category.findOne({ name: category });
+    category = await Category.findOne({ name: { $regex: category } });
+    console.log("ASDASDASDAS");
+    console.log("CATE", category);
     if (category) {
       category = category._id;
     }
   }
 
   if (material) {
-    material = await Material.findOne({ name: material });
+    material = await Material.findOne({ name: { $regex: material } });
     if (material) {
       material = material._id;
     }
   }
 
   if (section) {
-    section = await Section.findOne({ name: section });
+    section = await Section.findOne({ name: { $regex: section } });
     if (section) {
       section = section._id;
     }
@@ -131,21 +133,22 @@ const getShopProducts = asyncHandler(async (req, res) => {
   }
 
   if (category) {
-    category = await Category.findOne({ name: category });
+    category = await Category.findOne({ name: { $regex: category } });
+    console.log("category", category)
     if (category) {
       category = category._id;
     }
   }
 
   if (material) {
-    material = await Material.findOne({ name: material });
+    material = await Material.findOne({ name: { $regex: material } });
     if (material) {
       material = material._id;
     }
   }
 
   if (section) {
-    section = await Section.findOne({ name: section });
+    section = await Section.findOne({ name: { $regex: section } });
     if (section) {
       section = section._id;
     }
@@ -232,21 +235,21 @@ const getFilters = asyncHandler(async (req, res) => {
   }
 
   if (category) {
-    category = await Category.findOne({ name: category });
+    category = await Category.findOne({ name: { $regex: category } });
     if (category) {
       category = category._id;
     }
   }
 
   if (material) {
-    material = await Material.findOne({ name: material });
+    material = await Material.findOne({ name: { $regex: material } });
     if (material) {
       material = material._id;
     }
   }
 
   if (section) {
-    section = await Section.findOne({ name: section });
+    section = await Section.findOne({ name: { $regex: section } });
     if (section) {
       section = section._id;
     }

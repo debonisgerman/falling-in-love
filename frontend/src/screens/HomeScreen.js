@@ -48,7 +48,7 @@ const HomeScreen = () => {
 
                   <Card className="my-3 p-3 rounded w100p mh-400 CardLinkContainer">
                     <Card.Img
-                      className="mh-210 of-ct"
+                      className="mh-210 of-ct m-w-70-m0a"
                       src={category.image}
                       variant="top"
                       fluid="true"

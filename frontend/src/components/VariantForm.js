@@ -105,7 +105,7 @@ const VariantForm = (props) => {
             setImages(newImage);
             const el = {
                 target: {
-                    id: id ? id : e.target.parentElement.parentElement.children[1].id,
+                    id: id ? id : e.target.parentElement.parentElement.querySelector("input.form-control").id,
                     value: data
                 }
             }

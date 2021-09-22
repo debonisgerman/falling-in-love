@@ -46,7 +46,6 @@ const App = () => {
         <Route path="/admin/materiallist" component={MaterialListScreen} />
         <Route path="/admin/subheader/:id/edit" component={SubHeaderEditScreen} />
         <Route path="/admin/subheaderlist" component={SubHeaderListScreen} />
-        <Route path="/admin/color/:id/edit" component={ColorEditScreen} />
         <Route path="/admin/size/:id/edit" component={SizeEditScreen} />
         <Route path="/admin/sizelist" component={SizeListScreen} />
         <Route path="/admin/color/:id/edit" component={ColorEditScreen} />

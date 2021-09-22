@@ -40,7 +40,7 @@ const ShopScreen = ({ match, location }) => {
     <>
       <Meta />
       <Container>
-        <h1>Conozca Nuestros Productos</h1>
+        <h1>Conoce nuestra colección</h1>
       </Container>
       {loading ? (
         <Loader />

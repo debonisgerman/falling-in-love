@@ -17,10 +17,12 @@ import {
   getOrderDetails,
   deliverOrder,
   priceOrder,
+  shipOrder,
 } from "../actions/orderActions";
 import {
   ORDER_DELIVER_RESET,
   ORDER_PRICED_RESET,
+  ORDER_SHIPPED_RESET
 } from "../constants/orderConstants";
 
 const OrderScreen = ({ match, history }) => {
@@ -40,6 +42,9 @@ const OrderScreen = ({ match, history }) => {
   const orderPriced = useSelector((state) => state.orderPriced);
   const { loading: loadingPriced, success: successPriced } = orderPriced;
 
+  const orderShipped = useSelector((state) => state.orderShipped);
+  const { loading: loadingShipped, success: successShipped } = orderShipped;
+
   useEffect(() => {
     if (!order || order._id !== orderId) {
       dispatch(getOrderDetails(orderId));
@@ -49,11 +54,15 @@ const OrderScreen = ({ match, history }) => {
       dispatch({ type: ORDER_DELIVER_RESET });
       dispatch(getOrderDetails(orderId));
     }
+    if (successShipped) {
+      dispatch({ type: ORDER_SHIPPED_RESET });
+      dispatch(getOrderDetails(orderId));
+    }
     if (successPriced) {
       dispatch({ type: ORDER_PRICED_RESET });
       dispatch(getOrderDetails(orderId));
     }
-  }, [dispatch, order, orderId, successDeliver, history, successPriced]);
+  }, [dispatch, order, orderId, successDeliver, history, successPriced, successShipped]);
 
   const deliverHandler = () => {
     dispatch(deliverOrder(order));
@@ -61,6 +70,10 @@ const OrderScreen = ({ match, history }) => {
 
   const pricedHandler = () => {
     dispatch(priceOrder(order));
+  };
+
+  const shippedHandler = () => {
+    dispatch(shipOrder(order));
   };
 
   return loading ? (
@@ -92,12 +105,19 @@ const OrderScreen = ({ match, history }) => {
               ) : (
                 <Message variant="secondary">No pagado</Message>
               )}
+               {order.isShipping ? (
+                <Message variant="success">
+                  En camino desde {(new Date(order.pricedAt)).toLocaleString()}
+                </Message>
+              ) : (
+                <Message variant="secondary">Esperando para enviar</Message>
+              )}
               {order.isDelivered ? (
                 <Message variant="success">
                   Entregado el {(new Date(order.deliveredAt)).toLocaleString()}
                 </Message>
               ) : (
-                <Message variant="secondary">En Camino</Message>
+                <Message variant="secondary">{order.isShipping ? 'En Camino' : 'Esperando que se envíe'}</Message>
               )}
             </ListGroup.Item>
 
@@ -174,13 +194,26 @@ const OrderScreen = ({ match, history }) => {
                 </ListGroup.Item>
               )}
               {loadingPriced && <Loader />}
+              {userInfo && userInfo.isAdmin && !order.isShipping && (
+                <ListGroup.Item>
+                  <Button
+                    type="button"
+                    className="btn btn-block"
+                    disabled={!order.isPriced}
+                    onClick={shippedHandler}
+                  >
+                    Marcar en camino{" "}
+                  </Button>
+                </ListGroup.Item>
+              )}
+              {loadingPriced && <Loader />}
               {userInfo && userInfo.isAdmin && !order.isDelivered && (
                 <ListGroup.Item>
                   <Button
                     type="button"
                     className="btn btn-block"
                     onClick={deliverHandler}
-                    ƒ
+                    disabled={!order.isPriced || !order.isShipping}
                   >
                     Marcar como enviado{" "}
                   </Button>
@@ -188,6 +221,17 @@ const OrderScreen = ({ match, history }) => {
               )}
               {loadingDeliver && <Loader />}
             </ListGroup>
+            {userInfo && userInfo.isAdmin && (
+              <Container className="text-center">
+                <Button
+                  type="button"
+                  className="btn px-5"
+                  onClick={() => history.goBack()}
+                >
+                  Volver
+                </Button>
+              </Container>
+            )}
           </Card>
         </Col>
       </Row>
