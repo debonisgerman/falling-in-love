@@ -118,7 +118,7 @@ const BannerEditScreen = ({ match, history }) => {
         ) : (
           <Form onSubmit={submitHandler}>
             <Form.Group controlId="imageDesktop">
-              <Form.Label>Imagen para Desktop</Form.Label>
+              <Form.Label>Imagen para Desktop (ancho 1366px)</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Ingrese Url de la imagen"
@@ -135,7 +135,7 @@ const BannerEditScreen = ({ match, history }) => {
             </Form.Group>
 
             <Form.Group controlId="imageTablet">
-              <Form.Label>Imagen para Tablet</Form.Label>
+              <Form.Label>Imagen para Tablet (ancho 1024px)</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Ingrese Url de la imagen"
@@ -152,7 +152,7 @@ const BannerEditScreen = ({ match, history }) => {
             </Form.Group>
 
             <Form.Group controlId="imageMobile">
-              <Form.Label>Imagen para Celular</Form.Label>
+              <Form.Label>Imagen para Celular (ancho 768px)</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Ingrese Url de la imagen"

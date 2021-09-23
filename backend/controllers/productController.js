@@ -8,7 +8,7 @@ import Section from "../models/sectionModel.js";
 // @route GET /api/products
 // @access Public
 const getProducts = asyncHandler(async (req, res) => {
-  const pageSize = 12;
+  const pageSize = 2;
   const page = Number(req.query.pageNumber) || 1;
   let regex = new RegExp(req.query.keyword, "i");
   let category = req.query.category;

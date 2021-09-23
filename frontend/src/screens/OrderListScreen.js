@@ -189,6 +189,7 @@ const OrderListScreen = ({ history }) => {
               <th>Contacto</th>
               <th>Fecha</th>
               <th>Pagado</th>
+              <th>En Camino</th>
               <th>Enviado</th>
               <th></th>
             </tr>
@@ -219,6 +220,13 @@ const OrderListScreen = ({ history }) => {
                 <td>
                   {order.isPriced ? (
                     new Date(order.pricedAt).toLocaleString()
+                  ) : (
+                    <i className="fas fa-times" style={{ color: "red" }} />
+                  )}
+                </td>
+                <td>
+                  {order.isShipping ? (
+                    new Date(order.shippedAt).toLocaleString()
                   ) : (
                     <i className="fas fa-times" style={{ color: "red" }} />
                   )}

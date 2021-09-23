@@ -30,11 +30,6 @@ const deleteProfile = asyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
 
     if (user) {
-        let products = await Product.find({ 'user': req.params.id });
-        for (let p in products) {
-            products[p].user = products[p].user.filter(s => s.toString() !== req.params.id);
-            await products[p].save();
-        }
         await user.remove();
         res.json({ message: "User removed" });
     } else {

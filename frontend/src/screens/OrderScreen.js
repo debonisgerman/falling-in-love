@@ -95,9 +95,13 @@ const OrderScreen = ({ match, history }) => {
               <p><strong>Departamento:</strong> {order.shippingAddress.department}</p>
               <p><strong>Provincia:</strong> {order.shippingAddress.province}</p>
               <p><strong>Teléfono:</strong> {order.shippingAddress.phone}</p>
-              <p><strong>Factura:</strong> {order.shippingAddress.bill ? 'Si' : 'No'}</p>
-              <p><strong>Razón Social:</strong> {order.shippingAddress.socialReason ? order.shippingAddress.socialReason : '-'}</p>
-              <p><strong>RUC:</strong> {order.shippingAddress.ruc ? order.shippingAddress.ruc : '-'}</p>
+              <p><strong>Comprobante:</strong> {order.shippingAddress.bill ? 'Factura' : 'Boleta'}</p>
+              {order.shippingAddress.bill && (
+                <>
+                  <p><strong>Razón Social:</strong> {order.shippingAddress.socialReason ? order.shippingAddress.socialReason : '-'}</p>
+                  <p><strong>RUC:</strong> {order.shippingAddress.ruc ? order.shippingAddress.ruc : '-'}</p>
+                </>
+              )}
               {order.isPriced ? (
                 <Message variant="success">
                   Pagado el {(new Date(order.pricedAt)).toLocaleString()}
@@ -105,7 +109,7 @@ const OrderScreen = ({ match, history }) => {
               ) : (
                 <Message variant="secondary">No pagado</Message>
               )}
-               {order.isShipping ? (
+              {order.isShipping ? (
                 <Message variant="success">
                   En camino desde {(new Date(order.pricedAt)).toLocaleString()}
                 </Message>

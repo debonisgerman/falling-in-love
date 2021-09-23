@@ -429,27 +429,29 @@ footer a:hover {
 }
 
 @media only screen and (max-width: 1024px) {
-  h5 {
-    font-size: 0.9rem;
+  h5, .fs-1 {
+    font-size: 1rem;
+  }
+  .carosuel-caption h5, .card-text i {
+    font-size: 1.1rem;
+  }
+  #productCarousel {
+    padding-top: 1rem;
   }
 }
 
 @media only screen and (max-width: 768px) {
-  h5 {
-    font-size: 0.7rem;
+  h5, .fs-1 {
+    font-size: 1rem;
   }
   #productCarousel img {
     margin: 0px 0px 100px 0px;
   }
-
-  .m-w-70-m0a,
-  .carousel img {
+  .m-w-70-m0a {
     width: 70%;
     margin: 0 auto;
   }
-
-  .carosuel-caption h5,
-  .card-text i {
+  .carosuel-caption h5, .card-text i {
     font-size: 1rem;
   }
 }

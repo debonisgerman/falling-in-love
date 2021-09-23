@@ -18,7 +18,7 @@ const BannerCarousel = () => {
   ) : error ? (
     <Message variant="danger">{error}</Message>
   ) : (
-    <Carousel pause="hover" className="banner-cr">
+    <Carousel pause="hover" className="banner-cr" id="bannerCarousel">
       {banners
         .filter((banner) => banner.show)
         .map((banner) => (

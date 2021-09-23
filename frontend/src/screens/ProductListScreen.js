@@ -49,6 +49,15 @@ const ProductListScreen = ({ history, match }) => {
     } else {
       dispatch(listProducts("", pageNumber));
     }
+    if (successDelete) {
+      if (products && products.length < 2 && pageNumber > 1) {
+        if (pageNumber !== "2") {
+          history.push(`/admin/productlist/${pageNumber - 1}`)
+        } else {
+          history.push(`/admin/productlist/`)
+        }
+      }
+    }
   }, [
     dispatch,
     history,
