@@ -39,11 +39,14 @@ const ProductScreen = ({ history, match }) => {
   const { loading, error, product } = productDetails;
 
   useEffect(() => {
-    if (!productRendered || product._id !== match.params.id) {
+    if (!productRendered || product._id !== match.params.id)
+    {
       dispatch(listProductsDetails(match.params.id));
     }
-    if (product && product.name && !productRendered) {
-      if (product.variants && product.variants.length > 0) {
+    if (product && product.name && !productRendered)
+    {
+      if (product.variants && product.variants.length > 0)
+      {
         let sizes = [];
         sizes.push(product.variants[0].sizes.find(x => x.size.name === "XS"))
         sizes.push(product.variants[0].sizes.find(x => x.size.name === "S"))
@@ -55,7 +58,8 @@ const ProductScreen = ({ history, match }) => {
         setVariant(product.variants[0]);
         createQtySelector(0);
         setBackgroundImage(product.variants[0].images[0].split("\\").join("//"));
-      } else {
+      } else
+      {
         setBackgroundImage('/images/logo.png');
       }
       setProductRendered(true);
@@ -63,11 +67,13 @@ const ProductScreen = ({ history, match }) => {
   }, [dispatch, match, product, productRendered]);
 
   const addToCartHandler = () => {
-    if (!variantSize) {
+    if (!variantSize)
+    {
       document.getElementById("sizes-error").innerHTML = "No seleccionó ningún talle";
       return false;
     }
-    if (qty <= 0) {
+    if (qty <= 0)
+    {
       document.getElementById("qty-error").innerHTML = "No seleccionó la cantidad";
       return false
     }
@@ -77,7 +83,8 @@ const ProductScreen = ({ history, match }) => {
   const handleMouseMove = e => {
     console.log("DEVICE", isMobile);
     e.preventDefault();
-    if (isMobile) {
+    if (isMobile)
+    {
       e.target.style.backgroundSize = '100%';
       return;
     }
@@ -110,23 +117,28 @@ const ProductScreen = ({ history, match }) => {
 
   const handleSizeChange = e => {
     setVariantSize(e.target.value);
-    if (e.target.value != 0) {
+    if (e.target.value != 0)
+    {
       createQtySelector(+variant.sizes.find(x => x.size._id == e.target.value).stock);
-      if (+qty > +variant.sizes.find(x => x.size._id == e.target.value).stock) {
+      if (+qty > +variant.sizes.find(x => x.size._id == e.target.value).stock)
+      {
         setQty(variant.sizes.find(x => x.size._id == e.target.value).stock);
       }
-    } else {
+    } else
+    {
       setQty(0);
     }
   }
 
   const createQtySelector = (size) => {
     const elems = [];
-    for (let i = 1; i <= size; i++) {
+    for (let i = 1; i <= size; i++)
+    {
       elems.push(<option key={i} value={i}>{i}</option>)
     }
     setQtySelector(elems);
-    if (size > 0) {
+    if (size > 0)
+    {
       setQty(1)
     }
   }
@@ -173,7 +185,7 @@ const ProductScreen = ({ history, match }) => {
             <Col md={5}>
               <ListGroup variant="flush">
                 <ListGroup.Item>
-                  <h3>{product.name}{product.price ? ` - S./ ${product.price}` : ''}</h3>
+                  <h3>{product.name}{product.price ? ` - S/. ${product.price}` : ''}</h3>
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <strong>Color:</strong>
@@ -197,7 +209,7 @@ const ProductScreen = ({ history, match }) => {
                   <strong>Descripción:</strong> {product.description}
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <strong>Categoría:</strong> {product.category ? product.category.name : 'No definido'}
+                  <strong>Categoría:</strong> {product.category ? product.category.reduce((accumulator, currentValue) => accumulator = accumulator + ", " + currentValue.name, "").slice(2) : "No definido"}
                 </ListGroup.Item>
                 <ListGroup.Item>
                   <strong>Material:</strong>{" "}
@@ -323,8 +335,8 @@ const ProductScreen = ({ history, match }) => {
           <Row className="my-3 py-3">
             <Col md={12}>
               {
-                product.related ? (
-                  <ProductRelatedCarousel categoryId={product.related._id} productId={product._id} />
+                product.related && product.related.length > 0 ? (
+                  <ProductRelatedCarousel categories={product.related.map(p => p._id)} productId={product._id} />
                 ) : (
                   <></>
                 )

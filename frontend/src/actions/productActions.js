@@ -31,7 +31,8 @@ export const listProducts = (
   pageNumber = "",
   search = ""
 ) => async (dispatch) => {
-  try {
+  try
+  {
     const parsed = {
       category: "",
       material: "",
@@ -46,7 +47,8 @@ export const listProducts = (
     );
 
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
-  } catch (error) {
+  } catch (error)
+  {
     dispatch({
       type: PRODUCT_LIST_FAIL,
       payload:
@@ -62,7 +64,8 @@ export const listShopProducts = (
   pageNumber = "",
   search = ""
 ) => async (dispatch) => {
-  try {
+  try
+  {
     const parsed = {
       category: "",
       material: "",
@@ -77,7 +80,8 @@ export const listShopProducts = (
     );
 
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
-  } catch (error) {
+  } catch (error)
+  {
     dispatch({
       type: PRODUCT_LIST_FAIL,
       payload:
@@ -89,7 +93,8 @@ export const listShopProducts = (
 };
 
 export const listFilters = (keyword = "", search = "") => async (dispatch) => {
-  try {
+  try
+  {
     const parsed = {
       category: "",
       material: "",
@@ -104,7 +109,8 @@ export const listFilters = (keyword = "", search = "") => async (dispatch) => {
     );
 
     dispatch({ type: PRODUCT_FILTER_SUCCESS, payload: data });
-  } catch (error) {
+  } catch (error)
+  {
     dispatch({
       type: PRODUCT_FILTER_FAIL,
       payload:
@@ -116,13 +122,15 @@ export const listFilters = (keyword = "", search = "") => async (dispatch) => {
 };
 
 export const listProductsDetails = (id) => async (dispatch) => {
-  try {
+  try
+  {
     dispatch({ type: PRODUCT_DETAILS_REQUEST });
 
     const { data } = await axios.get(`/api/products/${id}`);
 
     dispatch({ type: PRODUCT_DETAILS_SUCCESS, payload: data });
-  } catch (error) {
+  } catch (error)
+  {
     dispatch({
       type: PRODUCT_DETAILS_FAIL,
       payload:
@@ -134,7 +142,8 @@ export const listProductsDetails = (id) => async (dispatch) => {
 };
 
 export const deleteProduct = (id) => async (dispatch, getState) => {
-  try {
+  try
+  {
     dispatch({
       type: PRODUCT_DELETE_REQUEST,
     });
@@ -154,7 +163,8 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
     dispatch({
       type: PRODUCT_DELETE_SUCCESS,
     });
-  } catch (error) {
+  } catch (error)
+  {
     dispatch({
       type: PRODUCT_DETAILS_FAIL,
       payload:
@@ -166,7 +176,8 @@ export const deleteProduct = (id) => async (dispatch, getState) => {
 };
 
 export const createProduct = () => async (dispatch, getState) => {
-  try {
+  try
+  {
     dispatch({
       type: PRODUCT_CREATE_REQUEST,
     });
@@ -187,7 +198,8 @@ export const createProduct = () => async (dispatch, getState) => {
       type: PRODUCT_CREATE_SUCCESS,
       payload: data,
     });
-  } catch (error) {
+  } catch (error)
+  {
     dispatch({
       type: PRODUCT_CREATE_FAIL,
       payload:
@@ -199,7 +211,8 @@ export const createProduct = () => async (dispatch, getState) => {
 };
 
 export const updateProduct = (product) => async (dispatch, getState) => {
-  try {
+  try
+  {
     dispatch({
       type: PRODUCT_UPDATE_REQUEST,
     });
@@ -225,7 +238,8 @@ export const updateProduct = (product) => async (dispatch, getState) => {
       type: PRODUCT_UPDATE_SUCCESS,
       payload: data,
     });
-  } catch (error) {
+  } catch (error)
+  {
     dispatch({
       type: PRODUCT_UPDATE_FAIL,
       payload:
@@ -236,14 +250,16 @@ export const updateProduct = (product) => async (dispatch, getState) => {
   }
 };
 
-export const listRelatedProducts = ({ categoryId }) => async (dispatch) => {
-  try {
+export const listRelatedProducts = ({ categories }) => async (dispatch) => {
+  try
+  {
     dispatch({ type: PRODUCT_RELATED_REQUEST });
 
-    const { data } = await axios.get(`/api/products/related/${categoryId}`);
+    const { data } = await axios.get(`/api/products/related/${categories.join(",")}`);
 
     dispatch({ type: PRODUCT_RELATED_SUCCESS, payload: data });
-  } catch (error) {
+  } catch (error)
+  {
     dispatch({
       type: PRODUCT_RELATED_FAIL,
       payload:
@@ -255,13 +271,15 @@ export const listRelatedProducts = ({ categoryId }) => async (dispatch) => {
 };
 
 export const listTopProducts = () => async (dispatch) => {
-  try {
+  try
+  {
     dispatch({ type: PRODUCT_TOP_REQUEST });
 
     const { data } = await axios.get(`/api/products/top`);
 
     dispatch({ type: PRODUCT_TOP_SUCCESS, payload: data });
-  } catch (error) {
+  } catch (error)
+  {
     dispatch({
       type: PRODUCT_TOP_FAIL,
       payload:

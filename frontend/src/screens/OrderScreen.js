@@ -94,6 +94,7 @@ const OrderScreen = ({ match, history }) => {
               <p><strong>Dirección:</strong> {order.shippingAddress.address}</p>
               <p><strong>Departamento:</strong> {order.shippingAddress.department}</p>
               <p><strong>Provincia:</strong> {order.shippingAddress.province}</p>
+              <p><strong>Distrito:</strong> {order.shippingAddress.district}</p>
               <p><strong>Teléfono:</strong> {order.shippingAddress.phone}</p>
               <p><strong>Comprobante:</strong> {order.shippingAddress.bill ? 'Factura' : 'Boleta'}</p>
               {order.shippingAddress.bill && (

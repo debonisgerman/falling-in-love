@@ -6,14 +6,14 @@ import Loader from "./Loader";
 import Message from "./Message";
 import { listRelatedProducts } from "../actions/productActions";
 
-const ProductRelatedCarousel = ({ categoryId, productId }) => {
+const ProductRelatedCarousel = ({ categories, productId }) => {
     const dispatch = useDispatch();
     let pages = [];
     const productRelated = useSelector((state) => state.productRelated);
     const { loading, error, products } = productRelated;
 
     useEffect(() => {
-        dispatch(listRelatedProducts({ categoryId }));
+        dispatch(listRelatedProducts({ categories }));
     }, [dispatch]);
 
     const getPages = () => {

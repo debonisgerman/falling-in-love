@@ -29,6 +29,7 @@ const orderSchema = mongoose.Schema(
       socialReason: { type: String },
       ruc: { type: String },
       bill: { type: Boolean },
+      district: { type: String, required: true },
     },
     paymentMethod: {
       type: String,

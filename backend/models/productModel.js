@@ -15,14 +15,14 @@ const productSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    category: {
+    category: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
-    },
-    related: {
+    }],
+    related: [{
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",
-    },
+    }],
     description: {
       type: String,
       required: true,

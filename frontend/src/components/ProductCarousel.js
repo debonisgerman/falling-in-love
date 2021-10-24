@@ -66,7 +66,7 @@ const ProductCarousel = () => {
                 />
                 <Carousel.Caption className="carosuel-caption">
                   <h5>{products[i - 1].name}</h5>
-                  <h5>S./ {products[i - 1].price}</h5>
+                  <h5>S/. {products[i - 1].price}</h5>
                 </Carousel.Caption>
               </Link>
             </Col>

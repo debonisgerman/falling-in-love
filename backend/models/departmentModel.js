@@ -10,7 +10,13 @@ const departmentSchema = mongoose.Schema(
             name: {
                 type: String,
                 required: true,
-            }
+            },
+            districts: [{
+                name: {
+                    type: String,
+                    required: true,
+                },
+            }]
         }]
     }
 );

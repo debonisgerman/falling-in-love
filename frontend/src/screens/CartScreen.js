@@ -26,7 +26,8 @@ const CartScreen = ({ match, location, history }) => {
   let color = "";
 
   const search = location.search ? location.search.split("&") : null;
-  if (search) {
+  if (search)
+  {
     qty = search.find(x => x.indexOf("qty") !== -1).split("=")[1];
     size = search.find(x => x.indexOf("size") !== -1).split("=")[1];
     color = search.find(x => x.indexOf("color") !== -1).split("=")[1];
@@ -37,7 +38,8 @@ const CartScreen = ({ match, location, history }) => {
   const { cartItems } = cart;
 
   useEffect(() => {
-    if (productId) {
+    if (productId)
+    {
       dispatch(addToCart(productId, qty, size, color));
     }
   }, [dispatch, productId, qty, size, color]);
@@ -66,7 +68,7 @@ const CartScreen = ({ match, location, history }) => {
       <Row>
         <Col md={8}>
           <Link className="btn btn-light my-3 rounded" to="/shop">
-          <i className="fas fa-store-alt pr-2" />Seguir Comprando
+            <i className="fas fa-store-alt pr-2" />Seguir Comprando
           </Link>
           <h1><i>Carrito de compras</i></h1>
           {cartItems.length === 0 ? (
@@ -86,7 +88,7 @@ const CartScreen = ({ match, location, history }) => {
                         rounded
                       />
                     </Col>
-                    <Col md={5}>
+                    <Col md={3}>
                       <Link
                         style={{ fontSize: '1.1rem' }}
                         to={`/product/${item.product}`}
@@ -96,7 +98,21 @@ const CartScreen = ({ match, location, history }) => {
                       <div
                         style={{ fontSize: '1.1rem' }}
                       >
-                        S./ {item.price}
+                        S/. {item.price}
+                      </div>
+                    </Col>
+                    <Col md={2}>
+                      <div
+                        style={{ fontSize: '1.1rem' }}
+                      >
+                        {item.sizeName}
+                      </div>
+                    </Col>
+                    <Col md={2}>
+                      <div
+                        style={{ fontSize: '1.1rem' }}
+                      >
+                        {item.colorName}
                       </div>
                     </Col>
                     <Col md={2}>
@@ -130,7 +146,7 @@ const CartScreen = ({ match, location, history }) => {
             <ListGroup variant="flush">
               <ListGroup.Item>
                 <h2>
-                  Subtotal (S./ {trunc(cartItems.reduce((acc, item) => acc + (item.qty * item.price), 0), 2)})
+                  Subtotal (S/. {trunc(cartItems.reduce((acc, item) => acc + (item.qty * item.price), 0), 2)})
                 </h2>
               </ListGroup.Item>
               <ListGroup.Item>

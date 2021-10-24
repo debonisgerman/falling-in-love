@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler";
 import mongoose from "mongoose";
 import sendMail from "../utils/mailer.js";
+import sendMailShipping from "../utils/shippingmailer.js"
 import Order from "../models/orderModel.js";
 import Product from "../models/productModel.js";
 
@@ -9,10 +10,12 @@ import Product from "../models/productModel.js";
 // @access Private
 const addOrderItems = asyncHandler(async (req, res) => {
   const { orderItems, shippingAddress } = req.body;
-  if (orderItems && orderItems.length === 0) {
+  if (orderItems && orderItems.length === 0)
+  {
     res.status(400);
     throw new Error("No order items");
-  } else {
+  } else
+  {
     const order = new Order({
       orderItems,
       shippingAddress,
@@ -24,13 +27,16 @@ const addOrderItems = asyncHandler(async (req, res) => {
     );
     createdOrder = await createdOrder.populate("orderItems.product");
 
-    for (let i in orderItems) {
+    for (let i in orderItems)
+    {
       console.log(orderItems[i]);
       const product = await Product.findById(orderItems[i].product);
       const productVariant = product.variants.find(v => v.color == orderItems[i].color);
-      if (productVariant) {
+      if (productVariant)
+      {
         const variantSize = productVariant.sizes.find(x => x.size == orderItems[i].size);
-        if (variantSize) {
+        if (variantSize)
+        {
           variantSize.stock = variantSize.stock - orderItems[i].qty;
         }
       }
@@ -49,9 +55,11 @@ const addOrderItems = asyncHandler(async (req, res) => {
 const getOrderById = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id);
 
-  if (order) {
+  if (order)
+  {
     res.json(order);
-  } else {
+  } else
+  {
     res.status(404);
     throw new Error("Order not found");
   }
@@ -79,14 +87,16 @@ const getOrders = asyncHandler(async (req, res) => {
 const updateOrderToDelivered = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id);
 
-  if (order) {
+  if (order)
+  {
     order.isDelivered = true;
     order.deliveredAt = Date.now();
 
     const updatedOrder = await order.save();
 
     res.json(updatedOrder);
-  } else {
+  } else
+  {
     res.status(404);
     throw new Error("Order not found");
   }
@@ -98,12 +108,14 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
 const updateOrderToPriced = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id);
 
-  if (order) {
+  if (order)
+  {
     order.isPriced = true;
     order.pricedAt = Date.now();
     const updatedOrder = await order.save();
     res.json(updatedOrder);
-  } else {
+  } else
+  {
     throw new Error("Order not found");
   }
 });
@@ -114,12 +126,15 @@ const updateOrderToPriced = asyncHandler(async (req, res) => {
 const updateOrderToShipped = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id);
 
-  if (order) {
+  if (order)
+  {
     order.isShipping = true;
     order.shippedAt = Date.now();
     const updatedOrder = await order.save();
     res.json(updatedOrder);
-  } else {
+    sendMailShipping(order.shippingAddress, order)
+  } else
+  {
     throw new Error("Order not found");
   }
 });

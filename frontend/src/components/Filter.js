@@ -220,7 +220,7 @@ const Filter = ({ loadingFilters, errorFilters, parsed, keyword, filters }) => {
             <ListGroup.Item>
               <Accordion>
                 <Accordion.Toggle as={Card.Header} className="pointer" eventKey="0">
-                  <b>Precio (S./)</b>
+                  <b>Precio (S/.)</b>
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey="0">
                   <ListGroup variant="flush">

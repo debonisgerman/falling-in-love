@@ -27,6 +27,8 @@ const ShippingScreen = ({ history }) => {
   const [ruc, setRuc] = useState(shippingAddress.ruc);
   const [bill, setBill] = useState(shippingAddress.bill);
   const [currentProvinces, setCurrentProvinces] = useState([])
+  const [district, setDistrict] = useState(shippingAddress.district);
+  const [currentDistricts, setCurrentDistricts] = useState([])
 
   const dispatch = useDispatch();
 
@@ -36,7 +38,8 @@ const ShippingScreen = ({ history }) => {
   }, [dispatch]);
 
   setTimeout(() => {
-    if (department && !filledDepartment) {
+    if (department && !filledDepartment)
+    {
       handleDepartment(department);
       setFilledDepartment(true);
     }
@@ -44,7 +47,7 @@ const ShippingScreen = ({ history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(saveShippingAddress({ name, email, address, department, province, phone, socialReason, ruc, bill }));
+    dispatch(saveShippingAddress({ name, email, address, department, province, phone, socialReason, ruc, bill, district }));
     history.push("/payment");
   };
 
@@ -52,18 +55,43 @@ const ShippingScreen = ({ history }) => {
     setDepartment(value);
     const selectedDepartment = departments.find(d => d.name.toString() == value);
     createProvinceSelector(selectedDepartment);
+    setCurrentDistricts([])
+    setDistrict("")
   }
 
   const createProvinceSelector = (department) => {
     let auxProvinces = [];
-    if (department && department.provinces.length > 0) {
+    if (department && department.provinces.length > 0)
+    {
       department.provinces.map((p) => {
-        auxProvinces.push(p.name);
+        auxProvinces.push(p);
       });
     }
     setCurrentProvinces(auxProvinces);
-    if (province) {
+    if (province)
+    {
       setProvince(province);
+    }
+  }
+
+  const handleProvince = (value, id) => {
+    setProvince(value);
+    const selectedProvince = currentProvinces.find(d => d.name.toString() == value);
+    createDistrictSelector(selectedProvince);
+  }
+
+  const createDistrictSelector = (province) => {
+    let auxDistrict = [];
+    if (province && province.districts.length > 0)
+    {
+      province.districts.map((p) => {
+        auxDistrict.push(p.name);
+      });
+    }
+    setCurrentDistricts(auxDistrict);
+    if (district)
+    {
+      setDistrict(district);
     }
   }
 
@@ -140,7 +168,7 @@ const ShippingScreen = ({ history }) => {
             value={province}
             required
             onChange={e => {
-              setProvince(e.target.value)
+              handleProvince(e.target.value, e.target.selectedOptions[0].id)
             }}
           >
             <option value={''}>- Elegir</option>
@@ -150,6 +178,29 @@ const ShippingScreen = ({ history }) => {
               <Message variant="danger">{error}</Message>
             ) : (
               currentProvinces && currentProvinces.sort((a, b) => a > b).map((c, i) => (
+                <option id={i} key={i} value={c.name}>{c.name}</option>
+              ))
+            )}
+          </Form.Control>
+        </Form.Group>
+
+        <Form.Group controlId="district">
+          <Form.Label>Distrito</Form.Label>
+          <Form.Control
+            as="select"
+            value={district}
+            required
+            onChange={e => {
+              setDistrict(e.target.value)
+            }}
+          >
+            <option value={''}>- Elegir</option>
+            {loading ? (
+              <Loader />
+            ) : error ? (
+              <Message variant="danger">{error}</Message>
+            ) : (
+              currentDistricts && currentDistricts.sort((a, b) => a > b).map((c, i) => (
                 <option id={i} key={i} value={c}>{c}</option>
               ))
             )}
@@ -175,7 +226,8 @@ const ShippingScreen = ({ history }) => {
             checked={bill}
             onChange={(e) => {
               setBill(e.target.checked)
-              if (!e.target.checked) {
+              if (!e.target.checked)
+              {
                 setSocialReason("");
                 setRuc("");
               }

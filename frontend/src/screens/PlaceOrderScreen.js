@@ -33,7 +33,7 @@ const PlaceOrderScreen = ({ history }) => {
   cart.itemsPrice = addDecimals(
     cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
   );
-  cart.shippingPrice = cart.shippingAddress.province !== 'Lima' ?  addDecimals(20) : addDecimals(15);
+  cart.shippingPrice = cart.shippingAddress.province !== 'Lima' ? 15 : 10;
   cart.totalPrice = (
     Number(cart.itemsPrice) +
     Number(cart.shippingPrice)
@@ -43,7 +43,8 @@ const PlaceOrderScreen = ({ history }) => {
   const { order, success, error } = orderCreate;
 
   useEffect(() => {
-    if (success) {
+    if (success)
+    {
       history.push(`/order/${order._id}`);
     }
     // eslint-disable-next-line
@@ -77,6 +78,7 @@ const PlaceOrderScreen = ({ history }) => {
               <p><strong>Dirección:</strong> {cart.shippingAddress.address}</p>
               <p><strong>Departamento:</strong> {cart.shippingAddress.department}</p>
               <p><strong>Provincia:</strong> {cart.shippingAddress.province}</p>
+              <p><strong>Distrito:</strong> {cart.shippingAddress.district}</p>
               <p><strong>Teléfono:</strong> {cart.shippingAddress.phone}</p>
               <p><strong>Factura:</strong> {cart.shippingAddress.bill ? 'Si' : 'No'}</p>
               <p><strong>Razón Social:</strong> {cart.shippingAddress.socialReason ? cart.shippingAddress.socialReason : '-'}</p>
@@ -94,13 +96,13 @@ const PlaceOrderScreen = ({ history }) => {
                   <Modal.Body>
                     <h4><b>ENVÍOS Y ENTREGAS</b></h4>
                     <h6 className="mb-1 mt-4">LIMA METROPOLITANA:</h6>
-                    <p className="mb-0">Todas las compras por montos menores a S/150 tendrán un costo de envío de S/15. <b>Envíos gratis por compras mayores a S/150.</b></p>
+                    <p className="mb-0">Todas las compras por montos menores a S/150 tendrán un costo de envío de S/10. <b>Envíos gratis por compras mayores a S/150.</b></p>
                     <p className="mb-0">Tiempo de entrega de 3 días hábiles contados desde la fecha que realizaste tu compra, en el horario de 9am a 7pm.</p>
                     <h6 className="mb-1 mt-4">RECÍBELO HASTA EN 24 HORAS - LIMA METROPOLITANA:</h6>
-                    <p className="mb-0">Tiene un costo fijo de S/20.</p>
+                    <p className="mb-0">Tiene un costo fijo de S/15.</p>
                     <p className="mb-0">Tiempo de entrega dentro de las siguientes 24 horas hábiles. (Consulta si tu distrito está incluido dentro de la cobertura)</p>
                     <h6 className="mb-1 mt-4">PROVINCIAS DEL PERÚ</h6>
-                    <p className="mb-0">Todas las compras por montos menores a S/150 tendrán un costo de envío de S/20. <b>Envíos gratis por compras mayores a S/150.</b></p>
+                    <p className="mb-0">Todas las compras por montos menores a S/150 tendrán un costo de envío de S/15. <b>Envíos gratis por compras mayores a S/150.</b></p>
                     <p className="mb-0">Tiempo de entrega de 3 a 5 días hábiles contados desde la fecha que realizaste tu compra.</p>
                     <p className="mb-0">Los envíos se hacen por Olva Courier y se te brindara el número de tracking con el que podrás hacer seguimiento de tu pedido.</p>
                     <p className="mb-0">El pedido se puede programar para que llegue a la dirección dada al momento de realizar la compra o también para recojo en la agencia de Olva Courier de la ciudad de destino.</p>
@@ -143,7 +145,7 @@ const PlaceOrderScreen = ({ history }) => {
                           </p>
                         </Col>
                         <Col md={4}>
-                          {item.qty} x S./ {item.price} = S./
+                          {item.qty} x S/. {item.price} = S/.
                           {(item.qty * item.price).toFixed(2)}
                         </Col>
                       </Row>
@@ -164,20 +166,20 @@ const PlaceOrderScreen = ({ history }) => {
                 <Row>
                   <Col>Items</Col>
                   <Col>
-                    <strong>S./ {cart.itemsPrice}</strong>
+                    <strong>S/. {cart.itemsPrice}</strong>
                   </Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Costo de Envío</Col>
-                  <Col><strong>S./ {cart.shippingPrice}</strong></Col>
+                  <Col><strong>S/. {cart.shippingPrice}</strong></Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Total</Col>
-                  <Col><strong>S./ {cart.totalPrice}</strong></Col>
+                  <Col><strong>S/. {cart.totalPrice}</strong></Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>

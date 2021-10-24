@@ -131,7 +131,7 @@ const ProductListScreen = ({ history, match }) => {
                   </td>
                   <td>{product._id}</td>
                   <td>{product.name}</td>
-                  <td>{product.price ? `S./ ${product.price}` : ''}</td>
+                  <td>{product.price ? `S/. ${product.price}` : ''}</td>
                   <td>{product.material ? product.material.reduce((accumulator, currentValue) => accumulator = accumulator + ", " + currentValue.name, "").slice(2) : ''}</td>
                   <td>{product.category ? product.category.name : ''}</td>
                   <td>{product.section ? product.section.reduce((accumulator, currentValue) => accumulator = accumulator + ", " + currentValue.name, "").slice(2) : ''}</td>

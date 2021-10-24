@@ -18,34 +18,43 @@ const getProducts = asyncHandler(async (req, res) => {
   let priceTo;
   let priceFrom;
 
-  if (price) {
-    if (price.indexOf("to") !== -1) {
+  if (price)
+  {
+    if (price.indexOf("to") !== -1)
+    {
       priceTo = price.split("to")[1];
       priceFrom = price.split("to")[0];
-    } else {
+    } else
+    {
       priceFrom = price;
     }
   }
   console.log("HERE");
-  if (category) {
+  if (category)
+  {
     category = await Category.findOne({ name: { $regex: category } });
     console.log("ASDASDASDAS");
     console.log("CATE", category);
-    if (category) {
+    if (category)
+    {
       category = category._id;
     }
   }
 
-  if (material) {
+  if (material)
+  {
     material = await Material.findOne({ name: { $regex: material } });
-    if (material) {
+    if (material)
+    {
       material = material._id;
     }
   }
 
-  if (section) {
+  if (section)
+  {
     section = await Section.findOne({ name: { $regex: section } });
-    if (section) {
+    if (section)
+    {
       section = section._id;
     }
   }
@@ -53,8 +62,10 @@ const getProducts = asyncHandler(async (req, res) => {
   console.log(price, priceFrom, priceTo);
 
   let keyword;
-  if (category || material || section || priceFrom || priceTo) {
-    if (req.query.keyword) {
+  if (category || material || section || priceFrom || priceTo)
+  {
+    if (req.query.keyword)
+    {
       keyword = {
         $and: [
           {
@@ -77,7 +88,8 @@ const getProducts = asyncHandler(async (req, res) => {
       section && keyword.$and.push({ section: section });
       priceFrom && keyword.$and.push({ price: { $gte: priceFrom } });
       priceTo && keyword.$and.push({ price: { $lte: priceTo } });
-    } else {
+    } else
+    {
       keyword = { $and: [] };
       category && keyword.$and.push({ category: category });
       material && keyword.$and.push({ material: material });
@@ -85,7 +97,8 @@ const getProducts = asyncHandler(async (req, res) => {
       priceFrom && keyword.$and.push({ price: { $gte: priceFrom } });
       priceTo && keyword.$and.push({ price: { $lte: priceTo } });
     }
-  } else {
+  } else
+  {
     keyword = req.query.keyword
       ? {
         $or: [
@@ -123,33 +136,42 @@ const getShopProducts = asyncHandler(async (req, res) => {
   let priceTo;
   let priceFrom;
 
-  if (price) {
-    if (price.indexOf("to") !== -1) {
+  if (price)
+  {
+    if (price.indexOf("to") !== -1)
+    {
       priceTo = price.split("to")[1];
       priceFrom = price.split("to")[0];
-    } else {
+    } else
+    {
       priceFrom = price;
     }
   }
 
-  if (category) {
+  if (category)
+  {
     category = await Category.findOne({ name: { $regex: category } });
     console.log("category", category)
-    if (category) {
+    if (category)
+    {
       category = category._id;
     }
   }
 
-  if (material) {
+  if (material)
+  {
     material = await Material.findOne({ name: { $regex: material } });
-    if (material) {
+    if (material)
+    {
       material = material._id;
     }
   }
 
-  if (section) {
+  if (section)
+  {
     section = await Section.findOne({ name: { $regex: section } });
-    if (section) {
+    if (section)
+    {
       section = section._id;
     }
   }
@@ -157,8 +179,10 @@ const getShopProducts = asyncHandler(async (req, res) => {
   console.log(price, priceFrom, priceTo);
 
   let keyword;
-  if (category || material || section || priceFrom || priceTo) {
-    if (req.query.keyword) {
+  if (category || material || section || priceFrom || priceTo)
+  {
+    if (req.query.keyword)
+    {
       keyword = {
         $and: [
           {
@@ -181,7 +205,8 @@ const getShopProducts = asyncHandler(async (req, res) => {
       section && keyword.$and.push({ section: section });
       priceFrom && keyword.$and.push({ price: { $gte: priceFrom } });
       priceTo && keyword.$and.push({ price: { $lte: priceTo } });
-    } else {
+    } else
+    {
       keyword = { $and: [] };
       category && keyword.$and.push({ category: category });
       material && keyword.$and.push({ material: material });
@@ -189,7 +214,8 @@ const getShopProducts = asyncHandler(async (req, res) => {
       priceFrom && keyword.$and.push({ price: { $gte: priceFrom } });
       priceTo && keyword.$and.push({ price: { $lte: priceTo } });
     }
-  } else {
+  } else
+  {
     keyword = req.query.keyword
       ? {
         $or: [
@@ -225,39 +251,50 @@ const getFilters = asyncHandler(async (req, res) => {
   let priceTo;
   let priceFrom;
 
-  if (price) {
-    if (price.indexOf("to") !== -1) {
+  if (price)
+  {
+    if (price.indexOf("to") !== -1)
+    {
       priceTo = price.split("to")[1];
       priceFrom = price.split("to")[0];
-    } else {
+    } else
+    {
       priceFrom = price;
     }
   }
 
-  if (category) {
+  if (category)
+  {
     category = await Category.findOne({ name: { $regex: category } });
-    if (category) {
+    if (category)
+    {
       category = category._id;
     }
   }
 
-  if (material) {
+  if (material)
+  {
     material = await Material.findOne({ name: { $regex: material } });
-    if (material) {
+    if (material)
+    {
       material = material._id;
     }
   }
 
-  if (section) {
+  if (section)
+  {
     section = await Section.findOne({ name: { $regex: section } });
-    if (section) {
+    if (section)
+    {
       section = section._id;
     }
   }
 
   let keyword;
-  if (category || material || section || priceFrom || priceTo) {
-    if (req.query.keyword) {
+  if (category || material || section || priceFrom || priceTo)
+  {
+    if (req.query.keyword)
+    {
       keyword = {
         $and: [
           {
@@ -280,7 +317,8 @@ const getFilters = asyncHandler(async (req, res) => {
       section && keyword.$and.push({ section: section });
       priceFrom && keyword.$and.push({ price: { $gte: priceFrom } });
       priceTo && keyword.$and.push({ price: { $lte: priceTo } });
-    } else {
+    } else
+    {
       keyword = { $and: [] };
       category && keyword.$and.push({ category: category });
       material && keyword.$and.push({ material: material });
@@ -288,7 +326,8 @@ const getFilters = asyncHandler(async (req, res) => {
       priceFrom && keyword.$and.push({ price: { $gte: priceFrom } });
       priceTo && keyword.$and.push({ price: { $lte: priceTo } });
     }
-  } else {
+  } else
+  {
     keyword = req.query.keyword
       ? {
         $or: [
@@ -316,13 +355,27 @@ const getFilters = asyncHandler(async (req, res) => {
       price,
     },
   };
-  filters.filters.categories = products
-    .map((item) => item.category && item.category.name)
-    .filter((value, index, self) => value && self.indexOf(value) === index);
+  // filters.filters.categories = products
+  //   .map((item) => item.category && item.category.name)
+  //   .filter((value, index, self) => value && self.indexOf(value) === index);
+
+  filters.filters.categories = products.reduce((acc, product) => {
+    acc = acc || [];
+    if (product.category)
+    {
+      acc.push(product.category.reduce((accumulator, currentValue) => {
+        accumulator = accumulator || [];
+        accumulator.push(currentValue.name);
+        return accumulator
+      }, []));
+    }
+    return acc;
+  }, []).flat().filter((value, index, self) => value && self.indexOf(value) === index);
 
   filters.filters.materials = products.reduce((acc, product) => {
     acc = acc || [];
-    if (product.material) {
+    if (product.material)
+    {
       acc.push(product.material.reduce((accumulator, currentValue) => {
         accumulator = accumulator || [];
         accumulator.push(currentValue.name);
@@ -334,7 +387,8 @@ const getFilters = asyncHandler(async (req, res) => {
 
   filters.filters.sections = products.reduce((acc, product) => {
     acc = acc || [];
-    if (product.section) {
+    if (product.section)
+    {
       acc.push(product.section.reduce((accumulator, currentValue) => {
         accumulator = accumulator || [];
         accumulator.push(currentValue.name);
@@ -359,9 +413,11 @@ const getProductById = asyncHandler(async (req, res) => {
     .populate('variants.sizes.size')
     .populate('related');
 
-  if (product) {
+  if (product)
+  {
     res.json(product);
-  } else {
+  } else
+  {
     res.status(404);
     throw new Error("Product not found");
   }
@@ -373,10 +429,12 @@ const getProductById = asyncHandler(async (req, res) => {
 const deleteProduct = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id);
 
-  if (product) {
+  if (product)
+  {
     await product.remove();
     res.json({ message: "Product removed" });
-  } else {
+  } else
+  {
     res.status(404);
     throw new Error("Product not found");
   }
@@ -421,7 +479,8 @@ const updateProduct = asyncHandler(async (req, res) => {
 
   const product = await Product.findById(req.params.id);
 
-  if (product) {
+  if (product)
+  {
     product.name = name;
     product.category = category;
     product.description = description;
@@ -436,7 +495,8 @@ const updateProduct = asyncHandler(async (req, res) => {
 
     const updatedProduct = await product.save();
     res.json(updatedProduct);
-  } else {
+  } else
+  {
     res.status(404);
     throw new Error("Product not found");
   }
@@ -451,8 +511,12 @@ const getTopProducts = asyncHandler(async (req, res) => {
 });
 
 const getRelatedProducts = asyncHandler(async (req, res) => {
-  const categoryId = req.params.id;
-  const products = await Product.find({ leading: true, published: true, category: categoryId }).sort({ leading: -1 }).limit(9);
+  const categories = req.params.id.split(",");
+  const products = await Product.find({
+    leading: true,
+    published: true,
+    category: { $in: categories }
+  }).sort({ leading: -1 }).limit(9);
   res.json(products);
 });
 

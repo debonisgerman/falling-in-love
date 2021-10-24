@@ -25,8 +25,8 @@ const ProductEditScreen = ({ match, history }) => {
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
-  const [related, setRelated] = useState("");
+  const [category, setCategory] = useState([]);
+  const [related, setRelated] = useState([]);
   const [material, setMaterial] = useState([]);
   const [section, setSection] = useState([]);
   const [code, setCode] = useState("");
@@ -71,19 +71,32 @@ const ProductEditScreen = ({ match, history }) => {
     dispatch(listSections());
     dispatch(listColors());
     dispatch(listSizes());
-    if (successUpdate) {
+    if (successUpdate)
+    {
       dispatch(listCategories());
       dispatch({ type: PRODUCT_UPDATE_RESET });
       dispatch({ type: PRODUCT_DETAILS_RESET });
       history.push("/admin/productlist");
-    } else {
-      if (!product || !product.name || product._id !== productId) {
+    } else
+    {
+      if (!product || !product.name || product._id !== productId)
+      {
         dispatch(listProductsDetails(productId));
-      } else {
+      } else
+      {
         setName(product.name);
         setDescription(product.description);
-        setCategory(product.category ? product.category._id : "");
-        setRelated(product.related ? product.related._id : "");
+        // setCategory(product.category ? product.category._id : "");
+        setCategory(product.category ? product.category.reduce((accumulator, currentValue) => {
+          accumulator = accumulator || [];
+          accumulator.push(currentValue._id);
+          return accumulator
+        }, []) : []);
+        setRelated(product.related ? product.related.reduce((accumulator, currentValue) => {
+          accumulator = accumulator || [];
+          accumulator.push(currentValue._id);
+          return accumulator
+        }, []) : []);
         setMaterial(product.material ? product.material.reduce((accumulator, currentValue) => {
           accumulator = accumulator || [];
           accumulator.push(currentValue._id);
@@ -99,13 +112,16 @@ const ProductEditScreen = ({ match, history }) => {
         setPrice(product.price ? product.price : 0);
         setPublished(product.published ? product.published : false);
         // ver como setear los valores, color tiene que ser el id y mismo los sizes
-        if (product.variants) {
+        if (product.variants)
+        {
           let aux = [];
-          for (let i in product.variants) {
+          for (let i in product.variants)
+          {
             const imagesAux = product.variants[i].images;
             const colorAux = product.variants[i].color._id;
             let sizesAux = [];
-            for (let j in product.variants[i].sizes) {
+            for (let j in product.variants[i].sizes)
+            {
               sizesAux.push({
                 size: product.variants[i].sizes[j].size._id,
                 stock: product.variants[i].sizes[j].stock,
@@ -147,9 +163,11 @@ const ProductEditScreen = ({ match, history }) => {
 
   const onSectionChange = (e) => {
     let newSections = [...section];
-    if (e.target.checked) {
+    if (e.target.checked)
+    {
       newSections.push(e.target.id);
-    } else {
+    } else
+    {
       const value = e.target.id;
       newSections = newSections.filter(x => x !== value);
     }
@@ -158,18 +176,47 @@ const ProductEditScreen = ({ match, history }) => {
 
   const onMaterialChange = (e) => {
     let newMaterials = [...material];
-    if (e.target.checked) {
+    if (e.target.checked)
+    {
       newMaterials.push(e.target.id);
-    } else {
+    } else
+    {
       const value = e.target.id;
       newMaterials = newMaterials.filter(x => x !== value);
     }
     setMaterial(newMaterials);
   }
 
+  const onCategoryChange = (e) => {
+    let newCategories = [...category];
+    if (e.target.checked)
+    {
+      newCategories.push(e.target.id);
+    } else
+    {
+      const value = e.target.id;
+      newCategories = newCategories.filter(x => x !== value);
+    }
+    setCategory(newCategories);
+  }
+
+  const onRelatedChange = (e) => {
+    let newRelateds = [...related];
+    if (e.target.checked)
+    {
+      newRelateds.push(e.target.id);
+    } else
+    {
+      const value = e.target.id;
+      newRelateds = newRelateds.filter(x => x !== value);
+    }
+    setRelated(newRelateds);
+  }
+
   const updateVariantForm = (newVariants) => {
 
-    if (newVariants) {
+    if (newVariants)
+    {
       setVariantForm(colors.length > 0 && sizes.length > 0 && newVariants.map((v, i) => (
         <>
           {<VariantForm
@@ -184,7 +231,8 @@ const ProductEditScreen = ({ match, history }) => {
           />}
         </>
       )))
-    } else {
+    } else
+    {
 
       setVariantForm(colors.length > 0 && sizes.length > 0 && variants.length > 0 && variants.map((v, i) => (
         <>
@@ -213,12 +261,14 @@ const ProductEditScreen = ({ match, history }) => {
 
   const handleVariantsUpdate = (sizesV, images, color, updatedVariants) => {
     console.log(sizesV, images, color);
-    if (color) {
+    if (color)
+    {
       let newVariants = [...updatedVariants];
       const otherVariants = newVariants.filter(v => v.color !== color._id);
       const variantIndex = newVariants.findIndex(v => v.color === color._id)
       newVariants = newVariants.filter(v => v.color === color._id);
-      if (newVariants.length > 0) {
+      if (newVariants.length > 0)
+      {
         newVariants = newVariants[0];
 
         let imgs = [];
@@ -226,7 +276,8 @@ const ProductEditScreen = ({ match, history }) => {
         newVariants.images = imgs;
 
         let newSizes = [];
-        for (let s in sizesV) {
+        for (let s in sizesV)
+        {
           let foundSize = sizes.find(x => x.name === s);
           newSizes.push({
             size: foundSize._id,
@@ -238,7 +289,8 @@ const ProductEditScreen = ({ match, history }) => {
         newArray.splice(variantIndex, 0, newVariants);
         setVariants([...newArray]);
         updateVariantForm([...newArray]);
-      } else {
+      } else
+      {
         console.log("Something went wrong ", newVariants);
       }
     }
@@ -288,7 +340,7 @@ const ProductEditScreen = ({ match, history }) => {
               ></Form.Control>
             </Form.Group>
 
-            <Form.Group controlId="category">
+            {/* <Form.Group controlId="category">
               <Form.Label>Categoría</Form.Label>
               <Form.Control
                 as="select"
@@ -308,28 +360,58 @@ const ProductEditScreen = ({ match, history }) => {
                   ))
                 )}
               </Form.Control>
-            </Form.Group>
+            </Form.Group> */}
 
-            <Form.Group controlId="related">
-              <Form.Label>Relacionado</Form.Label>
-              <Form.Control
-                as="select"
-                value={related}
-                onChange={e => {
-                  setRelated(e.target.value);
-                }}
-              >
-                <option value={null}>- Elegir</option>
+            <Form.Group controlId="category">
+              <Form.Label>Categoría</Form.Label>
+              <div key={`category`} className="mb-3">
                 {loadingCategories ? (
                   <Loader />
                 ) : errorCategories ? (
                   <Message variant="danger">{error}</Message>
                 ) : (
                   categories && categories.map((c) => (
-                    <option key={c._id} value={c._id}>{c.name}</option>
+                    <Form.Check
+                      key={c._id}
+                      checked={category.indexOf(c._id) !== -1}
+                      onChange={onCategoryChange}
+                      custom
+                      inline
+                      value={c._id}
+                      name={c.name}
+                      label={c.name}
+                      type='checkbox'
+                      id={c._id}
+                    />
                   ))
                 )}
-              </Form.Control>
+              </div>
+            </Form.Group>
+
+            <Form.Group controlId="related">
+              <Form.Label>Relacionado</Form.Label>
+              <div key={`related`} className="mb-3">
+                {loadingCategories ? (
+                  <Loader />
+                ) : errorCategories ? (
+                  <Message variant="danger">{error}</Message>
+                ) : (
+                  categories && categories.map((c) => (
+                    <Form.Check
+                      key={c._id}
+                      checked={related.indexOf(c._id) !== -1}
+                      onChange={onRelatedChange}
+                      custom
+                      inline
+                      value={c._id}
+                      name={c.name}
+                      label={c.name}
+                      type='checkbox'
+                      id={c._id}
+                    />
+                  ))
+                )}
+              </div>
             </Form.Group>
 
             <Form.Group controlId="description">

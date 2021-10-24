@@ -3,16 +3,16 @@ import nodemailer from "nodemailer";
 const sendMail = async (data, order, orderItems) => {
   let transporter = nodemailer.createTransport({
     service: "gmail",
-    host: "smtp.gmail.com",
+    host: process.env.EMAIL_HOST,
     auth: {
-      user: "debonis.german@gmail.com",
-      pass: "unapass",
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
     },
   });
 
   await transporter.sendMail({
-    from: '"Germán De Bonis" <debonis.german@gmail.com>',
-    to: '"Germán De Bonis" <debonis.german@gmail.com>',
+    from: '"Falling in Love" <ventas@fallinginlove.pe>',
+    to: '"Falling in Love" <ventas@fallinginlove.pe>',
     subject: `${data.name} hizo una compra desde el Sitio Web`,
     html: `
       <div>
@@ -24,6 +24,7 @@ const sendMail = async (data, order, orderItems) => {
               <li><strong>Email: </strong> ${data.email}</li>
               <li><strong>Dirección:</strong> ${data.address}</li>
               <li><strong>Provincia:</strong> ${data.province}</li>
+              <li><strong>Distrito:</strong> ${data.district}</li>
               <li><strong>Teléfono:</strong> ${data.phone}</li>
               <li><strong>Factura:</strong> ${data.bill ? 'Si' : 'No'}</li>
               <li><strong>Razón Social:</strong> ${data.socialReason ? data.socialReason : '-'}</li>
@@ -50,7 +51,7 @@ const sendMail = async (data, order, orderItems) => {
   });
 
   await transporter.sendMail({
-    from: '"Germán De Bonis" <debonis.german@gmail.com>',
+    from: '"Falling in Love" <ventas@fallinginlove.pe>',
     to: "'" + data.name + "' " + data.email,
     subject: `${data.name} gracias por pedir en Falling In love`,
     html: `
@@ -63,6 +64,7 @@ const sendMail = async (data, order, orderItems) => {
               <li><strong>Email: </strong> ${data.email}</li>
               <li><strong>Dirección:</strong> ${data.address}</li>
               <li><strong>Provincia:</strong> ${data.province}</li>
+              <li><strong>Distrito:</strong> ${data.district}</li>
               <li><strong>Teléfono:</strong> ${data.phone}</li>
               <li><strong>Factura:</strong> ${data.bill ? 'Si' : 'No'}</li>
               <li><strong>Razón Social:</strong> ${data.socialReason ? data.socialReason : '-'}</li>

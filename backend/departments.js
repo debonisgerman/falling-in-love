@@ -10,13 +10,15 @@ dotenv.config();
 connectDB();
 
 const importData = async () => {
-  try {
-    
+  try
+  {
+    await Department.deleteMany();
     const newDep = await Department.insertMany(departments);
 
     console.log("Data Imported!", newDep);
     process.exit();
-  } catch (err) {
+  } catch (err)
+  {
     console.log(err.message);
     process.exit(1);
   }
