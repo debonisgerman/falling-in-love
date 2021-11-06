@@ -455,16 +455,3 @@ footer a:hover {
     font-size: 1rem;
   }
 }
-
-.outofstock {
-  position: absolute;
-  left: 93px;
-  right: 0;
-  background: red;
-  width: 100px;
-  top: 50px;
-  transform: rotate( 310deg);
-  font-size: 15px;
-  font-weight: bold;
-  color: white;
-}

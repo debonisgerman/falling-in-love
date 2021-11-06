@@ -28,17 +28,14 @@ const Product = ({ product }) => {
 
   return (
     <Card className="my-3 p-3 rounded w100p">
-      {
-        product.variants &&
-          product.variants.length == 0 ? (<div class="no-stock-bow">Sin Stock</div>) : (<></>)
-      }
       <Link onClick={handleLink} className='img-prod-cont'>
-        {isOutOfStock && (
-          <div className='outofstock'>
-            AGOTADO
-          </div>
-        )}
-        <Card.Img src={productImage} variant="top" className='img-prod' />
+        {isOutOfStock && (<div variant="top" className='img-prod' style={{
+          backgroundImage: `url(/uploads/agotado.png), url(${productImage.split("\\").join("/")})`,
+          backgroundSize: 'contain, contain',
+          backgroundRepeat: 'no-repeat, no-repeat',
+          backgroundPosition: 'center, center',
+        }}></div>)}
+        {!isOutOfStock && (<Card.Img src={productImage} variant="top" className='img-prod' />)}
       </Link>
 
       <Card.Body>

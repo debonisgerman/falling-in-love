@@ -80,9 +80,13 @@ const PlaceOrderScreen = ({ history }) => {
               <p><strong>Provincia:</strong> {cart.shippingAddress.province}</p>
               <p><strong>Distrito:</strong> {cart.shippingAddress.district}</p>
               <p><strong>Teléfono:</strong> {cart.shippingAddress.phone}</p>
-              <p><strong>Factura:</strong> {cart.shippingAddress.bill ? 'Si' : 'No'}</p>
-              <p><strong>Razón Social:</strong> {cart.shippingAddress.socialReason ? cart.shippingAddress.socialReason : '-'}</p>
-              <p><strong>RUC:</strong> {cart.shippingAddress.ruc ? cart.shippingAddress.ruc : '-'}</p>
+              <p><strong>Comprobante:</strong> {cart.shippingAddress.bill ? 'Factura' : 'Boleta'}</p>
+              {cart.shippingAddress.bill && (
+                <>
+                  <p><strong>Razón Social:</strong> {cart.shippingAddress.socialReason ? cart.shippingAddress.socialReason : '-'}</p>
+                  <p><strong>RUC:</strong> {cart.shippingAddress.ruc ? cart.shippingAddress.ruc : '-'}</p>
+                </>
+              )}
               <div className="mb-2">
                 <a
                   href="#"

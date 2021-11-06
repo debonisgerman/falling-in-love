@@ -17,15 +17,19 @@ const ProductCarousel = () => {
   }, [dispatch]);
 
   const getPages = () => {
-    if (!products || products.length === 0) {
+    if (!products || products.length === 0)
+    {
       return null;
-    } else {
+    } else
+    {
       const pagesCount = Math.ceil(products.length / 3);
-      if (document.getElementById("destTitle") && products.length > 0) {
+      if (document.getElementById("destTitle") && products.length > 0)
+      {
         document.getElementById("destTitle").innerHTML = "LOS PREFERIDOS";
       }
       pages = [];
-      for (let i = 0; i < pagesCount; i++) {
+      for (let i = 0; i < pagesCount; i++)
+      {
         pages.push(i + 1);
       }
       return pages.map((page, index) => (
@@ -41,14 +45,18 @@ const ProductCarousel = () => {
   }
 
   const getCarouselItem = (page, products) => {
-    if (!products || products.length === 0) {
+    if (!products || products.length === 0)
+    {
       // document.getElementById("destTitle") ? document.getElementById("destTitle").remove() : null;
       return null;
-    } else {
+    } else
+    {
       const rounds = page + 3;
       let items = [];
-      for (let i = page; i < rounds; i++) {
-        if (products[i - 1]) {
+      for (let i = page; i < rounds; i++)
+      {
+        if (products[i - 1])
+        {
           items.push(
             <Col md={3} key={products[i - 1]._id}>
               <Link onClick={() => handleLink(products[i - 1])}>
@@ -65,8 +73,8 @@ const ProductCarousel = () => {
                   className="m-w-70-m0a"
                 />
                 <Carousel.Caption className="carosuel-caption">
-                  <h5>{products[i - 1].name}</h5>
-                  <h5>S/. {products[i - 1].price}</h5>
+                  <h5 className="bold text-center underline"><i>{products[i - 1].name}</i></h5>
+                  <h5><i>S/. {products[i - 1].price}</i></h5>
                 </Carousel.Caption>
               </Link>
             </Col>

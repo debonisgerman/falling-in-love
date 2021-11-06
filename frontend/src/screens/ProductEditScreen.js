@@ -189,12 +189,13 @@ const ProductEditScreen = ({ match, history }) => {
 
   const onCategoryChange = (e) => {
     let newCategories = [...category];
+    const id = e.target.id.split("related-")[1];
     if (e.target.checked)
     {
-      newCategories.push(e.target.id);
+      newCategories.push(id);
     } else
     {
-      const value = e.target.id;
+      const value = id;
       newCategories = newCategories.filter(x => x !== value);
     }
     setCategory(newCategories);
@@ -372,7 +373,7 @@ const ProductEditScreen = ({ match, history }) => {
                 ) : (
                   categories && categories.map((c) => (
                     <Form.Check
-                      key={c._id}
+                      key={`related-${c._id}`}
                       checked={category.indexOf(c._id) !== -1}
                       onChange={onCategoryChange}
                       custom
@@ -381,7 +382,7 @@ const ProductEditScreen = ({ match, history }) => {
                       name={c.name}
                       label={c.name}
                       type='checkbox'
-                      id={c._id}
+                      id={`related-${c._id}`}
                     />
                   ))
                 )}
