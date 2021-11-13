@@ -31,9 +31,9 @@ const Product = ({ product }) => {
       <Link onClick={handleLink} className='img-prod-cont'>
         {isOutOfStock && (<div variant="top" className='img-prod' style={{
           backgroundImage: `url(/uploads/agotado.png), url(${productImage.split("\\").join("/")})`,
-          backgroundSize: 'contain, contain',
+          backgroundSize: '44%, contain',
           backgroundRepeat: 'no-repeat, no-repeat',
-          backgroundPosition: 'center, center',
+          backgroundPosition: 'top center,center center',
         }}></div>)}
         {!isOutOfStock && (<Card.Img src={productImage} variant="top" className='img-prod' />)}
       </Link>

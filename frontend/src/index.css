@@ -422,6 +422,10 @@ footer a:hover {
   color: #fbc0c1;
 }
 
+#termsModal {
+  max-width: 60%;
+}
+
 @media only screen and (min-width: 1300px) {
   .list-group {
     font-size: .9rem;
