@@ -224,9 +224,9 @@ const ProductScreen = ({ history, match }) => {
                   {variant && variant.sizes ? (
                     <div>
                       {variant && variant.sizes.map((c) => (
-                        c && c.stock && c.stock > 0 &&
-                        <div key={c.size._id}>{c.size.name} {c.stock ? c.stock : 0} {c.stock != 1 ? 'Unidades' : 'Unidad'}</div>
-                      ))
+                        c && c.stock != null && c.stock != undefined && c.stock > -1 ? (
+                          <div key={c.size._id}>{c.size.name} {c.stock > 0 ? c.stock : '0'} {c.stock != 1 ? 'Unidades' : 'Unidad'}</div>
+                        ) : <></>))
                       }
                     </div>
                   ) : <></>

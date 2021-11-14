@@ -48,7 +48,7 @@ const ShopScreen = ({ match, location }) => {
         <Message variant="danger">{error}</Message>
       ) : (
         <>
-          <Row className="px-3 w-100">
+          <Row className="px-3 w-100 mobile-px2-ml-0 ml-w78">
             <Col lg={3} md={3} xl={3} className="pt-2-4">
               <Filter
                 loadingFilters={loadingFilters}
@@ -64,8 +64,8 @@ const ShopScreen = ({ match, location }) => {
                   <Col
                     key={product._id}
                     sm={12}
-                    md={6}
-                    lg={4}
+                    md={12}
+                    lg={6}
                     xl={4}
                     className="disp-flex"
                   >
