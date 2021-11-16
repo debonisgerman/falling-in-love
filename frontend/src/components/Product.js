@@ -45,14 +45,6 @@ const Product = ({ product }) => {
           </Card.Title>
         </Link>
         <Card.Text as="p">
-          <strong>Categoría: </strong>
-          {product.category ? product.category.reduce((accumulator, currentValue) => accumulator = accumulator + ", " + currentValue.name, "").slice(2) : "No definido"}
-        </Card.Text>
-        <Card.Text as="p">
-          <strong>Material: </strong>
-          {product.material ? product.material.reduce((accumulator, currentValue) => accumulator = accumulator + ", " + currentValue.name, "").slice(2) : "No definido"}
-        </Card.Text>
-        <Card.Text as="p">
           <strong>Precio: </strong>
           {product.price ? ` S/. ${product.price}` : "No definido"}
         </Card.Text>
@@ -87,28 +79,6 @@ const Product = ({ product }) => {
             </Card.Text>
           </>
         )}
-        <Card.Text as="div">
-          <Row>
-            <Col sm={6} md={6} lg={6} xl={6} xs={6} className="text-center">
-              <a
-                href="https://wa.me/message/BC3M5NM7LNWAE1"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <i className="fab fa-whatsapp h2"></i>
-              </a>
-            </Col>
-            <Col sm={6} md={6} lg={6} xl={6} xs={6} className="text-center">
-              <a
-                href="mailto:fallinginloveperu@outlook.com"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <i className="fas fa-envelope-open h2"></i>
-              </a>
-            </Col>
-          </Row>
-        </Card.Text>
       </Card.Body>
     </Card>
   );
