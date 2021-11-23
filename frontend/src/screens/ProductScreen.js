@@ -169,16 +169,18 @@ const ProductScreen = ({ history, match }) => {
               </Row>
               <Row>
                 {variant && variant.images && variant.images.map((image, i) => (
-                  <Col xs={2} sm={2} md={2} >
-                    <Image
-                      src={image}
-                      alt={i}
-                      key={i}
-                      fluid="true"
-                      className="w100p"
-                      onClick={handleImageClick}
-                    />
-                  </Col>
+                  image ? (
+                    <Col xs={2} sm={2} md={2} >
+                      <Image
+                        src={image}
+                        alt={i}
+                        key={i}
+                        fluid="true"
+                        className="w100p"
+                        onClick={handleImageClick}
+                      />
+                    </Col>
+                  ) : (<></>)
                 ))}
               </Row>
             </Col>
@@ -280,7 +282,7 @@ const ProductScreen = ({ history, match }) => {
                   <Row>
                     <Col sm={6} className="text-center">
                       <a
-                        href="mailto:debonis.german@gmail.com"
+                        href={`https://wa.me/message/BC3M5NM7LNWAE1?text=Hola,%20quisiera%20saber%20más%20de%20${product.name}`}
                         target="_blank"
                         rel="noreferrer"
                       >
@@ -289,7 +291,7 @@ const ProductScreen = ({ history, match }) => {
                     </Col>
                     <Col sm={6} className="text-center">
                       <a
-                        href="mailto:debonis.german@gmail.com"
+                        href={`mailto:fallinginloveperu@outlook.com`}
                         target="_blank"
                         rel="noreferrer"
                       >
