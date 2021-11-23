@@ -2,13 +2,16 @@ import nodemailer from "nodemailer";
 
 const sendMail = async (data, order, orderItems) => {
   let transporter = nodemailer.createTransport({
-    service: "gmail",
     host: process.env.EMAIL_HOST,
+    port: process.env.EMAIL_PORT,
+    secure: true,
     auth: {
       user: process.env.EMAIL_USER,
       pass: process.env.EMAIL_PASS,
     },
   });
+
+  console.log("SENDING EMAIL")
 
   await transporter.sendMail({
     from: '"Falling in Love" <ventas@fallinginlove.pe>',
