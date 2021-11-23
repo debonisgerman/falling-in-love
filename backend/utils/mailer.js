@@ -52,7 +52,7 @@ const sendMail = async (data, order, orderItems) => {
 
   await transporter.sendMail({
     from: '"Falling in Love" <ventas@fallinginlove.pe>',
-    to: "'" + data.name + "' " + data.email,
+    to: data.email,
     subject: `${data.name} gracias por pedir en Falling In love`,
     html: `
       <div>
@@ -85,9 +85,6 @@ const sendMail = async (data, order, orderItems) => {
               `;
     })}
           </ul>
-        </div>
-        <div>
-          <a href="https://falling-in-love.herokuapp.com/order/${order._id}" target="_blank">Aquí</a> puedes seguir tu pedido.
         </div>
       </div>
     `,
