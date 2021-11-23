@@ -69,16 +69,16 @@ const Footer = () => {
                   <Modal.Body style={{ maxHeight: '70vh', overflowY: 'auto' }}>
                     <h4><b>Términos y Condiciones</b></h4>
                     <hr />
-                    <p>Bienvenido a Falling in love. Su completa satisfacción es nuestro principal objetivo Queremos que tenga una experiencia de compra excelente, segura y fácil. Además, valoramos mucho sus sugerencias y comentarios. No dude en ponerse en contacto con nosotros para cualquier cosa que pueda necesitar.</p>
+                    <p>Bienvenido a Falling in love. Su completa satisfacción es nuestro principal objetivo. Queremos que tenga una experiencia de compra excelente, segura y fácil. Además, valoramos mucho sus sugerencias y comentarios. No dude en ponerse en contacto con nosotros para cualquier cosa que pueda necesitar.</p>
                     <h6><b>ENVÍOS Y ENTREGAS</b></h6>
                     <p>
-                      LIMA METROPOLITANA: todas las compras por montos menores a S/150 tendrán un costo de envío de S/10.00. <b>Envíos gratis por compras mayores a S/150</b>. Tiempo de entrega de 3 días hábiles contados desde la fecha que realizaste tu compra, en el horario de 9am a 7pm.
+                      LIMA METROPOLITANA: Todas las compras por montos menores a S/150 tendrán un costo de envío de S/10.00. <b>Envíos gratis por compras mayores a S/150</b>. Tiempo de entrega de 3 días hábiles contados desde la fecha que realizaste tu compra, en el horario de 9am a 7pm.
                     </p>
                     <p>
-                      RECÍBELO HASTA EN 24 HORAS – LIMA METROPOLITANA: tiene un costo fijo de S/15. Tiempo de entrega dentro de las siguientes 24 horas hábiles. (Consulta si tu distrito está incluido en la cobertura)
+                      RECÍBELO HASTA EN 24 HORAS – LIMA METROPOLITANA: Tiene un costo fijo de S/15. Tiempo de entrega dentro de las siguientes 24 horas hábiles. (Consulta si tu distrito está incluido en la cobertura)
                     </p>
                     <p>
-                      PROVINCIAS PERÚ: todas las compras por montos menores a S/150 tendrán un costo de envío de S/15.00. <b>Envíos gratis por compras mayores a S/150.</b> Tiempo de entrega de 3 a 5 días hábiles contados desde la fecha que realizaste tu compra.
+                      PROVINCIAS PERÚ: Todas las compras por montos menores a S/150 tendrán un costo de envío de S/15.00. <b>Envíos gratis por compras mayores a S/150.</b> Tiempo de entrega de 3 a 5 días hábiles contados desde la fecha que realizaste tu compra.
                     </p>
                     <p>
                       Los envíos se hacen por Olva Courier y se te brindara el número de tracking con el que podrás hacer seguimiento de tu pedido.
