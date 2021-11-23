@@ -282,7 +282,7 @@ const ProductScreen = ({ history, match }) => {
                   <Row>
                     <Col sm={6} className="text-center">
                       <a
-                        href="https://wa.me/message/BC3M5NM7LNWAE1"
+                        href={`https://wa.me/message/BC3M5NM7LNWAE1?text=Hola,%20quisiera%20saber%20más%20de%20${product.name}`}
                         target="_blank"
                         rel="noreferrer"
                       >
@@ -291,7 +291,7 @@ const ProductScreen = ({ history, match }) => {
                     </Col>
                     <Col sm={6} className="text-center">
                       <a
-                        href={`mailto:fallinginloveperu@outlook.com?text=Hola,%20quisiera%20saber%20más%20de%20${product.name}`}
+                        href={`mailto:fallinginloveperu@outlook.com`}
                         target="_blank"
                         rel="noreferrer"
                       >
