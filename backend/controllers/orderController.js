@@ -4,6 +4,7 @@ import sendMail from "../utils/mailer.js";
 import sendMailShipping from "../utils/shippingmailer.js"
 import Order from "../models/orderModel.js";
 import Product from "../models/productModel.js";
+import sendMailPriced from "../utils/pricedMailer.js";
 
 // @desc Create new Order
 // @route POST /api/orders
@@ -113,6 +114,9 @@ const updateOrderToPriced = asyncHandler(async (req, res) => {
     order.isPriced = true;
     order.pricedAt = Date.now();
     const updatedOrder = await order.save();
+
+    sendMailPriced(order);
+
     res.json(updatedOrder);
   } else
   {

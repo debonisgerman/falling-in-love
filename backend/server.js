@@ -18,6 +18,7 @@ import sizeRoutes from "./routes/sizeRoutes.js";
 import departmentRoutes from "./routes/departmentRoutes.js";
 import subHeaderRoutes from "./routes/subheaderRoutes.js";
 import profileRoutes from "./routes/profileRoutes.js";
+import mailRoutes from "./routes/mailRoutes.js";
 
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 
@@ -27,7 +28,8 @@ connectDB();
 
 const app = express();
 
-if (process.env.NODE_ENV === "development") {
+if (process.env.NODE_ENV === "development")
+{
   app.use(morgan("dev"));
 }
 
@@ -46,6 +48,7 @@ app.use("/api/sizes", sizeRoutes);
 app.use("/api/departments", departmentRoutes);
 app.use("/api/subheaders", subHeaderRoutes);
 app.use("/api/profiles", profileRoutes);
+app.use("/api/mails", mailRoutes);
 
 app.get("/api/config/paypal", (req, res) =>
   res.send(process.env.PAYPAL_CLIENT_ID)
@@ -54,12 +57,14 @@ app.get("/api/config/paypal", (req, res) =>
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
-if (process.env.NODE_ENV === "production") {
+if (process.env.NODE_ENV === "production")
+{
   app.use(express.static(path.join(__dirname, "/frontend/build")));
   app.get("*", (req, res) => {
     res.sendFile(path.resolve(__dirname, "frontend", "build", "index.html"));
   });
-} else {
+} else
+{
   app.get("/", (req, res) => {
     res.send("API is running...");
   });

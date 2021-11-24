@@ -1,6 +1,8 @@
 import React, { useState } from "react";
-import { Row, Col, Container, ListGroup, Form, Button } from "react-bootstrap";
+import { Row, Col, Container, ListGroup, Form, Button, Toast } from "react-bootstrap";
 import Meta from "../components/Meta";
+import { sendMailContact as SendMail } from '../actions/mailActions';
+import { useDispatch, useSelector } from "react-redux";
 
 const FindUsScreen = ({ match }) => {
 
@@ -10,8 +12,26 @@ const FindUsScreen = ({ match }) => {
   const [phone, setPhone] = useState("");
   const [commentary, setCommentary] = useState("");
 
+  const [showSentMail, setShowSentMail] = useState(false);
+
+  const dispatch = useDispatch();
+  const sendMailContact = useSelector((state) => state.sendMailContact);
+  const { loading, error, contactData } = sendMailContact;
+
+  const toggleShowSentMail = () => setShowSentMail(!showSentMail);
+
   const submitHandler = (e) => {
     e.preventDefault();
+    dispatch(SendMail({ name, email, address, phone, commentary }));
+    if (!showSentMail)
+    {
+      toggleShowSentMail();
+    }
+    setName("");
+    setEmail("");
+    setAddress("");
+    setPhone("");
+    setCommentary("");
   };
 
   return (
@@ -70,6 +90,12 @@ const FindUsScreen = ({ match }) => {
         </Col>
         <Col>
           <h1 className="mb-3 secondary-blue bold text-center">Déjanos tu consulta</h1>
+          <Toast show={showSentMail} onClose={toggleShowSentMail}>
+            <Toast.Header>
+              <strong className="me-auto">Falling In Love</strong>
+            </Toast.Header>
+            <Toast.Body>¡Gracias por enviarnos un correo! Pronto nos pondremos en contacto.</Toast.Body>
+          </Toast>
           <ListGroup variant="flush">
             <ListGroup.Item>
               <Form onSubmit={submitHandler}>

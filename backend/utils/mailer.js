@@ -33,7 +33,7 @@ const sendMail = async (data, order, orderItems) => {
               <li><strong>Razón Social:</strong> ${data.socialReason ? data.socialReason : '-'}</li>
               <li><strong>RUC:</strong> ${data.ruc ? data.ruc : '-'}</li>
           </ul>
-        <div>
+        </div>
         <div>
           <div>Datos del pedido:</div>
           <ul>
@@ -73,7 +73,7 @@ const sendMail = async (data, order, orderItems) => {
               <li><strong>Razón Social:</strong> ${data.socialReason ? data.socialReason : '-'}</li>
               <li><strong>RUC:</strong> ${data.ruc ? data.ruc : '-'}</li>
           </ul>
-        <div>
+        </div>
         <div>
           <div>Datos del pedido:</div>
           <ul>

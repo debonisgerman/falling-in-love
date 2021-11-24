@@ -89,6 +89,9 @@ import {
   profileListReducer,
   profileUpdateReducer,
 } from "./reducers/profileReducers";
+import {
+  sendMailContactReducer,
+} from "./reducers/mailReducers";
 
 const reducer = combineReducers({
   productList: productListReducer,
@@ -155,6 +158,7 @@ const reducer = combineReducers({
   profileDetails: profileDetailsReducer,
   profileList: profileListReducer,
   profileUpdate: profileUpdateReducer,
+  sendMailContact: sendMailContactReducer,
 });
 
 const cartItemsFromStorage = localStorage.getItem("cartItems")

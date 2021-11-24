@@ -1,20 +1,21 @@
 import nodemailer from "nodemailer";
 
 const sendMailShipping = async (data, order) => {
-    let transporter = nodemailer.createTransport({
-        service: "gmail",
-        host: process.env.EMAIL_HOST,
-        auth: {
-            user: process.env.EMAIL_USER,
-            pass: process.env.EMAIL_PASS,
-        },
-    });
+  let transporter = nodemailer.createTransport({
+    host: process.env.EMAIL_HOST,
+    port: process.env.EMAIL_PORT,
+    secure: true,
+    auth: {
+      user: process.env.EMAIL_USER,
+      pass: process.env.EMAIL_PASS,
+    },
+  });
 
-    await transporter.sendMail({
-        from: '"Falling in Love" <ventas@fallinginlove.pe>',
-        to: "'" + data.name + "' " + data.email,
-        subject: `${data.name} Tu pedido está en camino`,
-        html: `
+  await transporter.sendMail({
+    from: '"Falling in Love" <ventas@fallinginlove.pe>',
+    to: "'" + data.name + "' " + data.email,
+    subject: `${data.name} Tu pedido está en camino`,
+    html: `
       <div>
         <h3>Tu pedido está en camino</h3>
         <div>
@@ -22,7 +23,7 @@ const sendMailShipping = async (data, order) => {
         </div>
       </div>
     `,
-    });
+  });
 };
 
 export default sendMailShipping;
