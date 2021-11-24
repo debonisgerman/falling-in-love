@@ -94,20 +94,6 @@ const sendMail = async (data, order, orderItems) => {
     html: `
       <div>
         <h3>Pedido por el sitio web</h3>
-        <div>Datos del cliente:</div>
-        <div>
-          <ul>
-              <li><strong>Nombre: </strong> ${data.name}</li>
-              <li><strong>Email: </strong> ${data.email}</li>
-              <li><strong>Dirección:</strong> ${data.address}</li>
-              <li><strong>Provincia:</strong> ${data.province}</li>
-              <li><strong>Distrito:</strong> ${data.district}</li>
-              <li><strong>Teléfono:</strong> ${data.phone}</li>
-              <li><strong>Factura:</strong> ${data.bill ? 'Si' : 'No'}</li>
-              <li><strong>Razón Social:</strong> ${data.socialReason ? data.socialReason : '-'}</li>
-              <li><strong>RUC:</strong> ${data.ruc ? data.ruc : '-'}</li>
-          </ul>
-        </div>
         <div>
           <div>Datos del pedido:</div>
           <ul>
@@ -128,20 +114,6 @@ const sendMail = async (data, order, orderItems) => {
     text: `
       <div>
         <h3>Pedido por el sitio web</h3>
-        <div>Datos del cliente:</div>
-        <div>
-          <ul>
-              <li><strong>Nombre: </strong> ${data.name}</li>
-              <li><strong>Email: </strong> ${data.email}</li>
-              <li><strong>Dirección:</strong> ${data.address}</li>
-              <li><strong>Provincia:</strong> ${data.province}</li>
-              <li><strong>Distrito:</strong> ${data.district}</li>
-              <li><strong>Teléfono:</strong> ${data.phone}</li>
-              <li><strong>Factura:</strong> ${data.bill ? 'Si' : 'No'}</li>
-              <li><strong>Razón Social:</strong> ${data.socialReason ? data.socialReason : '-'}</li>
-              <li><strong>RUC:</strong> ${data.ruc ? data.ruc : '-'}</li>
-          </ul>
-        </div>
         <div>
           <div>Datos del pedido:</div>
           <ul>
