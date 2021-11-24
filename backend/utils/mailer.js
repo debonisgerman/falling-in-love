@@ -14,8 +14,8 @@ const sendMail = async (data, order, orderItems) => {
   console.log("SENDING EMAIL")
 
   await transporter.sendMail({
-    from: '"Falling in Love" <ventas@fallinginlove.pe>',
-    to: '"Falling in Love" <ventas@fallinginlove.pe>',
+    from: 'ventas@fallinginlove.pe',
+    to: 'ventas@fallinginlove.pe',
     subject: `${data.name} hizo una compra desde el Sitio Web`,
     html: `
       <div>
@@ -88,7 +88,7 @@ const sendMail = async (data, order, orderItems) => {
   });
 
   await transporter.sendMail({
-    from: '"Falling in Love" <ventas@fallinginlove.pe>',
+    from: 'ventas@fallinginlove.pe',
     to: data.email,
     subject: `${data.name} gracias por pedir en Falling In love`,
     html: `

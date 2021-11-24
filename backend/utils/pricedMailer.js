@@ -14,7 +14,7 @@ const sendMailPriced = async (order) => {
     console.log("SENDING EMAIL");
 
     await transporter.sendMail({
-        from: '"Falling in Love" <ventas@fallinginlove.pe>',
+        from: 'ventas@fallinginlove.pe',
         to: order.shippingAddress.email,
         subject: `${order.shippingAddress.name} tu pago ha sido aprobado`,
         html: `

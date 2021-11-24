@@ -12,7 +12,7 @@ const sendMailShipping = async (data, order) => {
   });
 
   await transporter.sendMail({
-    from: '"Falling in Love" <ventas@fallinginlove.pe>',
+    from: 'ventas@fallinginlove.pe',
     to: "'" + data.name + "' " + data.email,
     subject: `${data.name} Tu pedido está en camino`,
     html: `
