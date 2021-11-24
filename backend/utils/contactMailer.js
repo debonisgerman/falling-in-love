@@ -18,8 +18,7 @@ const sendContactMail = async (data, order, orderItems) => {
 
     await transporter.sendMail({
       from: '"Falling in Love" <ventas@fallinginlove.pe>',
-      // to: '"Falling in Love" <ventas@fallinginlove.pe>',
-      to: 'debonis.german@gmail.com',
+      to: '"Falling in Love" <ventas@fallinginlove.pe>',
       subject: `${data.name} hizo una consulta`,
       html: `
       <div>
