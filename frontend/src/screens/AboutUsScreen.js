@@ -70,7 +70,7 @@ const AboutUsScreen = () => {
                   </Col>
                   <Col className="text-center">
                     <a
-                      href="mailto:fallinginloveperu@outlook.com"
+                      href="mailto:hola@fallinginlove.pe"
                       target="_blank"
                       rel="noreferrer"
                     >

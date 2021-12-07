@@ -31,11 +31,11 @@ const HomeScreen = () => {
           <h5 className="mb-5 text-center  fs-1"><i>Nuestras prendas te ayudarán a resaltar tu sensualidad sin dejar de lado tu comodidad.</i></h5>
         </Container>
       </div>
-      <Row className="bg-light">
+      <Row className="bg-light m-0">
         <h2 className="mt-5 mb-3 secondary-blue bold text-center border-title-bottom">ENCUENTRA TU FAVORITO</h2>
       </Row>
 
-      <Row className="bg-light">
+      <Row className="bg-light m-0">
         <Container>
           <Row>
             {loading ? (
@@ -44,7 +44,7 @@ const HomeScreen = () => {
               <Message variant="danger">{error}</Message>
             ) : (
               categories && categories.filter(c => c.showInHome).slice(0, 4).map((category) => (
-                <Col md={3} className="flex">
+                <Col lg={3} md={6} sm={6} xs={6} className="flex">
 
                   <Card className="my-3 p-3 rounded w100p mh-400 CardLinkContainer">
                     <Card.Img

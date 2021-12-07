@@ -193,6 +193,11 @@ const PlaceOrderScreen = ({ history }) => {
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
+                <Row>
+                  <Col><strong><i>*Recibirás un correo con los detalles del pedido. Recuerda mirar en la carpeta de spam si no te llega pronto.</i></strong></Col>
+                </Row>
+              </ListGroup.Item>
+              <ListGroup.Item>
                 {error && <Message variant="danger">{error}</Message>}
               </ListGroup.Item>
               <ListGroup.Item>

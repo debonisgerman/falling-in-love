@@ -49,7 +49,7 @@ const ShopScreen = ({ match, location }) => {
       ) : (
         <>
           <Row className="px-3 w-100 mobile-px2-ml-0 ml-w78">
-            <Col lg={3} md={3} xl={3} className="pt-2-4">
+            <Col lg={3} md={4} xl={3} className="pt-2-4">
               <Filter
                 loadingFilters={loadingFilters}
                 errorFilters={errorFilters}
@@ -58,16 +58,16 @@ const ShopScreen = ({ match, location }) => {
                 filters={filters}
               />
             </Col>
-            <Col lg={9} md={9} xl={9}>
+            <Col lg={9} md={8} xl={9}>
               <Row>
                 {products.map((product) => (
                   <Col
                     key={product._id}
                     sm={12}
-                    md={12}
+                    md={6}
                     lg={6}
                     xl={4}
-                    className="disp-flex"
+                    className="disp-flex mobile-center"
                   >
                     <Product product={product} />
                   </Col>

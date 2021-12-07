@@ -23,55 +23,15 @@ const BannerCarousel = () => {
         .filter((banner) => banner.show)
         .map((banner) => (
           <Carousel.Item key={banner._id}>
-            {isBrowser &&
-              (banner.imageDesktop.indexOf("mp4") > -1 ? (
-                <video
-                  width="100%"
-                  height="auto"
-                  style={{ maxHeight: "630px" }}
-                  autoPlay
-                  loop
-                  muted
-                >
-                  <source src={banner.imageDesktop} type="video/mp4" />
-                </video>
-              ) : (
-                <Image
-                  src={banner.imageDesktop}
-                  alt={banner._id}
-                  fluid="true"
-                />
-              ))}
-            {isTablet &&
-              (banner.imageTablet.indexOf("mp4") > -1 ? (
-                <video
-                  width="100%"
-                  height="auto"
-                  style={{ maxHeight: "630px" }}
-                  autoPlay
-                  loop
-                  muted
-                >
-                  <source src={banner.imageTablet} type="video/mp4" />
-                </video>
-              ) : (
-                <Image src={banner.imageTablet} alt={banner._id} fluid="true" />
-              ))}
-            {isMobile &&
-              (banner.imageMobile.indexOf("mp4") > -1 ? (
-                <video
-                  width="100%"
-                  height="auto"
-                  style={{ maxHeight: "630px" }}
-                  autoPlay
-                  loop
-                  muted
-                >
-                  <source src={banner.imageMobile} type="video/mp4" />
-                </video>
-              ) : (
-                <Image src={banner.imageMobile} alt={banner._id} fluid="true" />
-              ))}
+            {isMobile ? (
+              <Image src={banner.imageMobile} alt={banner._id} fluid="true" />
+            ) : isTablet ? (
+              <Image src={banner.imageTablet} alt={banner._id} fluid="true" />
+            ) : isBrowser ? (
+              <Image src={banner.imageDesktop} alt={banner._id} fluid="true" />
+            ) : (
+              <Image src={banner.imageDesktop} alt={banner._id} fluid="true" />
+            )}
           </Carousel.Item>
         ))}
     </Carousel>

@@ -58,7 +58,7 @@ const ProductCarousel = () => {
         if (products[i - 1])
         {
           items.push(
-            <Col md={3} key={products[i - 1]._id}>
+            <Col md={3} sm={3} xs={3} key={products[i - 1]._id}>
               <Link onClick={() => handleLink(products[i - 1])}>
                 <Image
                   src={

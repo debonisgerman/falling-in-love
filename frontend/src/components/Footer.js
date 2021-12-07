@@ -41,12 +41,12 @@ const Footer = () => {
               <hr className="bg-light" />
               <div className="mb-2">
                 <a
-                  href="mailto:fallinginloveperu@outlook.com"
+                  href="mailto:hola@fallinginlove.pe"
                   target="_blank"
                   rel="noreferrer"
                 >
                   <i className="fas fa-envelope pr-2"></i>
-                  fallinginloveperu@outlook.com
+                  hola@fallinginlove.pe
                 </a>
               </div>
               <hr className="bg-light" />
@@ -101,10 +101,10 @@ const Footer = () => {
                             rel="noreferrer"
                           > 913059930</a> o al correo
                           <a
-                            href="mailto:fallinginloveperu@outlook.com"
+                            href="mailto:hola@fallinginlove.pe"
                             target="_blank"
                             rel="noreferrer"
-                          > fallinginloveperu@outlook.com</a>.</li>
+                          > hola@fallinginlove.pe</a>.</li>
 
                       </ul>
                     </p>

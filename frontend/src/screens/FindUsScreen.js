@@ -65,19 +65,19 @@ const FindUsScreen = ({ match }) => {
             <ListGroup.Item className="no-border secondary-blue">
               <h5>
                 <a
-                  href="mailto:fallinginloveperu@outlook.com"
+                  href="mailto:hola@fallinginlove.pe"
                   target="_blank"
                   rel="noreferrer"
                 >
                   <i className="fas fa-envelope pr-2"></i>
-                  fallinginloveperu@outlook.com
+                  hola@fallinginlove.pe
                 </a>
               </h5>
             </ListGroup.Item>
             <ListGroup.Item className="no-border secondary-blue">
               <h5>
                 <a
-                  href="mailto:fallinginloveperu@outlook.com"
+                  href="mailto:hola@fallinginlove.pe"
                   target="_blank"
                   rel="noreferrer"
                 >
