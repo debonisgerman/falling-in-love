@@ -101,7 +101,7 @@ const CartScreen = ({ match, location, history }) => {
                         S/. {item.price}
                       </div>
                     </Col>
-                    <Col md={2}>
+                    <Col md={1}>
                       <div
                         style={{ fontSize: '1.1rem' }}
                       >

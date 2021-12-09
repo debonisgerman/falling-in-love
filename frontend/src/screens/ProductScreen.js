@@ -307,8 +307,8 @@ const ProductScreen = ({ history, match }) => {
                 <ListGroup variant="flush">
                   <ListGroup.Item>
                     <Row className="align-items-center">
-                      <Col>Cantidad</Col>
-                      <Col>
+                      <Col sm={12} md={12} lg={6}>Cantidad</Col>
+                      <Col sm={12} md={12} lg={6}>
                         <FormControl
                           as="select"
                           value={qty}

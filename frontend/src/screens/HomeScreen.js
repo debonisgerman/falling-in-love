@@ -4,6 +4,8 @@ import { LinkContainer } from "react-router-bootstrap";
 import { Row, Col, Card, Container, Image } from "react-bootstrap";
 import BannerCarousel from "../components/BannerCarousel";
 import ProductCarousel from "../components/ProductCarousel";
+import ProductCarouselMobile from "../components/ProductCarouselMobile";
+import useWindowDimensions from '../components/useWindowDimensions';
 import Loader from "../components/Loader";
 import Message from "../components/Message";
 import Meta from "../components/Meta";
@@ -12,6 +14,7 @@ import { listCategories } from "../actions/categoryActions";
 const HomeScreen = () => {
 
   const dispatch = useDispatch();
+  const { width } = useWindowDimensions();
 
   const categoryList = useSelector((state) => state.categoryList);
   const { loading, error, categories } = categoryList;
@@ -76,7 +79,11 @@ const HomeScreen = () => {
         </Container>
       </Row>
       <Container>
-        <ProductCarousel />
+        {width > 768 ? (
+          <ProductCarousel />
+        ) : (
+          <ProductCarouselMobile />
+        )}
       </Container>
     </>
   );
