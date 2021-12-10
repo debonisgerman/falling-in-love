@@ -6,7 +6,7 @@ import Loader from "./Loader";
 import Message from "./Message";
 import { listTopProducts } from "../actions/productActions";
 
-const ProductCarouselMobile = () => {
+const ProductCarousel = () => {
   const dispatch = useDispatch();
   let pages = [];
   const productTopRated = useSelector((state) => state.productTopRated);
@@ -22,31 +22,19 @@ const ProductCarouselMobile = () => {
       return null;
     } else
     {
+      const pagesCount = Math.ceil(products.length / 2);
       if (document.getElementById("destTitle") && products.length > 0)
       {
         document.getElementById("destTitle").innerHTML = "LOS PREFERIDOS";
       }
-
-      return products.map((product, index) => (
-        <Carousel.Item key={index}>
-          <Link onClick={() => handleLink(product)}>
-            <Image
-              src={
-                product.variants &&
-                  product.variants[0] &&
-                  product.variants[0].images.length > 0 ?
-                  product.variants[0].images[0] :
-                  '/images/logo.png'
-              }
-              alt={product.name}
-              fluid="true"
-              className="m-w-70-m0a"
-            />
-            <Carousel.Caption className="carosuel-caption">
-              <h5 className="bold text-center underline"><i>{product.name}</i></h5>
-              <h5><i>S/. {product.price}</i></h5>
-            </Carousel.Caption>
-          </Link>
+      pages = [];
+      for (let i = 0; i < pagesCount; i++)
+      {
+        pages.push(i + 1);
+      }
+      return pages.map((page, index) => (
+        <Carousel.Item key={page}>
+          <Row className="w-100 text-center justify-content-center">{getCarouselItem(page, products)}</Row>
         </Carousel.Item>
       ))
     }
@@ -56,46 +44,46 @@ const ProductCarouselMobile = () => {
     window.location.href = window.location.origin + `/product/${product._id}`;
   }
 
-  // const getCarouselItem = (page, products) => {
-  //   if (!products || products.length === 0)
-  //   {
-  //     // document.getElementById("destTitle") ? document.getElementById("destTitle").remove() : null;
-  //     return null;
-  //   } else
-  //   {
-  //     const rounds = page + 3;
-  //     let items = [];
-  //     for (let i = page; i < rounds; i++)
-  //     {
-  //       if (products[i - 1])
-  //       {
-  //         items.push(
-  //           <Col md={3} sm={3} xs={3} key={products[i - 1]._id}>
-  //             <Link onClick={() => handleLink(products[i - 1])}>
-  //               <Image
-  //                 src={
-  //                   products[i - 1].variants &&
-  //                     products[i - 1].variants[0] &&
-  //                     products[i - 1].variants[0].images.length > 0 ?
-  //                     products[i - 1].variants[0].images[0] :
-  //                     '/images/logo.png'
-  //                 }
-  //                 alt={products[i - 1].name}
-  //                 fluid="true"
-  //                 className="m-w-70-m0a"
-  //               />
-  //               <Carousel.Caption className="carosuel-caption">
-  //                 <h5 className="bold text-center underline"><i>{products[i - 1].name}</i></h5>
-  //                 <h5><i>S/. {products[i - 1].price}</i></h5>
-  //               </Carousel.Caption>
-  //             </Link>
-  //           </Col>
-  //         );
-  //       }
-  //     }
-  //     return items
-  //   }
-  // };
+  const getCarouselItem = (page, products) => {
+    if (!products || products.length === 0)
+    {
+      // document.getElementById("destTitle") ? document.getElementById("destTitle").remove() : null;
+      return null;
+    } else
+    {
+      const rounds = page + 2;
+      let items = [];
+      for (let i = page; i < rounds; i++)
+      {
+        if (products[i - 1])
+        {
+          items.push(
+            <Col md={5} sm={5} xs={5} key={products[i - 1]._id}>
+              <Link onClick={() => handleLink(products[i - 1])}>
+                <Image
+                  src={
+                    products[i - 1].variants &&
+                      products[i - 1].variants[0] &&
+                      products[i - 1].variants[0].images.length > 0 ?
+                      products[i - 1].variants[0].images[0] :
+                      '/images/logo.png'
+                  }
+                  alt={products[i - 1].name}
+                  fluid="true"
+                  className="m-w-70-m0a"
+                />
+                <Carousel.Caption className="carosuel-caption">
+                  <h5 className="bold text-center underline"><i>{products[i - 1].name}</i></h5>
+                  <h5><i>S/. {products[i - 1].price}</i></h5>
+                </Carousel.Caption>
+              </Link>
+            </Col>
+          );
+        }
+      }
+      return items
+    }
+  };
 
   return loading ? (
     <Loader />
@@ -111,4 +99,4 @@ const ProductCarouselMobile = () => {
   );
 };
 
-export default ProductCarouselMobile;
+export default ProductCarousel;

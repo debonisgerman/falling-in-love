@@ -47,7 +47,7 @@ const HomeScreen = () => {
               <Message variant="danger">{error}</Message>
             ) : (
               categories && categories.filter(c => c.showInHome).slice(0, 4).map((category) => (
-                <Col lg={3} md={6} sm={6} xs={6} className="flex">
+                <Col lg={3} md={6} sm={6} xs={6} className="flex m-p-0">
 
                   <Card className="my-3 p-3 rounded w100p mh-400 CardLinkContainer">
                     <Card.Img
@@ -79,7 +79,7 @@ const HomeScreen = () => {
         </Container>
       </Row>
       <Container>
-        {width > 768 ? (
+        {width > 500 ? (
           <ProductCarousel />
         ) : (
           <ProductCarouselMobile />
