@@ -14,7 +14,7 @@ const PaymentScreen = ({ history }) => {
     history.push("/shipping");
   }
 
-  const [paymentMethod, setPaymentMethod] = useState("Paypal");
+  const [paymentMethod, setPaymentMethod] = useState("IziPay");
 
   const dispatch = useDispatch();
 
@@ -35,10 +35,10 @@ const PaymentScreen = ({ history }) => {
           <Col>
             <Form.Check
               type="radio"
-              label="PayPal"
-              id="PayPal"
+              label="IziPay"
+              id="IziPay"
               name="paymentMethod"
-              value="PayPal"
+              value="IziPay"
               checked
               onChange={(e) => setPaymentMethod(e.target.value)}
             ></Form.Check>
@@ -48,14 +48,6 @@ const PaymentScreen = ({ history }) => {
               id="Cash"
               name="paymentMethod"
               value="Efectivo"
-              onChange={(e) => setPaymentMethod(e.target.value)}
-            ></Form.Check>
-            <Form.Check
-              type="radio"
-              label="Mercado Pago"
-              id="MercadoPago"
-              name="paymentMethod"
-              value="MercadoPago"
               onChange={(e) => setPaymentMethod(e.target.value)}
             ></Form.Check>
           </Col>

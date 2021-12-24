@@ -16,6 +16,7 @@ import CheckoutSteps from "../components/CheckoutSteps";
 import { Link } from "react-router-dom";
 import { createOrder } from "../actions/orderActions";
 import { CART_RESET_ITEM } from "../constants/cartConstants";
+import IziPay from "../components/IzyPay";
 
 const PlaceOrderScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -63,6 +64,43 @@ const PlaceOrderScreen = ({ history }) => {
     );
     dispatch({ type: CART_RESET_ITEM });
   };
+
+  const onSuccessHandler = (data) => {
+    try
+    {
+      const uuid = JSON.parse(data.request.__sentry_xhr__.body).clientAnswer.transactions[0].uuid
+      dispatch(
+        createOrder({
+          orderItems: cart.cartItems,
+          shippingAddress: cart.shippingAddress,
+          paymentMethod: cart.paymentMethod,
+          itemsPrice: cart.itemsPrice,
+          shippingPrice: cart.shippingPrice,
+          totalPrice: cart.totalPrice,
+          isPriced: true,
+          pricedAt: new Date(),
+          uUId: uuid,
+        })
+      );
+      dispatch({ type: CART_RESET_ITEM });
+    }
+    catch {
+      dispatch(
+        createOrder({
+          orderItems: cart.cartItems,
+          shippingAddress: cart.shippingAddress,
+          paymentMethod: cart.paymentMethod,
+          itemsPrice: cart.itemsPrice,
+          shippingPrice: cart.shippingPrice,
+          totalPrice: cart.totalPrice,
+          isPriced: true,
+          pricedAt: new Date(),
+        })
+      );
+      dispatch({ type: CART_RESET_ITEM });
+    }
+
+  }
 
   return (
     <Container>
@@ -189,7 +227,7 @@ const PlaceOrderScreen = ({ history }) => {
               <ListGroup.Item>
                 <Row>
                   <Col>Método de Pago</Col>
-                  <Col><strong>{cart.paymentMethod}</strong></Col>
+                  <Col><strong>{cart.paymentMethod || JSON.parse(localStorage.paymentMethod)}</strong></Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
@@ -201,14 +239,25 @@ const PlaceOrderScreen = ({ history }) => {
                 {error && <Message variant="danger">{error}</Message>}
               </ListGroup.Item>
               <ListGroup.Item>
-                <Button
-                  type="button"
-                  className="btn-block"
-                  disabled={cart.cartItems === 0}
-                  onClick={placeOrderHandler}
-                >
-                  Hacer Pedido
-                </Button>
+                {
+                  cart.paymentMethod === 'IziPay' || JSON.parse(localStorage.paymentMethod) === 'IziPay' ? (
+                    <IziPay
+                      amount={cart.totalPrice}
+                      email={cart.shippingAddress.email}
+                      onSuccess={onSuccessHandler}
+                    />
+                  ) :
+                    (
+                      <Button
+                        type="button"
+                        className="btn-block"
+                        disabled={cart.cartItems === 0}
+                        onClick={placeOrderHandler}
+                      >
+                        Hacer Pedido
+                      </Button>
+                    )
+                }
               </ListGroup.Item>
             </ListGroup>
           </Card>

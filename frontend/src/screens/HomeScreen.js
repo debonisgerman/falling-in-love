@@ -28,6 +28,7 @@ const HomeScreen = () => {
       <Meta />
       <BannerCarousel />
       <div className="relative">
+        
         <Container>
           <h2 className="mt-5 mb-3 secondary-blue bold text-center border-title-bottom">ÚNICA Y LIBRE</h2>
           <h5 className="text-center fs-1"><i>Conviértete en una chica Falling in Love, ten la libertad de usar lo que te haga sentir única</i></h5>

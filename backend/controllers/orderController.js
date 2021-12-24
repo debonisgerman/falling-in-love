@@ -1,10 +1,14 @@
 import asyncHandler from "express-async-handler";
 import mongoose from "mongoose";
+import hmacSHA256 from 'crypto-js/hmac-sha256.js';
+import Hex from 'crypto-js/enc-hex.js';
 import sendMail from "../utils/mailer.js";
 import sendMailShipping from "../utils/shippingmailer.js"
 import Order from "../models/orderModel.js";
 import Product from "../models/productModel.js";
 import sendMailPriced from "../utils/pricedMailer.js";
+
+import { createFormToken } from "../utils/createPayment.js";
 
 // @desc Create new Order
 // @route POST /api/orders
@@ -143,6 +147,29 @@ const updateOrderToShipped = asyncHandler(async (req, res) => {
   }
 });
 
+const createPayment = asyncHandler(async (req, res) => {
+  const paymentConf = req.body.paymentConf
+
+  try
+  {
+    const formToken = await createFormToken(paymentConf)
+    res.send(formToken)
+  } catch (error)
+  {
+    res.status(500).send(error)
+  }
+})
+
+const validatePayment = asyncHandler(async (req, res) => {
+  const answer = req.body.clientAnswer
+  const hash = req.body.hash
+  const answerHash = Hex.stringify(
+    hmacSHA256(JSON.stringify(answer), process.env.IZIPAY_HMAC_SHA)
+  )
+  if (hash === answerHash) res.status(200).send('Valid payment')
+  else res.status(500).send('Payment hash mismatch')
+});
+
 export {
   addOrderItems,
   getOrderById,
@@ -151,4 +178,6 @@ export {
   updateOrderToDelivered,
   updateOrderToPriced,
   updateOrderToShipped,
+  createPayment,
+  validatePayment,
 };
