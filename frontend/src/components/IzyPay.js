@@ -10,7 +10,6 @@ const IziPay = (data) => {
         const endpoint = process.env.REACT_APP_IZIPAY_URL
         const publicKey = `${process.env.REACT_APP_IZIPAY_KEY}`
         let formToken = ''
-        /*
         const body = document.getElementsByTagName('body').item(0);
         const script = document.createElement('script');
         script.setAttribute('type', 'text/javascript');
@@ -18,7 +17,6 @@ const IziPay = (data) => {
         script.setAttribute('kr-public-key', '44010247:testpublickey_QoEOBckCpwwGBpZpnVn1aZJERDEvJSa1V1qGoKC51rSLD');
         script.setAttribute('kr-post-url-success', 'paid.html');
         body.appendChild(script);
-        */
         // Generate the form token
         axios
             .post(`${process.env.REACT_APP_IZIPAY_URL_FULL}/api/orders/createPayment`, {
