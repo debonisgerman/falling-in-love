@@ -23,7 +23,7 @@ const IziPay = (data) => {
             .then(lastOrder => {
                 console.log("LASTORDER", lastOrder)
                 axios
-                    .post(`${process.env.REACT_APP_IZIPAY_URL_FULL}/api/orders/createPayment`, {
+                    .post(`${process.env.REACT_APP_IZIPAY_URL_FULL}api/orders/createPayment`, {
                         paymentConf: {
                             "amount": Number(data.amount * 100),
                             "currency": "PEN",
