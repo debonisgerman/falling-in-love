@@ -551,3 +551,8 @@ footer a:hover {
   background-color: #470018!important;
   border-color: #310011!important;
 }
+
+.filter-accordion{
+  background-color: #780028;
+  color: #fff;
+}

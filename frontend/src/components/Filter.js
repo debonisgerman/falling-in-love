@@ -9,12 +9,16 @@ const Filter = ({ loadingFilters, errorFilters, parsed, keyword, filters }) => {
   const [toPrice, setToPrice] = useState(null);
 
   useEffect(() => {
-    if (!loadingFilters) {
-      if (filters && filters.price) {
-        if (filters.price.indexOf("to") !== -1) {
+    if (!loadingFilters)
+    {
+      if (filters && filters.price)
+      {
+        if (filters.price.indexOf("to") !== -1)
+        {
           setToPrice(filters.price.split("to")[1]);
           setFromPrice(filters.price.split("to")[0]);
-        } else {
+        } else
+        {
           setFromPrice(filters.price);
         }
       }
@@ -23,17 +27,22 @@ const Filter = ({ loadingFilters, errorFilters, parsed, keyword, filters }) => {
 
   const filterClicked = (filter, filterValue) => {
     const hasFilter = window.location.href.indexOf("?") > -1;
-    if (!hasFilter) {
+    if (!hasFilter)
+    {
       window.location.href = window.location.href + `?${filter}=` + filterValue;
-    } else {
+    } else
+    {
       const hasFilterValue = window.location.href.indexOf(`${filter}=`) > -1;
-      if (!hasFilterValue) {
+      if (!hasFilterValue)
+      {
         window.location.href =
           window.location.href + `&${filter}=` + filterValue;
-      } else {
+      } else
+      {
         const filtersSplitted = window.location.href.split("?")[1];
         let filtersSplit;
-        if (filtersSplitted) {
+        if (filtersSplitted)
+        {
           filtersSplit = filtersSplitted.split("&");
           filtersSplit = filtersSplit.filter(
             (item) => item.indexOf(`${filter}=`) > -1
@@ -41,7 +50,8 @@ const Filter = ({ loadingFilters, errorFilters, parsed, keyword, filters }) => {
           filtersSplit = filtersSplit.split(`${filter}=`)[1];
         }
 
-        if (filtersSplit === filterValue) {
+        if (filtersSplit === filterValue)
+        {
           const prevChar =
             window.location.href[
             window.location.href.indexOf(`${filter}=`) - 1
@@ -51,16 +61,19 @@ const Filter = ({ loadingFilters, errorFilters, parsed, keyword, filters }) => {
             window.location.href.indexOf(`${filter}=` + filtersSplit) +
             (`${filter}=` + filtersSplit).length
             ];
-          if (prevChar === "?" && nextChar === "&") {
+          if (prevChar === "?" && nextChar === "&")
+          {
             window.location.href = window.location.href
               .split(`${filter}=` + filtersSplit + nextChar)
               .join("");
-          } else {
+          } else
+          {
             window.location.href = window.location.href
               .split(prevChar + `${filter}=` + filtersSplit)
               .join("");
           }
-        } else {
+        } else
+        {
           window.location.href = window.location.href
             .split(`${filter}=` + filtersSplit)
             .join(`${filter}=` + filterValue);
@@ -70,7 +83,8 @@ const Filter = ({ loadingFilters, errorFilters, parsed, keyword, filters }) => {
   };
 
   const handlePrice = (e) => {
-    if (toPrice < fromPrice) {
+    if (toPrice < fromPrice)
+    {
       alert("El precio hasta no puede ser menor al precio desde");
       return false;
     }
@@ -93,6 +107,7 @@ const Filter = ({ loadingFilters, errorFilters, parsed, keyword, filters }) => {
           {(parsed.section ||
             parsed.category ||
             parsed.material ||
+            parsed.color ||
             keyword) && (
               <>
                 <p>
@@ -114,6 +129,13 @@ const Filter = ({ loadingFilters, errorFilters, parsed, keyword, filters }) => {
                   {parsed.material ? (
                     <>
                       <br /> Material: {parsed.material}
+                    </>
+                  ) : (
+                    ""
+                  )}
+                  {parsed.color ? (
+                    <>
+                      <br /> Color: {parsed.color}
                     </>
                   ) : (
                     ""
@@ -140,7 +162,7 @@ const Filter = ({ loadingFilters, errorFilters, parsed, keyword, filters }) => {
             )}
           <ListGroup>
             <ListGroup.Item>
-              <Accordion>
+              <Accordion className="filter-accordion">
                 <Accordion.Toggle as={Card.Header} className="pointer" eventKey="0">
                   <b>Sección</b>
                 </Accordion.Toggle>
@@ -166,7 +188,7 @@ const Filter = ({ loadingFilters, errorFilters, parsed, keyword, filters }) => {
               </Accordion>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Accordion>
+              <Accordion className="filter-accordion">
                 <Accordion.Toggle as={Card.Header} className="pointer" eventKey="0">
                   <b>Categoría</b>
                 </Accordion.Toggle>
@@ -192,7 +214,7 @@ const Filter = ({ loadingFilters, errorFilters, parsed, keyword, filters }) => {
               </Accordion>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Accordion>
+              <Accordion className="filter-accordion">
                 <Accordion.Toggle as={Card.Header} className="pointer" eventKey="0">
                   <b>Material</b>
                 </Accordion.Toggle>
@@ -218,7 +240,33 @@ const Filter = ({ loadingFilters, errorFilters, parsed, keyword, filters }) => {
               </Accordion>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Accordion>
+              <Accordion className="filter-accordion">
+                <Accordion.Toggle as={Card.Header} className="pointer" eventKey="0">
+                  <b>Color</b>
+                </Accordion.Toggle>
+                <Accordion.Collapse eventKey="0">
+                  <ListGroup variant="flush">
+                    {filters &&
+                      filters.colors &&
+                      filters.colors.sort().map((color, index) => (
+                        <ListGroup.Item
+                          key={index}
+                          action
+                          onClick={() => filterClicked("color", color)}
+                        >
+                          {color === parsed.color ? (
+                            <b className="filterSelected">{color}</b>
+                          ) : (
+                            color
+                          )}
+                        </ListGroup.Item>
+                      ))}
+                  </ListGroup>
+                </Accordion.Collapse>
+              </Accordion>
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <Accordion className="filter-accordion">
                 <Accordion.Toggle as={Card.Header} className="pointer" eventKey="0">
                   <b>Precio (S/.)</b>
                 </Accordion.Toggle>

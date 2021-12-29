@@ -14,7 +14,7 @@ import { createFormToken } from "../utils/createPayment.js";
 // @route POST /api/orders
 // @access Private
 const addOrderItems = asyncHandler(async (req, res) => {
-  const { orderItems, shippingAddress } = req.body;
+  const { orderItems, shippingAddress, pricedAt, isPriced } = req.body;
   if (orderItems && orderItems.length === 0)
   {
     res.status(400);
@@ -24,6 +24,8 @@ const addOrderItems = asyncHandler(async (req, res) => {
     const order = new Order({
       orderItems,
       shippingAddress,
+      pricedAt,
+      isPriced,
     });
 
     let createdOrder = await order.save();
@@ -63,6 +65,25 @@ const getOrderById = asyncHandler(async (req, res) => {
   if (order)
   {
     res.json(order);
+  } else
+  {
+    res.status(404);
+    throw new Error("Order not found");
+  }
+});
+
+// @desc Get Last order Number
+// @route GET /api/lastOrderNumber/
+// @access Public
+const getLastOrderNumber = asyncHandler(async (req, res) => {
+  const order = await Order.findOne({}, {}, { sort: { 'billNumber': -1 } });
+
+  if (order)
+  {
+    const billNumber = +(order.billNumber) + 1;
+    res.json({
+      billNumber
+    });
   } else
   {
     res.status(404);
@@ -175,6 +196,7 @@ export {
   getOrderById,
   getMyOrders,
   getOrders,
+  getLastOrderNumber,
   updateOrderToDelivered,
   updateOrderToPriced,
   updateOrderToShipped,

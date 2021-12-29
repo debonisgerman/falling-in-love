@@ -71,12 +71,13 @@ export const listShopProducts = (
       material: "",
       section: "",
       price: "",
+      color: "",
       ...queryString.parse(window.location.search),
     };
     dispatch({ type: PRODUCT_LIST_REQUEST });
 
     const { data } = await axios.get(
-      `/api/products/shop?keyword=${keyword}&pageNumber=${pageNumber}&category=${parsed.category}&material=${parsed.material}&section=${parsed.section}&price=${parsed.price}`
+      `/api/products/shop?keyword=${keyword}&pageNumber=${pageNumber}&category=${parsed.category}&material=${parsed.material}&section=${parsed.section}&color=${parsed.color}&price=${parsed.price}`
     );
 
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
@@ -100,12 +101,13 @@ export const listFilters = (keyword = "", search = "") => async (dispatch) => {
       material: "",
       section: "",
       price: "",
+      color: "",
       ...queryString.parse(window.location.search),
     };
     dispatch({ type: PRODUCT_FILTER_REQUEST });
 
     const { data } = await axios.get(
-      `/api/products/filters?keyword=${keyword}&category=${parsed.category}&material=${parsed.material}&section=${parsed.section}&price=${parsed.price}`
+      `/api/products/filters?keyword=${keyword}&category=${parsed.category}&material=${parsed.material}&section=${parsed.section}&color=${parsed.color}&price=${parsed.price}`
     );
 
     dispatch({ type: PRODUCT_FILTER_SUCCESS, payload: data });

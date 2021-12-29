@@ -30,7 +30,7 @@ const ProductCarousel = () => {
       pages = [];
       for (let i = 0; i < pagesCount; i++)
       {
-        pages.push(i + 1);
+        pages.push(i);
       }
       return pages.map((page, index) => (
         <Carousel.Item key={page}>
@@ -51,30 +51,30 @@ const ProductCarousel = () => {
       return null;
     } else
     {
-      const rounds = page + 3;
+      const rounds = (page + 1) * 3;
       let items = [];
-      for (let i = page; i < rounds; i++)
+      for (let i = (page * 3); i < rounds; i++)
       {
-        if (products[i - 1])
+        if (products[i])
         {
           items.push(
-            <Col md={3} sm={3} xs={3} key={products[i - 1]._id}>
-              <Link onClick={() => handleLink(products[i - 1])}>
+            <Col md={3} sm={3} xs={3} key={products[i]._id}>
+              <Link onClick={() => handleLink(products[i])}>
                 <Image
                   src={
-                    products[i - 1].variants &&
-                      products[i - 1].variants[0] &&
-                      products[i - 1].variants[0].images.length > 0 ?
-                      products[i - 1].variants[0].images[0] :
+                    products[i].variants &&
+                      products[i].variants[0] &&
+                      products[i].variants[0].images.length > 0 ?
+                      products[i].variants[0].images[0] :
                       '/images/logo.png'
                   }
-                  alt={products[i - 1].name}
+                  alt={products[i].name}
                   fluid="true"
                   className="m-w-70-m0a"
                 />
                 <Carousel.Caption className="carosuel-caption">
-                  <h5 className="bold text-center underline"><i>{products[i - 1].name}</i></h5>
-                  <h5><i>S/. {products[i - 1].price}</i></h5>
+                  <h5 className="bold text-center underline"><i>{products[i].name}</i></h5>
+                  <h5><i>S/. {products[i].price}</i></h5>
                 </Carousel.Caption>
               </Link>
             </Col>

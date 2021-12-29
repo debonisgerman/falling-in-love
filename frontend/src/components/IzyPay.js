@@ -19,56 +19,62 @@ const IziPay = (data) => {
         body.appendChild(script);
         // Generate the form token
         axios
-            .post(`${process.env.REACT_APP_IZIPAY_URL_FULL}/api/orders/createPayment`, {
-                paymentConf: {
-                    "amount": Number(data.amount * 100),
-                    "currency": "PEN",
-                    "customer": {
-                        "email": data.email
-                    }
-                },
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                }
-            })
-            .then(resp => {
-                formToken = resp.data
-                return KRGlue.loadLibrary(
-                    endpoint,
-                    publicKey
-                ) /* Load the remote library */
-            })
-            .then(({ KR }) =>
-                KR.setFormConfig({
-                    /* set the minimal configuration */
-                    formToken: formToken,
-                    'kr-language': 'en-US' /* to update initialization parameter */
-                })
-            )
-            .then(({ KR }) =>
-                KR.onSubmit(paymentData => {
-                    if (paymentData.clientAnswer.orderStatus !== "PAID")
-                    {
-                        console.log("PDATA", paymentData);
-                    }
-                    axios
-                        .post(`${process.env.REACT_APP_IZIPAY_URL_FULL}/api/orders/validatePayment`, paymentData)
-                        .then(response => {
-                            if (response.status === 200)
-                            {
-                                console.log('Payment validated', response)
-                                data.onSuccess(response)
-                            }
+            .get(`/api/orders/lastOrderNumber`)
+            .then(lastOrder => {
+                console.log("LASTORDER", lastOrder)
+                axios
+                    .post(`${process.env.REACT_APP_IZIPAY_URL_FULL}/api/orders/createPayment`, {
+                        paymentConf: {
+                            "amount": Number(data.amount * 100),
+                            "currency": "PEN",
+                            "customer": {
+                                "email": data.email
+                            },
+                            "orderId": lastOrder.data.billNumber,
+                        },
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        }
+                    })
+                    .then(resp => {
+                        formToken = resp.data
+                        return KRGlue.loadLibrary(
+                            endpoint,
+                            publicKey
+                        ) /* Load the remote library */
+                    })
+                    .then(({ KR }) =>
+                        KR.setFormConfig({
+                            /* set the minimal configuration */
+                            formToken: formToken,
+                            'kr-language': 'en-US' /* to update initialization parameter */
                         })
-                    return false // Return false to prevent the redirection
-                })
-            ) // Custom payment callback
-            .then(({ KR }) =>
-                KR.addForm('#myPaymentForm')
-            ) /* add a payment form  to myPaymentForm div*/
-            .then(({ KR, result }) =>
-                KR.showForm(result.formId)
-            ) /* show the payment form */
+                    )
+                    .then(({ KR }) =>
+                        KR.onSubmit(paymentData => {
+                            if (paymentData.clientAnswer.orderStatus !== "PAID")
+                            {
+                                console.log("PDATA", paymentData);
+                            }
+                            axios
+                                .post(`${process.env.REACT_APP_IZIPAY_URL_FULL}/api/orders/validatePayment`, paymentData)
+                                .then(response => {
+                                    if (response.status === 200)
+                                    {
+                                        console.log('Payment validated', response)
+                                        data.onSuccess(response)
+                                    }
+                                })
+                            return false // Return false to prevent the redirection
+                        })
+                    ) // Custom payment callback
+                    .then(({ KR }) =>
+                        KR.addForm('#myPaymentForm')
+                    ) /* add a payment form  to myPaymentForm div*/
+                    .then(({ KR, result }) =>
+                        KR.showForm(result.formId)
+                    ) /* show the payment form */
+            })
             .catch(error =>
                 console.log(error)
             )

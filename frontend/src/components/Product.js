@@ -70,6 +70,7 @@ const Product = ({ product }) => {
                         borderRadius: '50%',
                         backgroundColor: variant.color.color,
                         margin: '0 auto',
+                        border: '1px solid #bababa'
                       }}></div>
                       <div>{variant.color.name}</div>
                     </Col>

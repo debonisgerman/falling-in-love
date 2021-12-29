@@ -3,6 +3,7 @@ import Product from "../models/productModel.js";
 import Category from "../models/categoryModel.js";
 import Material from "../models/materialModel.js";
 import Section from "../models/sectionModel.js";
+import Color from "../models/colorModel.js"
 
 // @desc Fetch all products
 // @route GET /api/products
@@ -59,7 +60,7 @@ const getProducts = asyncHandler(async (req, res) => {
     }
   }
 
-  console.log(price, priceFrom, priceTo);
+  console.log(price, priceFrom, priceTo, color);
 
   let keyword;
   if (category || material || section || priceFrom || priceTo)
@@ -132,6 +133,7 @@ const getShopProducts = asyncHandler(async (req, res) => {
   let category = req.query.category;
   let material = req.query.material;
   let section = req.query.section;
+  let color = req.query.color;
   let price = req.query.price;
   let priceTo;
   let priceFrom;
@@ -176,10 +178,19 @@ const getShopProducts = asyncHandler(async (req, res) => {
     }
   }
 
+  if (color)
+  {
+    color = await Color.findOne({ name: { $regex: color } });
+    if (color)
+    {
+      color = color._id;
+    }
+  }
+
   console.log(price, priceFrom, priceTo);
 
   let keyword;
-  if (category || material || section || priceFrom || priceTo)
+  if (category || material || section || color || priceFrom || priceTo)
   {
     if (req.query.keyword)
     {
@@ -196,6 +207,9 @@ const getShopProducts = asyncHandler(async (req, res) => {
               {
                 section: regex,
               },
+              {
+                color: regex,
+              },
             ],
           },
         ],
@@ -203,6 +217,7 @@ const getShopProducts = asyncHandler(async (req, res) => {
       category && keyword.$and.push({ category: category });
       material && keyword.$and.push({ material: material });
       section && keyword.$and.push({ section: section });
+      color && keyword.$and.push({ 'variants.color': color });
       priceFrom && keyword.$and.push({ price: { $gte: priceFrom } });
       priceTo && keyword.$and.push({ price: { $lte: priceTo } });
     } else
@@ -211,6 +226,7 @@ const getShopProducts = asyncHandler(async (req, res) => {
       category && keyword.$and.push({ category: category });
       material && keyword.$and.push({ material: material });
       section && keyword.$and.push({ section: section });
+      color && keyword.$and.push({ 'variants.color': color });
       priceFrom && keyword.$and.push({ price: { $gte: priceFrom } });
       priceTo && keyword.$and.push({ price: { $lte: priceTo } });
     }
@@ -223,6 +239,7 @@ const getShopProducts = asyncHandler(async (req, res) => {
           { category: regex },
           { code: regex },
           { section: regex },
+          { color: regex },
         ],
       }
       : {};
@@ -247,6 +264,7 @@ const getFilters = asyncHandler(async (req, res) => {
   let category = req.query.category;
   let material = req.query.material;
   let section = req.query.section;
+  let color = req.query.color;
   let price = req.query.price;
   let priceTo;
   let priceFrom;
@@ -290,8 +308,17 @@ const getFilters = asyncHandler(async (req, res) => {
     }
   }
 
+  if (color)
+  {
+    color = await Color.findOne({ name: { $regex: color } });
+    if (color)
+    {
+      color = color._id;
+    }
+  }
+
   let keyword;
-  if (category || material || section || priceFrom || priceTo)
+  if (category || material || section || priceFrom || priceTo || color)
   {
     if (req.query.keyword)
     {
@@ -308,6 +335,9 @@ const getFilters = asyncHandler(async (req, res) => {
               {
                 section: regex,
               },
+              {
+                color: regex,
+              },
             ],
           },
         ],
@@ -315,6 +345,7 @@ const getFilters = asyncHandler(async (req, res) => {
       category && keyword.$and.push({ category: category });
       material && keyword.$and.push({ material: material });
       section && keyword.$and.push({ section: section });
+      color && keyword.$and.push({ 'variants.color': color });
       priceFrom && keyword.$and.push({ price: { $gte: priceFrom } });
       priceTo && keyword.$and.push({ price: { $lte: priceTo } });
     } else
@@ -323,6 +354,7 @@ const getFilters = asyncHandler(async (req, res) => {
       category && keyword.$and.push({ category: category });
       material && keyword.$and.push({ material: material });
       section && keyword.$and.push({ section: section });
+      color && keyword.$and.push({ 'variants.color': color });
       priceFrom && keyword.$and.push({ price: { $gte: priceFrom } });
       priceTo && keyword.$and.push({ price: { $lte: priceTo } });
     }
@@ -335,6 +367,7 @@ const getFilters = asyncHandler(async (req, res) => {
           { category: regex },
           { code: regex },
           { section: regex },
+          { color: regex },
         ],
       }
       : {};
@@ -345,13 +378,15 @@ const getFilters = asyncHandler(async (req, res) => {
   const products = await Product.find({ ...keyword })
     .populate('category')
     .populate('section')
-    .populate('material');
+    .populate('material')
+    .populate('variants.color');
 
   const filters = {
     filters: {
       categories: [],
       materials: [],
       sections: [],
+      colors: [],
       price,
     },
   };
@@ -379,6 +414,19 @@ const getFilters = asyncHandler(async (req, res) => {
       acc.push(product.material.reduce((accumulator, currentValue) => {
         accumulator = accumulator || [];
         accumulator.push(currentValue.name);
+        return accumulator
+      }, []));
+    }
+    return acc;
+  }, []).flat().filter((value, index, self) => value && self.indexOf(value) === index);
+
+  filters.filters.colors = products.reduce((acc, product) => {
+    acc = acc || [];
+    if (product.variants)
+    {
+      acc.push(product.variants.reduce((accumulator, currentValue) => {
+        accumulator = accumulator || [];
+        accumulator.push(currentValue.color.name);
         return accumulator
       }, []));
     }
@@ -506,17 +554,23 @@ const updateProduct = asyncHandler(async (req, res) => {
 // @route get /api/products/top
 // @access Public
 const getTopProducts = asyncHandler(async (req, res) => {
-  const products = await Product.find({ leading: true, published: true }).sort({ leading: -1 }).limit(9);
+  // const products = await Product.find({ leading: true, published: true }).sort({ leading: -1 }).limit(9);
+  const products = await Product.find({ leading: true, published: true }).sort({ leading: -1 });
   res.json(products);
 });
 
 const getRelatedProducts = asyncHandler(async (req, res) => {
   const categories = req.params.id.split(",");
+  // const products = await Product.find({
+  //   leading: true,
+  //   published: true,
+  //   category: { $in: categories }
+  // }).sort({ leading: -1 }).limit(9);
   const products = await Product.find({
     leading: true,
     published: true,
     category: { $in: categories }
-  }).sort({ leading: -1 }).limit(9);
+  }).sort({ leading: -1 });
   res.json(products);
 });
 
