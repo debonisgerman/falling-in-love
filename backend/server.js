@@ -66,18 +66,42 @@ app.use(function (req, res, next) {
 
 app.use(cors());
 
-app.get('/*', function (req, res, next) {
-  console.dir(req.hostname)
+/**
+ * Creates origin property on request object
+ */
+app.use(function (req, _res, next) {
+  var protocol = req.protocol;
 
-  if (!req.hostname.match(/^www/))
+  var hostHeaderIndex = req.rawHeaders.indexOf('Host') + 1;
+  var host = hostHeaderIndex ? req.rawHeaders[hostHeaderIndex] : undefined;
+
+  Object.defineProperty(req, 'origin', {
+    get: function () {
+      if (!host)
+      {
+        return req.headers.referer ? req.headers.referer.substring(0, req.headers.referer.length - 1) : undefined;
+      }
+      else
+      {
+        return protocol + '://' + host;
+      }
+    }
+  });
+  console.log(req.origin);
+  if (req.origin.indexOf('www') < 0)
   {
+    console.log("redirecting")
     res.redirect(
       301,
-      'https://www.' + req.hostname + req.url);
-  } else
-  {
-    next();
+      'https://www.' + req.origin + req.url
+    );
   }
+  next();
+});
+
+app.use(function (req, res, next) {
+
+  next();
 })
 
 const __dirname = path.resolve();
