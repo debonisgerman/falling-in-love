@@ -7,7 +7,7 @@ const IziPay = (data) => {
 
 
     useEffect(() => {
-        const endpoint = process.env.REACT_APP_IZIPAY_URL
+        const endpoint = window.location.origin
         const publicKey = `${process.env.REACT_APP_IZIPAY_KEY}`
         let formToken = ''
         const body = document.getElementsByTagName('body').item(0);
