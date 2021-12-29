@@ -33,7 +33,8 @@ const IziPay = (data) => {
                             "orderId": lastOrder.data.billNumber,
                         },
                         headers: {
-                            "Content-Type": "application/x-www-form-urlencoded"
+                            "Content-Type": "application/x-www-form-urlencoded",
+                            'Access-Control-Allow-Origin' : '*',
                         }
                     })
                     .then(resp => {
