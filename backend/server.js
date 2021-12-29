@@ -56,6 +56,18 @@ app.get("/api/config/paypal", (req, res) =>
   res.send(process.env.PAYPAL_CLIENT_ID)
 );
 
+app.get('/*', function (req, res, next) {
+  if (req.headers.host.match(/^www/) !== null)
+  {
+    res.redirect(
+      301,
+      'https://' + req.headers.host.replace(/^www\./, '') + req.url);
+  } else
+  {
+    next();
+  }
+})
+
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
