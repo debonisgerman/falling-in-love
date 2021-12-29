@@ -37,9 +37,12 @@ if (process.env.NODE_ENV === "development")
 
 app.use(express.json());
 
-app.get('*', function (req, res) {
-  res.redirect('https://' + req.headers.host + req.url);
-})
+if (process.env.NODE_ENV === "production")
+{
+  app.get('*', function (req, res) {
+    res.redirect('https://www.fallinginlove.pe' + req.url);
+  })
+}
 
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
