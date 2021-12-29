@@ -37,7 +37,7 @@ if (process.env.NODE_ENV === "development")
 
 app.use(express.json());
 
-http.get('*', function (req, res) {
+app.get('*', function (req, res) {
   res.redirect('https://' + req.headers.host + req.url);
 })
 
