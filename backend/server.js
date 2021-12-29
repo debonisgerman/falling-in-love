@@ -57,11 +57,11 @@ app.get("/api/config/paypal", (req, res) =>
 );
 
 app.get('/*', function (req, res, next) {
-  if (req.headers.host.match(/^www/) !== null)
+  if (!req.headers.host.match(/^www/))
   {
     res.redirect(
       301,
-      'https://' + req.headers.host.replace(/^www\./, '') + req.url);
+      'https://www.' + req.headers.host.replace(/^www\./, '') + req.url);
   } else
   {
     next();
