@@ -36,61 +36,75 @@ import SizeListScreen from "./screens/SizeListScreen";
 import SubHeaderEditScreen from "./screens/SubHeaderEditScreen";
 import SubHeaderListScreen from "./screens/SubHeaderListScreen";
 
-const App = () => {
-  return (
-    <Router>
-      <Header />
-      <SubHeader />
-      <main className="pb-3 w-100">
-        <Route path="/admin/material/:id/edit" component={MaterialEditScreen} />
-        <Route path="/admin/materiallist" component={MaterialListScreen} />
-        <Route path="/admin/subheader/:id/edit" component={SubHeaderEditScreen} />
-        <Route path="/admin/subheaderlist" component={SubHeaderListScreen} />
-        <Route path="/admin/size/:id/edit" component={SizeEditScreen} />
-        <Route path="/admin/sizelist" component={SizeListScreen} />
-        <Route path="/admin/color/:id/edit" component={ColorEditScreen} />
-        <Route path="/admin/colorlist" component={ColorListScreen} />
-        <Route path="/admin/section/:id/edit" component={SectionEditScreen} />
-        <Route path="/admin/sectionlist" component={SectionListScreen} />
-        <Route path="/admin/category/:id/edit" component={CategoryEditScreen} />
-        <Route path="/admin/categorylist" component={CategoryListScreen} />
-        <Route path="/admin/banner/:id/edit" component={BannerEditScreen} />
-        <Route path="/admin/bannerlist" component={BannerListScreen} />
-        <Route path="/admin/orderlist" component={OrderListScreen} />
-        <Route path="/admin/product/:id/edit" component={ProductEditScreen} />
-        <Route
-          path="/admin/productlist/:pageNumber"
-          component={ProductListScreen}
-          exact
-        />
-        <Route path="/admin/productlist" component={ProductListScreen} exact />
-        <Route path="/admin/user/:id/edit" component={UserEditScreen} />
-        <Route path="/admin/userlist" component={UserListScreen} />
-        <Route path="/order/:id" component={OrderScreen} />
-        <Route path="/placeorder" component={PlaceOrderScreen} />
-        <Route path="/payment" component={PaymentScreen} />
-        <Route path="/shipping" component={ShippingScreen} />
-        <Route path="/profile" component={ProfileScreen} />
-        <Route path="/register" component={RegisterScreen} />
-        <Route path="/login" component={LoginScreen} />
-        <Route path="/product/:id" component={ProductScreen} />
-        <Route path="/cart/:id?" component={CartScreen} />
-        <Route path="/about-us" component={AboutUsScreen} exact />
-        <Route path="/find-us" component={FindUsScreen} exact />
-        <Route path="/find-us/:map" component={FindUsScreen} exact />
-        <Route path="/shop/search/:keyword" component={ShopScreen} exact />
-        <Route path="/shop/page/:pageNumber" component={ShopScreen} exact />
-        <Route
-          path="/shop/search/:keyword/page/:pageNumber"
-          component={ShopScreen}
-          exact
-        />
-        <Route path="/shop" component={ShopScreen} exact />
-        <Route path="/" component={HomeScreen} exact />
-      </main>
-      <Footer />
-    </Router>
-  );
-};
+
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+  }
+
+  componentDidMount() {
+    if (window.location.origin.indexOf("www"))
+    {
+      window.location.href = "https://www." + window.location.host + window.location.pathname + window.location.search
+    }
+  }
+
+  render() {
+    return (
+      <Router>
+        <Header />
+        <SubHeader />
+        <main className="pb-3 w-100">
+          <Route path="/admin/material/:id/edit" component={MaterialEditScreen} />
+          <Route path="/admin/materiallist" component={MaterialListScreen} />
+          <Route path="/admin/subheader/:id/edit" component={SubHeaderEditScreen} />
+          <Route path="/admin/subheaderlist" component={SubHeaderListScreen} />
+          <Route path="/admin/size/:id/edit" component={SizeEditScreen} />
+          <Route path="/admin/sizelist" component={SizeListScreen} />
+          <Route path="/admin/color/:id/edit" component={ColorEditScreen} />
+          <Route path="/admin/colorlist" component={ColorListScreen} />
+          <Route path="/admin/section/:id/edit" component={SectionEditScreen} />
+          <Route path="/admin/sectionlist" component={SectionListScreen} />
+          <Route path="/admin/category/:id/edit" component={CategoryEditScreen} />
+          <Route path="/admin/categorylist" component={CategoryListScreen} />
+          <Route path="/admin/banner/:id/edit" component={BannerEditScreen} />
+          <Route path="/admin/bannerlist" component={BannerListScreen} />
+          <Route path="/admin/orderlist" component={OrderListScreen} />
+          <Route path="/admin/product/:id/edit" component={ProductEditScreen} />
+          <Route
+            path="/admin/productlist/:pageNumber"
+            component={ProductListScreen}
+            exact
+          />
+          <Route path="/admin/productlist" component={ProductListScreen} exact />
+          <Route path="/admin/user/:id/edit" component={UserEditScreen} />
+          <Route path="/admin/userlist" component={UserListScreen} />
+          <Route path="/order/:id" component={OrderScreen} />
+          <Route path="/placeorder" component={PlaceOrderScreen} />
+          <Route path="/payment" component={PaymentScreen} />
+          <Route path="/shipping" component={ShippingScreen} />
+          <Route path="/profile" component={ProfileScreen} />
+          <Route path="/register" component={RegisterScreen} />
+          <Route path="/login" component={LoginScreen} />
+          <Route path="/product/:id" component={ProductScreen} />
+          <Route path="/cart/:id?" component={CartScreen} />
+          <Route path="/about-us" component={AboutUsScreen} exact />
+          <Route path="/find-us" component={FindUsScreen} exact />
+          <Route path="/find-us/:map" component={FindUsScreen} exact />
+          <Route path="/shop/search/:keyword" component={ShopScreen} exact />
+          <Route path="/shop/page/:pageNumber" component={ShopScreen} exact />
+          <Route
+            path="/shop/search/:keyword/page/:pageNumber"
+            component={ShopScreen}
+            exact
+          />
+          <Route path="/shop" component={ShopScreen} exact />
+          <Route path="/" component={HomeScreen} exact />
+        </main>
+        <Footer />
+      </Router>
+    )
+  }
+}
 
 export default App;
