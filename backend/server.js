@@ -58,6 +58,7 @@ app.get("/api/config/paypal", (req, res) =>
 
 app.get('/*', function (req, res, next) {
   console.log(req.headers.host)
+  console.log(req.headers.origin)
   if (!req.headers.host.match(/^www/))
   {
     res.redirect(
