@@ -69,7 +69,7 @@ app.use(cors());
 /**
  * Creates origin property on request object
  */
-app.use(function (req, _res, next) {
+app.use(function (req, res, next) {
   var protocol = req.protocol;
 
   var hostHeaderIndex = req.rawHeaders.indexOf('Host') + 1;
@@ -99,10 +99,6 @@ app.use(function (req, _res, next) {
   next();
 });
 
-app.use(function (req, res, next) {
-
-  next();
-})
 
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
