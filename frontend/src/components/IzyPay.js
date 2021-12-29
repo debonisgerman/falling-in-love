@@ -14,7 +14,7 @@ const IziPay = (data) => {
         const script = document.createElement('script');
         script.setAttribute('type', 'text/javascript');
         script.setAttribute('src', 'https://static.micuentaweb.pe/static/js/krypton-client/V4.0/stable/kr-payment-form.min.js');
-        script.setAttribute('kr-public-key', '44010247:testpublickey_QoEOBckCpwwGBpZpnVn1aZJERDEvJSa1V1qGoKC51rSLD');
+        script.setAttribute('kr-public-key', '44010247:publickey_NvsaBHOOEPEAq9LFA2IIRf255wFvRpX8hS3OsWWs4rqML');
         script.setAttribute('kr-post-url-success', 'paid.html');
         body.appendChild(script);
         // Generate the form token
