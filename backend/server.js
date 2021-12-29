@@ -67,16 +67,13 @@ app.use(function (req, res, next) {
 app.use(cors());
 
 app.get('/*', function (req, res, next) {
-  console.log(req.header('Origin'))
-  console.log(req.header('Host'))
-  console.log(req.protocol)
-  console.log(req.get('host'))
-  console.log(req.originalUrl)
-  if (!req.headers.hostname.match(/^www/))
+  console.dir(req.hostname)
+
+  if (!req.hostname.match(/^www/))
   {
     res.redirect(
       301,
-      'https://www.' + req.headers.hostname + req.url);
+      'https://www.' + req.hostname + req.url);
   } else
   {
     next();
