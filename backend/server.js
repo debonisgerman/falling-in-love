@@ -37,20 +37,6 @@ if (process.env.NODE_ENV === "development")
 
 app.use(express.json());
 
-if (process.env.NODE_ENV === "production")
-{
-  app.get('*', function (req, res, next) {
-    console.log(req.url)
-    if (req.url.indexOf("index") !== 0)
-    {
-      res.redirect('https://www.fallinginlove.pe' + req.url);
-    } else
-    {
-      next()
-    }
-  })
-}
-
 app.use("/api/products", productRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/orders", orderRoutes);
