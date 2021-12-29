@@ -38,12 +38,13 @@ export const listProducts = (
       material: "",
       section: "",
       price: "",
+      color: "",
       ...queryString.parse(window.location.search),
     };
     dispatch({ type: PRODUCT_LIST_REQUEST });
 
     const { data } = await axios.get(
-      `/api/products?keyword=${keyword}&pageNumber=${pageNumber}&category=${parsed.category}&material=${parsed.material}&section=${parsed.section}&price=${parsed.price}`
+      `/api/products?keyword=${keyword}&pageNumber=${pageNumber}&category=${parsed.category}&material=${parsed.material}&section=${parsed.section}&color=${parsed.section}&price=${parsed.price}`
     );
 
     dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });

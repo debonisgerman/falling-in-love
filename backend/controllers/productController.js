@@ -15,6 +15,7 @@ const getProducts = asyncHandler(async (req, res) => {
   let category = req.query.category;
   let material = req.query.material;
   let section = req.query.section;
+  let color = req.query.color;
   let price = req.query.price;
   let priceTo;
   let priceFrom;
@@ -60,6 +61,15 @@ const getProducts = asyncHandler(async (req, res) => {
     }
   }
 
+  if (color)
+  {
+    color = await Color.findOne({ name: { $regex: color } });
+    if (color)
+    {
+      color = color._id;
+    }
+  }
+
   console.log(price, priceFrom, priceTo, color);
 
   let keyword;
@@ -80,6 +90,9 @@ const getProducts = asyncHandler(async (req, res) => {
               {
                 section: regex,
               },
+              {
+                color: regex,
+              },
             ],
           },
         ],
@@ -87,6 +100,7 @@ const getProducts = asyncHandler(async (req, res) => {
       category && keyword.$and.push({ category: category });
       material && keyword.$and.push({ material: material });
       section && keyword.$and.push({ section: section });
+      color && keyword.$and.push({ 'variants.color': color });
       priceFrom && keyword.$and.push({ price: { $gte: priceFrom } });
       priceTo && keyword.$and.push({ price: { $lte: priceTo } });
     } else
@@ -95,6 +109,7 @@ const getProducts = asyncHandler(async (req, res) => {
       category && keyword.$and.push({ category: category });
       material && keyword.$and.push({ material: material });
       section && keyword.$and.push({ section: section });
+      color && keyword.$and.push({ 'variants.color': color });
       priceFrom && keyword.$and.push({ price: { $gte: priceFrom } });
       priceTo && keyword.$and.push({ price: { $lte: priceTo } });
     }
@@ -107,6 +122,7 @@ const getProducts = asyncHandler(async (req, res) => {
           { category: regex },
           { code: regex },
           { section: regex },
+          { color: regex },
         ],
       }
       : {};
