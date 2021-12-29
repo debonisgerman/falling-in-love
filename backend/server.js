@@ -56,13 +56,7 @@ app.get("/api/config/paypal", (req, res) =>
   res.send(process.env.PAYPAL_CLIENT_ID)
 );
 
-app.use((req, res, next) => {
-  var origin = req.headers.origin;
-  if (app.get('allowed_origins').includes(origin))
-  {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-  }
-})
+app.use(cors());
 
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
@@ -83,7 +77,6 @@ if (process.env.NODE_ENV === "production")
 app.use(notFound);
 
 app.use(errorHandler);
-app.use(cors());
 
 
 const PORT = process.env.PORT || 5000;
