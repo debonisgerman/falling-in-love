@@ -56,9 +56,22 @@ app.get("/api/config/paypal", (req, res) =>
   res.send(process.env.PAYPAL_CLIENT_ID)
 );
 
+
+
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+app.use(cors());
+
 app.get('/*', function (req, res, next) {
   console.log(req.header('Origin'))
   console.log(req.header('Host'))
+  console.log(req.protocol)
+  console.log(req.get('host'))
+  console.log(req.originalUrl)
   if (!req.headers.hostname.match(/^www/))
   {
     res.redirect(
@@ -69,14 +82,6 @@ app.get('/*', function (req, res, next) {
     next();
   }
 })
-
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
-
-app.use(cors());
 
 const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
