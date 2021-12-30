@@ -35,11 +35,10 @@ const PlaceOrderScreen = ({ history }) => {
     cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
   );
   cart.shippingPrice = cart.shippingAddress && cart.shippingAddress.province && cart.shippingAddress.province.toUpperCase() !== 'LIMA' ? 15 : 10;
-  // cart.totalPrice = (
-  //   Number(cart.itemsPrice) +
-  //   Number(cart.shippingPrice)
-  // ).toFixed(2);
-  cart.totalPrice = (Number(cart.itemsPrice)).toFixed(2)
+  cart.totalPrice = (
+    Number(cart.itemsPrice) +
+    Number(cart.shippingPrice)
+  ).toFixed(2);
 
   const orderCreate = useSelector((state) => state.orderCreate);
   const { order, success, error } = orderCreate;
