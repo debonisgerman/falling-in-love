@@ -39,7 +39,7 @@ const PlaceOrderScreen = ({ history }) => {
   //   Number(cart.itemsPrice) +
   //   Number(cart.shippingPrice)
   // ).toFixed(2);
-  cart.totalPrice = (Number(cart.shippingPrice)).toFixed(2)
+  cart.totalPrice = (Number(cart.itemsPrice)).toFixed(2)
 
   const orderCreate = useSelector((state) => state.orderCreate);
   const { order, success, error } = orderCreate;
