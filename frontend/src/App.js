@@ -43,7 +43,7 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    if (window.location.origin.indexOf("www"))
+    if (window.location.origin.indexOf("www") === -1)
     {
       window.location.href = "https://www." + window.location.host + window.location.pathname + window.location.search
     }
