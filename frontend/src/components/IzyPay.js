@@ -48,7 +48,7 @@ const IziPay = (data) => {
                         KR.setFormConfig({
                             /* set the minimal configuration */
                             formToken: formToken,
-                            'kr-language': 'en-US' /* to update initialization parameter */
+                            'kr-language': 'es-ES' /* to update initialization parameter */
                         })
                     )
                     .then(({ KR }) =>
