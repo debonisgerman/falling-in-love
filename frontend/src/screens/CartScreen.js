@@ -55,6 +55,7 @@ const CartScreen = ({ match, location, history }) => {
   };
 
   const trunc = (x, posiciones = 0) => {
+    if ((""+x).indexOf('.') === -1) return Number(x); 
     var s = x.toString()
     var l = s.length
     var decimalLength = s.indexOf('.') + 1

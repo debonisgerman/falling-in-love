@@ -29,21 +29,22 @@ const ShippingScreen = ({ history }) => {
   const [currentProvinces, setCurrentProvinces] = useState([])
   const [district, setDistrict] = useState(shippingAddress.district);
   const [currentDistricts, setCurrentDistricts] = useState([])
+  const [dispatched, setDispatched] = useState(false);
 
   const dispatch = useDispatch();
 
 
   useEffect(() => {
-    dispatch(listDepartments());
-  }, [dispatch]);
-
-  setTimeout(() => {
-    if (department && !filledDepartment)
+    if (!dispatched)
+    {
+      dispatch(listDepartments());
+      setDispatched(true)
+    } else if (departments.length > 0 && !filledDepartment)
     {
       handleDepartment(department);
       setFilledDepartment(true);
     }
-  }, 1000);
+  }, [dispatch, departments, department]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -54,9 +55,9 @@ const ShippingScreen = ({ history }) => {
   const handleDepartment = (value, id) => {
     setDepartment(value);
     const selectedDepartment = departments.find(d => d.name.toString() == value);
-    createProvinceSelector(selectedDepartment);
     setCurrentDistricts([])
     setDistrict("")
+    createProvinceSelector(selectedDepartment);
   }
 
   const createProvinceSelector = (department) => {
@@ -70,13 +71,13 @@ const ShippingScreen = ({ history }) => {
     setCurrentProvinces(auxProvinces);
     if (province)
     {
-      setProvince(province);
+      handleProvince(province, auxProvinces);
     }
   }
 
-  const handleProvince = (value, id) => {
+  const handleProvince = (value, auxProvinces) => {
     setProvince(value);
-    const selectedProvince = currentProvinces.find(d => d.name.toString() == value);
+    const selectedProvince = auxProvinces.find(d => d.name.toString() == value);
     createDistrictSelector(selectedProvince);
   }
 
