@@ -14,7 +14,7 @@ import { createFormToken } from "../utils/createPayment.js";
 // @route POST /api/orders
 // @access Private
 const addOrderItems = asyncHandler(async (req, res) => {
-  const { orderItems, shippingAddress, pricedAt, isPriced } = req.body;
+  const { orderItems, shippingAddress, pricedAt, isPriced, uUId, paymentMethod } = req.body;
   if (orderItems && orderItems.length === 0)
   {
     res.status(400);
@@ -26,6 +26,8 @@ const addOrderItems = asyncHandler(async (req, res) => {
       shippingAddress,
       pricedAt,
       isPriced,
+      uUId,
+      paymentMethod,
     });
 
     let createdOrder = await order.save();

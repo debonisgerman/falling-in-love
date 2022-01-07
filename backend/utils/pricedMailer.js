@@ -36,7 +36,7 @@ const sendMailPriced = async (order) => {
           </ul>
         </div>
         <div>
-          <a href="http://fallinginlove.pe:5000/order/${order._id}" target="_blank">Aquí</a> puedes seguir tu pedido.
+          <a href="http://fallinginlove.pe/order/${order._id}" target="_blank">Aquí</a> puedes seguir tu pedido.
         </div>
       </div>
     `,

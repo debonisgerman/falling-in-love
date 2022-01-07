@@ -46,19 +46,23 @@ const OrderScreen = ({ match, history }) => {
   const { loading: loadingShipped, success: successShipped } = orderShipped;
 
   useEffect(() => {
-    if (!order || order._id !== orderId) {
+    if (!order || order._id !== orderId)
+    {
       dispatch(getOrderDetails(orderId));
     }
 
-    if (successDeliver) {
+    if (successDeliver)
+    {
       dispatch({ type: ORDER_DELIVER_RESET });
       dispatch(getOrderDetails(orderId));
     }
-    if (successShipped) {
+    if (successShipped)
+    {
       dispatch({ type: ORDER_SHIPPED_RESET });
       dispatch(getOrderDetails(orderId));
     }
-    if (successPriced) {
+    if (successPriced)
+    {
       dispatch({ type: ORDER_PRICED_RESET });
       dispatch(getOrderDetails(orderId));
     }
@@ -87,45 +91,6 @@ const OrderScreen = ({ match, history }) => {
       <Row>
         <Col md={8}>
           <ListGroup variant="flush">
-            <ListGroup.Item>
-              <h2>Envío</h2>
-              <p><strong>Nombre: </strong> {order.shippingAddress.name}</p>
-              <p><strong>Email: </strong> {order.shippingAddress.email}</p>
-              <p><strong>Dirección:</strong> {order.shippingAddress.address}</p>
-              <p><strong>Departamento:</strong> {order.shippingAddress.department}</p>
-              <p><strong>Provincia:</strong> {order.shippingAddress.province}</p>
-              <p><strong>Distrito:</strong> {order.shippingAddress.district}</p>
-              <p><strong>Teléfono:</strong> {order.shippingAddress.phone}</p>
-              <p><strong>Comprobante:</strong> {order.shippingAddress.bill ? 'Factura' : 'Boleta'}</p>
-              {order.shippingAddress.bill && (
-                <>
-                  <p><strong>Razón Social:</strong> {order.shippingAddress.socialReason ? order.shippingAddress.socialReason : '-'}</p>
-                  <p><strong>RUC:</strong> {order.shippingAddress.ruc ? order.shippingAddress.ruc : '-'}</p>
-                </>
-              )}
-              {order.isPriced ? (
-                <Message variant="success">
-                  Pagado el {(new Date(order.pricedAt)).toLocaleString()}
-                </Message>
-              ) : (
-                <Message variant="secondary">No pagado</Message>
-              )}
-              {order.isShipping ? (
-                <Message variant="success">
-                  En camino desde {(new Date(order.pricedAt)).toLocaleString()}
-                </Message>
-              ) : (
-                <Message variant="secondary">Esperando para enviar</Message>
-              )}
-              {order.isDelivered ? (
-                <Message variant="success">
-                  Entregado el {(new Date(order.deliveredAt)).toLocaleString()}
-                </Message>
-              ) : (
-                <Message variant="secondary">{order.isShipping ? 'En Camino' : 'Esperando que se envíe'}</Message>
-              )}
-            </ListGroup.Item>
-
             <ListGroup.Item>
               <h2>Items del Pedido</h2>
               {order.orderItems.length === 0 ? (
@@ -160,6 +125,127 @@ const OrderScreen = ({ match, history }) => {
                     </ListGroup.Item>
                   ))}
                 </ListGroup>
+              )}
+            </ListGroup.Item>
+            <ListGroup.Item>
+              <h2>Envío</h2>
+              <p><strong>Nombre: </strong> {order.shippingAddress.name}</p>
+              <p><strong>Email: </strong> {order.shippingAddress.email}</p>
+              <p><strong>Dirección:</strong> {order.shippingAddress.address}</p>
+              <p><strong>Departamento:</strong> {order.shippingAddress.department}</p>
+              <p><strong>Provincia:</strong> {order.shippingAddress.province}</p>
+              <p><strong>Distrito:</strong> {order.shippingAddress.district}</p>
+              <p><strong>Teléfono:</strong> {order.shippingAddress.phone}</p>
+              <p><strong>Comprobante:</strong> {order.shippingAddress.bill ? 'Factura' : 'Boleta'}</p>
+              {order.shippingAddress.bill && (
+                <>
+                  <p><strong>Razón Social:</strong> {order.shippingAddress.socialReason ? order.shippingAddress.socialReason : '-'}</p>
+                  <p><strong>RUC:</strong> {order.shippingAddress.ruc ? order.shippingAddress.ruc : '-'}</p>
+                </>
+              )}
+              {order.paymentMethod === "TransferenciaYapePlin" && !order.isPriced && (
+                <>
+                  <hr />
+                  <h4>Datos para el pago:</h4>
+                  <p><b>Titular</b>: Andrea Cueva</p>
+                  <div>
+                    <div>
+                      <h5>Plin</h5>
+                      <Row style={{ alignItems: 'center', justifyContent: 'center' }}>
+                        <Col md={3}>
+                          <Image
+                            src="/images/plinlogo.png"
+                            alt="logo"
+                            fluid="true"
+                          />
+                        </Col>
+                        <Col md={3}>
+                          <Image
+                            src="/images/plin.png"
+                            alt="logo"
+                            fluid="true"
+                          />
+                        </Col>
+                      </Row>
+                    </div>
+                    <div>
+                      <h5>Yape</h5>
+                      <Row style={{ alignItems: 'center', justifyContent: 'center' }}>
+                        <Col md={3}>
+                          <Image
+                            src="/images/yapelogo.png"
+                            alt="logo"
+                            fluid="true"
+                          />
+                        </Col>
+                        <Col md={3}>
+                          <Image
+                            src="/images/yape.png"
+                            alt="logo"
+                            fluid="true"
+                          />
+                        </Col>
+                      </Row>
+                    </div>
+                    <div>
+                      <h5>Transferencia Bancaria - Interbank</h5>
+                      <p>
+                        <b>Empresa:</b> Falling in Love SAC
+                        <br />
+                        <b>Cuenta Corriente Soles:</b> 200-3003735131 / CCI: 00320000300373513136
+                        <br />
+                        <b>Cuenta Corriente Dólares:</b> 200-3003735149 / CCI: 003-200-003003735149-38
+                      </p>
+                    </div>
+                    <div>
+                      <b style={{fontSize: '1.2rem'}}>
+                        Una vez realizado el pago envíanos el comprobante:
+                      </b>
+                      <br />
+                      <br />
+                      <a
+                        className="btn btn-primary rounded center"
+                        href={`https://wa.me/+51913059930?text=Hola,%20te%20envío%20el%20comprobante%20del%20pedido%20Nro.%20${order.billNumber}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        style={{ display: 'flex', width: 150, justifyContent: 'center', alignItems: 'center', paddingBottom: 8 }}
+                      >
+                        <b>
+                          <i
+                            className="fab fa-whatsapp pt-2"
+                            style={{ fontSize: "25px" }}
+                          ></i>
+                        </b>
+                        <b
+                          style={{ marginLeft: 10, marginTop: 4 }}>
+                          ¡Por Whatsapp!
+                        </b>
+                      </a>
+                    </div>
+                    <hr />
+                  </div>
+                </>
+              )}
+              {order.isPriced ? (
+                <Message variant="success">
+                  Pagado el {(new Date(order.pricedAt)).toLocaleString()}
+                </Message>
+              ) : (
+                <Message variant="secondary">No pagado</Message>
+              )}
+              {order.isShipping ? (
+                <Message variant="success">
+                  En camino desde {(new Date(order.pricedAt)).toLocaleString()}
+                </Message>
+              ) : (
+                <Message variant="secondary">Esperando para enviar</Message>
+              )}
+              {order.isDelivered ? (
+                <Message variant="success">
+                  Entregado el {(new Date(order.deliveredAt)).toLocaleString()}
+                </Message>
+              ) : (
+                <Message variant="secondary">{order.isShipping ? 'En Camino' : 'Esperando que se envíe'}</Message>
               )}
             </ListGroup.Item>
           </ListGroup>

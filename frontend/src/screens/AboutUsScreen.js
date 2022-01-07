@@ -5,18 +5,20 @@ import Meta from "../components/Meta";
 const AboutUsScreen = () => {
   return (
     <Container>
-    <Meta />
+      <Meta />
       <h1 className="secondary-blue bold text-center mt-5 mb-3 text-center">
         Falling In Love
       </h1>
       <Row>
-        <h4>Lorem Ipsum</h4>
         <p>
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard
-          dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type
-          specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining
-          essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum
-          passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum
+          Falling in love, es una marca peruana que nace a partir de la necesidad de la mujer por encontrar lencería bonita y
+          cómoda es por ello que estamos para brindarte estilo y sensualidad en tu día a día con piezas únicas hechas con amor.
+        <br />
+          Cada pieza implica compromiso, excelencia y originalidad de la marca,
+          para hacer sentir a las mujeres únicas y siempre sexys.
+        <br />
+          Las colecciones están hechas con la más alta calidad en telas y materiales,
+          para crear piezas bellas y únicas.
         </p>
       </Row>
       <Row>
@@ -25,12 +27,10 @@ const AboutUsScreen = () => {
       <Row>
         <ul>
           <li>
-            Lorem Ipsum Lorem Ipsum
+            Ayudarás un emprendimiento peruano, encontrarás piezas únicas hechas con amor 
+            que resaltará tu sensualidad en tu día a día con lencería fina y te acompañamos 
+            también en verano con unos bikinis únicos.
           </li>
-          <li>Lorem Ipsum Lorem Ipsum</li>
-          <li>Lorem Ipsum Lorem Ipsum</li>
-          <li>Lorem Ipsum Lorem Ipsum</li>
-          <li>Lorem Ipsum Lorem Ipsum</li>
         </ul>
       </Row>
       <h1 className="secondary-blue bold text-center text-center mt-5">

@@ -35,6 +35,11 @@ const PlaceOrderScreen = ({ history }) => {
     cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
   );
   cart.shippingPrice = cart.shippingAddress && cart.shippingAddress.province && cart.shippingAddress.province.toUpperCase() !== 'LIMA' ? 15 : 10;
+  
+  if (cart.itemsPrice >= 150) {
+    cart.shippingPrice = 0;
+  }
+  
   cart.totalPrice = (
     Number(cart.itemsPrice) +
     Number(cart.shippingPrice)

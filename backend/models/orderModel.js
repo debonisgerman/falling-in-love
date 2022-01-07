@@ -77,6 +77,9 @@ const orderSchema = mongoose.Schema(
     billNumber: {
       type: Number,
     },
+    uUId: {
+      type: String,
+    }
   },
   {
     timestamps: true,
