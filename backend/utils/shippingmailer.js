@@ -19,7 +19,7 @@ const sendMailShipping = async (data, order) => {
       <div>
         <h3>Tu pedido está en camino</h3>
         <div>
-          <a href="http://fallinginlove.pe/order/${order._id}" target="_blank">Aquí</a> puedes seguir tu pedido.
+          <a href="https://fallinginlove.pe/order/${order._id}" target="_blank">Aquí</a> puedes seguir tu pedido.
         </div>
       </div>
     `,
