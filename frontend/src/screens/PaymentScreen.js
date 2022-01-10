@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Button, Col } from "react-bootstrap";
+import { Form, Button, Col, Image } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import FormContainer from "../components/FormContainer";
 import CheckoutSteps from "../components/CheckoutSteps";
@@ -10,7 +10,8 @@ const PaymentScreen = ({ history }) => {
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
 
-  if (!shippingAddress) {
+  if (!shippingAddress)
+  {
     history.push("/shipping");
   }
 
@@ -41,15 +42,22 @@ const PaymentScreen = ({ history }) => {
               value="IziPay"
               checked
               onChange={(e) => setPaymentMethod(e.target.value)}
-            ></Form.Check>
-            <Form.Check
-              type="radio"
-              label="Efectivo"
-              id="Cash"
-              name="paymentMethod"
-              value="Efectivo"
-              onChange={(e) => setPaymentMethod(e.target.value)}
-            ></Form.Check>
+            >
+            </Form.Check>
+            <Col
+              xs={4}
+              sm={4}
+              md={4}
+              lg={4}
+              xl={2}
+            >
+              <Image
+                src="/images/izipay.png"
+                alt="logo"
+                fluid="true"
+                style={{marginTop: 5, marginBottom: 10}}
+              />
+            </Col>
             <Form.Check
               type="radio"
               label="Transferencia/Yape/Plin"
@@ -65,7 +73,7 @@ const PaymentScreen = ({ history }) => {
           Continuar
         </Button>
       </Form>
-    </FormContainer>
+    </FormContainer >
   );
 };
 

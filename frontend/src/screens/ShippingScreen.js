@@ -77,15 +77,23 @@ const ShippingScreen = ({ history }) => {
 
   const handleProvince = (value, auxProvinces) => {
     setProvince(value);
-    const selectedProvince = auxProvinces.find(d => d.name.toString() == value);
-    createDistrictSelector(selectedProvince);
+    let selectedProvince;
+    if (typeof auxProvinces !== 'string')
+    {
+      selectedProvince = auxProvinces.find(d => d.name.toString() == value);
+    } else if (currentProvinces.length > 0)
+    {
+      selectedProvince = currentProvinces.find(d => d.name.toString() == value);
+    }
+    if (selectedProvince)
+      createDistrictSelector(selectedProvince);
   }
 
-  const createDistrictSelector = (province) => {
+  const createDistrictSelector = (selectedProvince) => {
     let auxDistrict = [];
-    if (province && province.districts.length > 0)
+    if (selectedProvince && selectedProvince.districts.length > 0)
     {
-      province.districts.map((p) => {
+      selectedProvince.districts.map((p) => {
         auxDistrict.push(p.name);
       });
     }

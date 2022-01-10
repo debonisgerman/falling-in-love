@@ -89,7 +89,7 @@ const OrderScreen = ({ match, history }) => {
       <Meta />
       <h1>Pedido Nro. {order.billNumber}</h1>
       <Row>
-        <Col md={8}>
+        <Col md={12} lg={8} xl={8}>
           <ListGroup variant="flush">
             <ListGroup.Item>
               <h2>Items del Pedido</h2>
@@ -152,18 +152,20 @@ const OrderScreen = ({ match, history }) => {
                     <div>
                       <h5>Plin</h5>
                       <Row style={{ alignItems: 'center', justifyContent: 'center' }}>
-                        <Col md={3}>
+                        <Col md={3} lg={3} xl={3} className="text-center">
                           <Image
                             src="/images/plinlogo.png"
                             alt="logo"
                             fluid="true"
+                            style={{ width: 150 }}
                           />
                         </Col>
-                        <Col md={3}>
+                        <Col md={3} lg={3} xl={3} className="text-center">
                           <Image
                             src="/images/plin.png"
                             alt="logo"
                             fluid="true"
+                            style={{ width: 150 }}
                           />
                         </Col>
                       </Row>
@@ -171,18 +173,21 @@ const OrderScreen = ({ match, history }) => {
                     <div>
                       <h5>Yape</h5>
                       <Row style={{ alignItems: 'center', justifyContent: 'center' }}>
-                        <Col md={3}>
+                        <Col md={2} lg={2} xl={2} className="text-center">
                           <Image
                             src="/images/yapelogo.png"
                             alt="logo"
                             fluid="true"
+                            style={{ width: 150 }}
+
                           />
                         </Col>
-                        <Col md={3}>
+                        <Col md={4} lg={3} xl={3} className="text-center">
                           <Image
                             src="/images/yape.png"
                             alt="logo"
                             fluid="true"
+                            style={{ width: 150 }}
                           />
                         </Col>
                       </Row>
@@ -198,7 +203,7 @@ const OrderScreen = ({ match, history }) => {
                       </p>
                     </div>
                     <div>
-                      <b style={{fontSize: '1.2rem'}}>
+                      <b style={{ fontSize: '1.2rem' }}>
                         Una vez realizado el pago envíanos el comprobante:
                       </b>
                       <br />
@@ -250,7 +255,7 @@ const OrderScreen = ({ match, history }) => {
             </ListGroup.Item>
           </ListGroup>
         </Col>
-        <Col md={4}>
+        <Col md={12} lg={4} xl={4}>
           <Card>
             <ListGroup variant="flush">
               <ListGroup.Item>
@@ -260,17 +265,25 @@ const OrderScreen = ({ match, history }) => {
                 <Row>
                   <Col>Items</Col>
                   <Col>
-                    {order.orderItems.reduce(
-                      (acc, item) => +acc + +item.qty,
-                      0
-                    )}
+                    <strong>
+                      {order.orderItems.reduce(
+                        (acc, item) => +acc + +item.qty,
+                        0
+                      )}
+                    </strong>
                   </Col>
                 </Row>
               </ListGroup.Item>
               <ListGroup.Item>
                 <Row>
                   <Col>Productos</Col>
-                  <Col>{order.orderItems.length}</Col>
+                  <Col><strong>{order.orderItems.length}</strong></Col>
+                </Row>
+              </ListGroup.Item>
+              <ListGroup.Item>
+                <Row>
+                  <Col>Total</Col>
+                  <Col><strong>S/. {order.totalPrice}</strong></Col>
                 </Row>
               </ListGroup.Item>
               {userInfo && userInfo.isAdmin && !order.isPriced && (
