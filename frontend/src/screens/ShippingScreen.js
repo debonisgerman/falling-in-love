@@ -108,7 +108,7 @@ const ShippingScreen = ({ history }) => {
     <FormContainer>
       <Meta />
       <CheckoutSteps step1 step2 />
-      <h1>Envío</h1>
+      <h1>Completa los datos para tu envío</h1>
       <Form onSubmit={submitHandler}>
         <Form.Group controlId="name">
           <Form.Label>Nombre y Apellido</Form.Label>

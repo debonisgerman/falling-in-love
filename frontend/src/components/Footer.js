@@ -30,7 +30,7 @@ const Footer = () => {
               </div>
               <div className="mb-2">
                 <a
-                  href="https://wa.me/message/BC3M5NM7LNWAE1"
+                  href={`https://wa.me/+51913059930?text=Hola,%20me%20contacto%20desde%20la%20web%20`}
                   target="_blank"
                   rel="noreferrer"
                 >

@@ -29,14 +29,13 @@ const PaymentScreen = ({ history }) => {
     <FormContainer>
       <Meta />
       <CheckoutSteps step1 step2 step3 />
-      <h1>Método de Pago</h1>
-      <Form onSubmit={submitHandler}>
+      <h1>Elegir metodo de pago:</h1>
+      <Form className="payment-selector" onSubmit={submitHandler}>
         <Form.Group>
-          <Form.Label as="legend">Elegir Método</Form.Label>
           <Col>
             <Form.Check
               type="radio"
-              label="IziPay"
+              label="Pago con tarjeta de Crédito / Débito"
               id="IziPay"
               name="paymentMethod"
               value="IziPay"

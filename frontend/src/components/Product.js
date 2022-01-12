@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Card, Row, Col } from "react-bootstrap";
+import { Card, Row, Col, Button } from "react-bootstrap";
 
 const Product = ({ product }) => {
   const productImage = product.variants &&
@@ -27,7 +27,7 @@ const Product = ({ product }) => {
   }
 
   return (
-    <Card className="my-3 p-3 rounded w100p">
+    <Card className="my-3 p-3 rounded w100p productItem">
       <Link onClick={handleLink} className='img-prod-cont'>
         {isOutOfStock && (<div variant="top" className='img-prod' style={{
           backgroundImage: `url(/uploads/agotado.png), url(${productImage.split("\\").join("/")})`,
@@ -40,8 +40,8 @@ const Product = ({ product }) => {
 
       <Card.Body>
         <Link to={`/product/${product._id}`}>
-          <Card.Title as="div">
-            <strong>{product.name}</strong>
+          <Card.Title as="div" className="text-center">
+            <strong className="product-name">{product.name}</strong>
           </Card.Title>
         </Link>
         <Card.Text as="p">
@@ -80,6 +80,13 @@ const Product = ({ product }) => {
             </Card.Text>
           </>
         )}
+        <Card.Text className="text-center mt-4">
+          <Link to={`/product/${product._id}`}>
+            <Button variant="primary" className="rounded btn-ver-mas">
+              <strong><i class="fas fa-search pr-2"></i>¡Ver más!</strong>
+            </Button>
+          </Link>
+        </Card.Text>
       </Card.Body>
     </Card>
   );

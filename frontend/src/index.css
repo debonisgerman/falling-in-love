@@ -541,18 +541,61 @@ footer a:hover {
 }
 
 .kr-payment-button {
-  border-color: #6c0024!important;
-  background-color: #780028!important;
+  border-color: #6c0024 !important;
+  background-color: #780028 !important;
 }
 
 .kr-payment-button:active,
 .kr-payment-button:focus,
 .kr-payment-button:hover {
-  background-color: #470018!important;
-  border-color: #310011!important;
+  background-color: #470018 !important;
+  border-color: #310011 !important;
 }
 
-.filter-accordion{
+.filter-accordion {
   background-color: #780028;
   color: #fff;
+}
+
+.subheaderFont {
+  font-size: 1rem;
+}
+
+.productItem {
+  transition: all ease-in-out .75s;
+}
+
+.productItem:hover {
+  box-shadow: 3px 4px 2px 0px rgb(0 0 0 / 58%);
+  -webkit-box-shadow: 3px 4px 2px 0px rgb(0 0 0 / 58%);
+  -moz-box-shadow: 3px 4px 2px 0px rgb(0 0 0 / 58%);
+}
+
+.product-name {
+  font-size: 1.7rem;
+}
+
+.btn-ver-mas i {
+  transition: all ease-in-out .5s;
+}
+
+.btn-ver-mas:hover i {
+  transform: rotate(90deg) translate(4px, 5px);
+}
+
+#guiaTallas {
+  transition: all 1s ease-in-out;
+}
+
+#guiaTallas:hover {
+  transform: scale(1.5) translateY(3rem);
+}
+
+.continue-shopping {
+  font-size: 1.2rem;
+}
+
+.payment-selector input:checked+label {
+  text-decoration: underline;
+  font-weight: bold;
 }

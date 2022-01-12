@@ -250,6 +250,7 @@ const PlaceOrderScreen = ({ history }) => {
                       amount={cart.totalPrice}
                       email={cart.shippingAddress.email}
                       onSuccess={onSuccessHandler}
+                      cart={cart}
                     />
                   ) :
                     (

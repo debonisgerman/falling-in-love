@@ -69,7 +69,7 @@ const ProductScreen = ({ history, match }) => {
   const addToCartHandler = () => {
     if (!variantSize)
     {
-      document.getElementById("sizes-error").innerHTML = "No seleccionó ningún talle";
+      document.getElementById("sizes-error").innerHTML = "No seleccionó ninguna talla";
       return false;
     }
     if (qty <= 0)
@@ -227,7 +227,7 @@ const ProductScreen = ({ history, match }) => {
                     <div>
                       {variant && variant.sizes.map((c) => (
                         c && c.stock != null && c.stock != undefined && c.stock > -1 ? (
-                          <div key={c.size._id}>{c.size.name} {c.stock > 0 ? '('+c.stock : '(0'} {c.stock != 1 ? 'Unidades)' : 'Unidad)'}</div>
+                          <div key={c.size._id}>{c.size.name} {c.stock > 0 ? '(' + c.stock : '(0'} {c.stock != 1 ? 'Unidades)' : 'Unidad)'}</div>
                         ) : <></>))
                       }
                     </div>
@@ -258,12 +258,13 @@ const ProductScreen = ({ history, match }) => {
                   <Button variant="primary" onClick={handleShow}>
                     Guía de Tallas
                   </Button>
-                  <Modal show={show} onHide={handleClose}>
+                  <Modal show={show} onHide={handleClose} style={{ overflowY: 'hidden' }}>
                     <Modal.Body>
                       <Image
                         src={'/images/tallas.png'}
                         alt={'guiaTallas'}
                         fluid="true"
+                        id="guiaTallas"
                         style={{
                           width: '80%',
                           margin: '0 auto',
@@ -279,10 +280,17 @@ const ProductScreen = ({ history, match }) => {
                   </Modal>
                 </ListGroup.Item>
                 <ListGroup.Item>
+                  <h6 className="text-center my-3 ">
+                    {
+                      product && product.category && product.category.filter(x => x.name === "Conjuntos").length > 0
+                        ? "¿Deseas combinar tallas?, escríbeme para que te podamos asesorar" :
+                        "¿No encuentras lo que buscas?, escríbenos y te asesoraremos"}
+
+                  </h6>
                   <Row>
                     <Col sm={6} className="text-center">
                       <a
-                        href={`https://wa.me/message/BC3M5NM7LNWAE1?text=Hola,%20quisiera%20saber%20más%20de%20${product.name}`}
+                        href={`https://wa.me/+51913059930?text=Hola,%20vengo%20de%20ver%20este%20producto%20en%20la%20web%20https://www.fallinginlove.pe/product/${product._id}%20${product.name}%20y%20tengo%20una%20consulta`}
                         target="_blank"
                         rel="noreferrer"
                       >
@@ -291,7 +299,7 @@ const ProductScreen = ({ history, match }) => {
                     </Col>
                     <Col sm={6} className="text-center">
                       <a
-                        href={`mailto:hola@fallinginlove.pe`}
+                        href={`mailto:hola@fallinginlove.pe?Subject=Consulta%20desde%20el%20sitio%20Web&body=Hola,%20vengo%20de%20ver%20este%20producto%20en%20la%20web%20https://www.fallinginlove.pe/product/${product._id}%20${product.name}%20y%20tengo%20una%20consulta`}
                         target="_blank"
                         rel="noreferrer"
                       >

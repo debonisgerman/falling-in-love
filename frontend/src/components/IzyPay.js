@@ -17,6 +17,14 @@ const IziPay = (data) => {
         script.setAttribute('kr-public-key', '44010247:publickey_NvsaBHOOEPEAq9LFA2IIRf255wFvRpX8hS3OsWWs4rqML');
         script.setAttribute('kr-post-url-success', 'paid.html');
         body.appendChild(script);
+        const cartData = [];
+        data.cart.cartItems.map(item => {
+            cartData.push({
+                productLabel: item.name,
+                productType: "CLOTHING_AND_ACCESSORIES",
+                productQty: item.qty,
+            })
+        })
         // Generate the form token
         axios
             .get(`/api/orders/lastOrderNumber`)
@@ -28,13 +36,16 @@ const IziPay = (data) => {
                             "amount": Number(data.amount * 100),
                             "currency": "PEN",
                             "customer": {
-                                "email": data.email
+                                "email": data.email,
+                                "shoppingCarg": {
+                                    "cartItemInfo": cartData,
+                                }
                             },
                             "orderId": lastOrder.data.billNumber,
                         },
                         headers: {
                             "Content-Type": "application/x-www-form-urlencoded",
-                            'Access-Control-Allow-Origin' : '*',
+                            'Access-Control-Allow-Origin': '*',
                         }
                     })
                     .then(resp => {

@@ -147,10 +147,9 @@ const OrderScreen = ({ match, history }) => {
                 <>
                   <hr />
                   <h4>Datos para el pago:</h4>
-                  <p><b>Titular</b>: Andrea Cueva</p>
+                  <p><b>Titular</b>: Andrea Estefania Cueva Bedia</p>
                   <div>
                     <div>
-                      <h5>Plin</h5>
                       <Row style={{ alignItems: 'center', justifyContent: 'center' }}>
                         <Col md={3} lg={3} xl={3} className="text-center">
                           <Image
@@ -168,11 +167,6 @@ const OrderScreen = ({ match, history }) => {
                             style={{ width: 150 }}
                           />
                         </Col>
-                      </Row>
-                    </div>
-                    <div>
-                      <h5>Yape</h5>
-                      <Row style={{ alignItems: 'center', justifyContent: 'center' }}>
                         <Col md={2} lg={2} xl={2} className="text-center">
                           <Image
                             src="/images/yapelogo.png"
@@ -203,8 +197,8 @@ const OrderScreen = ({ match, history }) => {
                       </p>
                     </div>
                     <div>
-                      <b style={{ fontSize: '1.2rem' }}>
-                        Una vez realizado el pago envíanos el comprobante:
+                      <b style={{ fontSize: '1.3rem', color: '#780028', fontWeight: 'bold' }}>
+                        Una vez realizado el pago, envíanos el comprobante:
                       </b>
                       <br />
                       <br />
@@ -213,7 +207,7 @@ const OrderScreen = ({ match, history }) => {
                         href={`https://wa.me/+51913059930?text=Hola,%20te%20envío%20el%20comprobante%20del%20pedido%20Nro.%20${order.billNumber}`}
                         target="_blank"
                         rel="noreferrer"
-                        style={{ display: 'flex', width: 150, justifyContent: 'center', alignItems: 'center', paddingBottom: 8 }}
+                        style={{ display: 'flex', width: 175, justifyContent: 'center', alignItems: 'center', paddingBottom: 8 }}
                       >
                         <b>
                           <i
@@ -222,7 +216,7 @@ const OrderScreen = ({ match, history }) => {
                           ></i>
                         </b>
                         <b
-                          style={{ marginLeft: 10, marginTop: 4 }}>
+                          style={{ marginLeft: 8, marginTop: 4 }}>
                           ¡Por Whatsapp!
                         </b>
                       </a>

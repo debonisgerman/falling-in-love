@@ -96,7 +96,7 @@ const Filter = ({ loadingFilters, errorFilters, parsed, keyword, filters }) => {
   return (
     <>
       <h5>
-        <b>Refinar búsqueda</b>
+        <b>Filtros de búsqueda</b>
       </h5>
       {loadingFilters ? (
         <Loader />
@@ -149,7 +149,7 @@ const Filter = ({ loadingFilters, errorFilters, parsed, keyword, filters }) => {
                   )}
                 </p>
                 <Link
-                  className="btn btn-block btn-primary"
+                  className="btn btn-block btn-secondary rounded"
                   onClick={() =>
                   (window.location.href =
                     window.location.origin + window.location.pathname)
@@ -162,7 +162,7 @@ const Filter = ({ loadingFilters, errorFilters, parsed, keyword, filters }) => {
             )}
           <ListGroup>
             <ListGroup.Item>
-              <Accordion className="filter-accordion">
+              <Accordion className="filter-accordion" defaultActiveKey={parsed.section ? '0' : null}>
                 <Accordion.Toggle as={Card.Header} className="pointer" eventKey="0">
                   <b>Sección</b>
                 </Accordion.Toggle>
@@ -188,7 +188,7 @@ const Filter = ({ loadingFilters, errorFilters, parsed, keyword, filters }) => {
               </Accordion>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Accordion className="filter-accordion">
+              <Accordion className="filter-accordion" defaultActiveKey={parsed.category ? '0' : null}>
                 <Accordion.Toggle as={Card.Header} className="pointer" eventKey="0">
                   <b>Categoría</b>
                 </Accordion.Toggle>
@@ -214,7 +214,7 @@ const Filter = ({ loadingFilters, errorFilters, parsed, keyword, filters }) => {
               </Accordion>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Accordion className="filter-accordion">
+              <Accordion className="filter-accordion" defaultActiveKey={parsed.material ? '0' : null}>
                 <Accordion.Toggle as={Card.Header} className="pointer" eventKey="0">
                   <b>Material</b>
                 </Accordion.Toggle>
@@ -240,7 +240,7 @@ const Filter = ({ loadingFilters, errorFilters, parsed, keyword, filters }) => {
               </Accordion>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Accordion className="filter-accordion">
+              <Accordion className="filter-accordion" defaultActiveKey={parsed.color ? '0' : null}>
                 <Accordion.Toggle as={Card.Header} className="pointer" eventKey="0">
                   <b>Color</b>
                 </Accordion.Toggle>
@@ -266,7 +266,7 @@ const Filter = ({ loadingFilters, errorFilters, parsed, keyword, filters }) => {
               </Accordion>
             </ListGroup.Item>
             <ListGroup.Item>
-              <Accordion className="filter-accordion">
+              <Accordion className="filter-accordion" defaultActiveKey={filters && filters.price ? '0' : null}>
                 <Accordion.Toggle as={Card.Header} className="pointer" eventKey="0">
                   <b>Precio (S/.)</b>
                 </Accordion.Toggle>
