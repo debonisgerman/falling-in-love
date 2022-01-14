@@ -154,7 +154,14 @@ const ProductScreen = ({ history, match }) => {
         <Message variant="danger">{error}</Message>
       ) : (
         <>
-          <Meta title={product.name} />
+          <Meta
+            title={product.name}
+            description={product.description}
+            image={variant && variant.images ?
+              `https://www.fallinginlove.pe/uploads/${variant.images[0]}` :
+              'https://www.fallinginlove.pe/images/logo2.png'
+            }
+          />
           <Row>
             <Col sm={4} md={4}>
               <Row>
