@@ -1,9 +1,9 @@
 import React from "react";
-import { Helmet } from "react-helmet";
+import MetaTags from 'react-meta-tags';
 
 const Meta = ({ title, description, keywords, type, image }) => {
   return (
-    <Helmet>
+    <MetaTags>
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta name="keywords" content={keywords} />
@@ -15,7 +15,7 @@ const Meta = ({ title, description, keywords, type, image }) => {
       <meta property="og:url" content={window.location.href} />
       <meta property="og:image" content={image} />
 
-    </Helmet>
+    </MetaTags>
   );
 };
 
