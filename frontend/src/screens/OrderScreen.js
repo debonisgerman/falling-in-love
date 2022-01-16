@@ -151,7 +151,7 @@ const OrderScreen = ({ match, history }) => {
                   <div>
                     <div>
                       <Row style={{ alignItems: 'center', justifyContent: 'center' }}>
-                        <Col md={3} lg={3} xl={3} className="text-center">
+                        <Col md={3} lg={3} xl={3} className="text-center yape-mobile-first">
                           <Image
                             src="/images/plinlogo.png"
                             alt="logo"
@@ -159,7 +159,7 @@ const OrderScreen = ({ match, history }) => {
                             style={{ width: 150 }}
                           />
                         </Col>
-                        <Col md={3} lg={3} xl={3} className="text-center">
+                        <Col md={3} lg={3} xl={3} className="text-center yape-mobile-second">
                           <Image
                             src="/images/plin.png"
                             alt="logo"
@@ -167,7 +167,7 @@ const OrderScreen = ({ match, history }) => {
                             style={{ width: 150 }}
                           />
                         </Col>
-                        <Col md={2} lg={2} xl={2} className="text-center">
+                        <Col md={2} lg={2} xl={2} className="text-center yape-mobile-first">
                           <Image
                             src="/images/yapelogo.png"
                             alt="logo"
@@ -176,7 +176,7 @@ const OrderScreen = ({ match, history }) => {
 
                           />
                         </Col>
-                        <Col md={4} lg={3} xl={3} className="text-center">
+                        <Col md={4} lg={3} xl={3} className="text-center yape-mobile-second">
                           <Image
                             src="/images/yape.png"
                             alt="logo"
