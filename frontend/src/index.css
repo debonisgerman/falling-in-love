@@ -614,8 +614,9 @@ footer a:hover {
     border-left: 1px solid;
     border-bottom: 1px solid;
     border-right: 1px solid;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
     margin-left: 10px;
     margin-right: 10px;
+    margin-bottom: 10px;
   }
 }
